@@ -12,7 +12,18 @@ CONTENT_ROOT = REPO_ROOT / "content"
 SUMMARY_PATH = CONTENT_ROOT / "SUMMARY.md"
 REFERENCE_ROOT = CONTENT_ROOT / "references"
 GLOSSARY_SOURCE = CONTENT_ROOT / "reference_data" / "glossary.json"
-INDEX_SKIP_FILES = {"index.md", "como-usar.md", "plano-de-acao.md"}
+THEME_GLOSSARY_JS = REPO_ROOT / "renderers" / "mdbook" / "theme" / "generated_glossary.js"
+CONTENT_SKIP_FILES = {"index.md", "como-usar.md", "plano-de-acao.md"}
+REMISSIVE_SKIP_FILES = {
+    "index.md",
+    "como-usar.md",
+    "plano-de-acao.md",
+    "21-mini-resumo-das-regras-de-calculo-que-realmente-usamos-aqui.md",
+    "22-folha-de-consulta-compacta.md",
+    "23-exercicios-propostos.md",
+    "24-gabarito-dos-exercicios.md",
+}
+MAX_INDEX_REFERENCES = 12
 
 SUMMARY_LINK_RE = re.compile(r"^\s*-\s+\[[^\]]+\]\(([^)]+)\)")
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
@@ -37,9 +48,12 @@ class SectionRef:
 
 @dataclass
 class MediaItem:
+    kind: str
+    editorial_label: str
     caption: str
     asset_path: str
     chapter_title: str
+    chapter_label: str | None
     section_title: str
     source_path: Path
     anchor: str | None
@@ -62,6 +76,18 @@ def slugify_heading(text: str) -> str:
     slug = re.sub(r"\s+", "-", slug, flags=re.UNICODE)
     slug = re.sub(r"-+", "-", slug).strip("-")
     return slug
+
+
+def extract_chapter_label(chapter_title: str) -> str | None:
+    numeric_match = re.match(r"^(\d+)\.", chapter_title)
+    if numeric_match:
+        return numeric_match.group(1)
+
+    appendix_match = re.match(r"^Apêndice\s+([A-Z])\.", chapter_title)
+    if appendix_match:
+        return appendix_match.group(1)
+
+    return None
 
 
 def relative_md_link(source_path: Path, anchor: str | None = None) -> str:
@@ -134,7 +160,7 @@ def parse_summary_paths() -> list[Path]:
             continue
         if path.name == "SUMMARY.md":
             continue
-        if path.name in INDEX_SKIP_FILES:
+        if path.name in CONTENT_SKIP_FILES:
             continue
         paths.append(path)
     return paths
@@ -144,7 +170,7 @@ def section_link(source_path: Path, anchor: str | None) -> str:
     return relative_md_link(source_path, anchor)
 
 
-def scan_chapter(source_path: Path) -> tuple[str, list[SectionRef], list[MediaItem], list[MediaItem], list[FormulaItem]]:
+def scan_chapter(source_path: Path) -> tuple[str, str | None, list[SectionRef], list[MediaItem], list[MediaItem], list[FormulaItem]]:
     lines = source_path.read_text(encoding="utf-8").splitlines()
     chapter_title = source_path.stem
     for line in lines:
@@ -152,6 +178,7 @@ def scan_chapter(source_path: Path) -> tuple[str, list[SectionRef], list[MediaIt
         if match and len(match.group(1)) == 1:
             chapter_title = match.group(2).strip()
             break
+    chapter_label = extract_chapter_label(chapter_title)
 
     current_section_title = chapter_title
     current_anchor: str | None = None
@@ -160,6 +187,8 @@ def scan_chapter(source_path: Path) -> tuple[str, list[SectionRef], list[MediaIt
     figures: list[MediaItem] = []
     videos: list[MediaItem] = []
     formulas: list[FormulaItem] = []
+    figure_counter = 0
+    video_counter = 0
 
     index = 0
     while index < len(lines):
@@ -220,12 +249,24 @@ def scan_chapter(source_path: Path) -> tuple[str, list[SectionRef], list[MediaIt
             caption = clean_caption(caption_match.group(1)) if caption_match else "Figura sem legenda"
             asset_match = SOURCE_RE.search(block) or IMG_TAG_RE.search(block)
             asset_path = asset_match.group(1) if asset_match else ""
-            target = videos if "<video" in block.lower() else figures
+            is_video = "<video" in block.lower()
+            target = videos if is_video else figures
+            if is_video:
+                video_counter += 1
+                kind = "Vídeo"
+                editorial_label = f"Vídeo {chapter_label}.{video_counter}" if chapter_label else f"Vídeo {video_counter}"
+            else:
+                figure_counter += 1
+                kind = "Figura"
+                editorial_label = f"Figura {chapter_label}.{figure_counter}" if chapter_label else f"Figura {figure_counter}"
             target.append(
                 MediaItem(
+                    kind=kind,
+                    editorial_label=editorial_label,
                     caption=caption,
                     asset_path=asset_path,
                     chapter_title=chapter_title,
+                    chapter_label=chapter_label,
                     section_title=current_section_title,
                     source_path=source_path,
                     anchor=current_anchor,
@@ -236,11 +277,15 @@ def scan_chapter(source_path: Path) -> tuple[str, list[SectionRef], list[MediaIt
 
         image_match = MARKDOWN_IMAGE_RE.search(line)
         if image_match:
+            figure_counter += 1
             figures.append(
                 MediaItem(
+                    kind="Figura",
+                    editorial_label=f"Figura {chapter_label}.{figure_counter}" if chapter_label else f"Figura {figure_counter}",
                     caption=image_match.group(1).strip() or "Imagem sem legenda",
                     asset_path=image_match.group(2).strip(),
                     chapter_title=chapter_title,
+                    chapter_label=chapter_label,
                     section_title=current_section_title,
                     source_path=source_path,
                     anchor=current_anchor,
@@ -258,7 +303,7 @@ def scan_chapter(source_path: Path) -> tuple[str, list[SectionRef], list[MediaIt
         )
     )
 
-    return chapter_title, sections, figures, videos, formulas
+    return chapter_title, chapter_label, sections, figures, videos, formulas
 
 
 def load_glossary() -> list[dict]:
@@ -271,7 +316,10 @@ def term_pattern(term: str) -> re.Pattern[str]:
     return re.compile(rf"(?<!\w){escaped}(?!\w)", flags=re.IGNORECASE | re.UNICODE)
 
 
-def build_index(glossary_terms: list[dict], chapter_data: list[tuple[str, list[SectionRef], list[MediaItem], list[MediaItem], list[FormulaItem], Path]]) -> dict[str, list[tuple[str, str, str]]]:
+def build_index(
+    glossary_terms: list[dict],
+    chapter_data: list[tuple[str, str | None, list[SectionRef], list[MediaItem], list[MediaItem], list[FormulaItem], Path]],
+) -> dict[str, list[tuple[str, str, str]]]:
     index_map: dict[str, list[tuple[str, str, str]]] = defaultdict(list)
     for term in glossary_terms:
         patterns = [term_pattern(term["term"])]
@@ -279,7 +327,9 @@ def build_index(glossary_terms: list[dict], chapter_data: list[tuple[str, list[S
             patterns.append(term_pattern(alias))
 
         seen_links: set[str] = set()
-        for chapter_title, sections, _figures, _videos, _formulas, source_path in chapter_data:
+        for chapter_title, _chapter_label, sections, _figures, _videos, _formulas, source_path in chapter_data:
+            if source_path.name in REMISSIVE_SKIP_FILES:
+                continue
             for section in sections:
                 if not section.anchor:
                     continue
@@ -298,6 +348,23 @@ def build_index(glossary_terms: list[dict], chapter_data: list[tuple[str, list[S
 def write_page(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content.rstrip() + "\n", encoding="utf-8")
+
+
+def write_glossary_js(glossary: list[dict]) -> None:
+    payload = []
+    for entry in glossary:
+        payload.append(
+            {
+                "term": entry["term"],
+                "slug": slugify_heading(entry["term"]),
+                "definition": entry["definition"].strip(),
+                "aliases": entry.get("aliases", []),
+            }
+        )
+    THEME_GLOSSARY_JS.write_text(
+        "window.BOOK_GLOSSARY = " + json.dumps(payload, ensure_ascii=False, indent=2) + ";\n",
+        encoding="utf-8",
+    )
 
 
 def render_reference_home(figures: list[MediaItem], videos: list[MediaItem], formulas: list[FormulaItem], glossary: list[dict], index_map: dict[str, list[tuple[str, str, str]]]) -> str:
@@ -339,7 +406,7 @@ def render_media_list(title: str, intro: str, items: list[MediaItem]) -> str:
         "",
     ]
     for number, item in enumerate(items, start=1):
-        lines.append(f"{number}. [{item.caption}]({section_link(item.source_path, item.anchor)})")
+        lines.append(f"{number}. [{item.editorial_label}. {item.caption}]({section_link(item.source_path, item.anchor)})")
         lines.append(f"   Em: **{item.chapter_title}**, seção **{item.section_title}**.")
         if item.asset_path:
             lines.append(f"   Asset: `{item.asset_path}`.")
@@ -393,7 +460,7 @@ def render_glossary(glossary: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def render_index(index_map: dict[str, list[tuple[str, str, str]]]) -> str:
+def render_index(glossary: list[dict], index_map: dict[str, list[tuple[str, str, str]]]) -> str:
     lines = [
         "# Índice remissivo",
         "",
@@ -401,6 +468,7 @@ def render_index(index_map: dict[str, list[tuple[str, str, str]]]) -> str:
         "",
     ]
     current_letter = None
+    glossary_lookup = {entry["term"]: entry for entry in glossary}
     for term, refs in index_map.items():
         first_letter = term[0].upper()
         if first_letter != current_letter:
@@ -409,28 +477,38 @@ def render_index(index_map: dict[str, list[tuple[str, str, str]]]) -> str:
             lines.append("")
 
         glossary_link = f"[definição](glossario.md#{slugify_heading(term)})"
-        ref_links = ", ".join(f"[{section}]({link})" for _chapter, section, link in refs)
-        lines.append(f"- **{term}** ({glossary_link}): {ref_links}")
+        visible_refs = refs[:MAX_INDEX_REFERENCES]
+        hidden_count = max(len(refs) - len(visible_refs), 0)
+        ref_links = ", ".join(f"[{section}]({link})" for _chapter, section, link in visible_refs)
+        line = f"- **{term}** ({glossary_link}): {ref_links}"
+        entry = glossary_lookup.get(term, {})
+        if entry.get("see"):
+            see_links = ", ".join(f"[{item}](glossario.md#{slugify_heading(item)})" for item in entry["see"])
+            line += f". Veja também: {see_links}"
+        if hidden_count:
+            line += f". (+{hidden_count} ocorrências adicionais omitidas)"
+        lines.append(line)
     lines.append("")
     return "\n".join(lines)
 
 
 def main() -> int:
     chapter_paths = parse_summary_paths()
-    chapter_data: list[tuple[str, list[SectionRef], list[MediaItem], list[MediaItem], list[FormulaItem], Path]] = []
+    chapter_data: list[tuple[str, str | None, list[SectionRef], list[MediaItem], list[MediaItem], list[FormulaItem], Path]] = []
     all_figures: list[MediaItem] = []
     all_videos: list[MediaItem] = []
     all_formulas: list[FormulaItem] = []
 
     for path in chapter_paths:
-        chapter_title, sections, figures, videos, formulas = scan_chapter(path)
-        chapter_data.append((chapter_title, sections, figures, videos, formulas, path))
+        chapter_title, chapter_label, sections, figures, videos, formulas = scan_chapter(path)
+        chapter_data.append((chapter_title, chapter_label, sections, figures, videos, formulas, path))
         all_figures.extend(figures)
         all_videos.extend(videos)
         all_formulas.extend(formulas)
 
     glossary = load_glossary()
     index_map = build_index(glossary, chapter_data)
+    write_glossary_js(glossary)
 
     write_page(
         REFERENCE_ROOT / "index.md",
@@ -454,7 +532,7 @@ def main() -> int:
     )
     write_page(REFERENCE_ROOT / "lista-de-formulas.md", render_formula_list(all_formulas))
     write_page(REFERENCE_ROOT / "glossario.md", render_glossary(glossary))
-    write_page(REFERENCE_ROOT / "indice-remissivo.md", render_index(index_map))
+    write_page(REFERENCE_ROOT / "indice-remissivo.md", render_index(glossary, index_map))
     return 0
 
 

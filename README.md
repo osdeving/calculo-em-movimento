@@ -33,6 +33,13 @@ Laboratório editorial de um livro de cinemática com:
 6. Gere o livro com `make build`
 7. Sirva localmente com `make serve`
 
+## Recursos editoriais automáticos
+
+- o glossário alimenta uma camada de links automáticos no corpo dos capítulos
+- figuras e vídeos recebem numeração editorial por capítulo no HTML final
+- o índice remissivo usa a base do glossário, limita excesso de ocorrências e inclui `veja também`
+- as páginas em `content/references/` são geradas automaticamente; não vale a pena editá-las manualmente
+
 ## Comandos
 
 ```bash

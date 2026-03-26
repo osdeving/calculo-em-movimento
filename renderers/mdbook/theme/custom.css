@@ -150,6 +150,28 @@ html.light .content main a {
   font-size: 0.95rem;
 }
 
+.book-figure .editorial-label {
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+html.light .content main a.glossary-term {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in srgb, var(--accent) 70%, transparent);
+  transition: color 120ms ease, text-decoration-color 120ms ease;
+}
+
+html.light .content main a.glossary-term:hover,
+html.light .content main a.glossary-term:focus-visible {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
 .display-math {
   margin: 1.1rem 0;
   text-align: center;
