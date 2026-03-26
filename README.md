@@ -27,8 +27,16 @@ Laboratório editorial de um livro de cinemática com:
 ```bash
 make build
 make serve
+make serve-stop
 make clean
 ```
+
+## Porta do servidor
+
+O `make serve` tenta usar a porta `3000`.
+
+- se houver uma instância antiga do `mdBook` gerenciada por este projeto, ela é encerrada antes de subir outra
+- se a `3000` estiver ocupada por outro processo, o script sobe automaticamente na próxima porta livre e informa a URL no terminal
 
 ## Observação
 

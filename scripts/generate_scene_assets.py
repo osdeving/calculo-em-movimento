@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -28,6 +29,8 @@ ORANGE = "#d98943"
 GRAY = "#8b9098"
 DARK = "#30363b"
 BOX = "#d6ab73"
+
+plt.rcParams["svg.hashsalt"] = "calculo-em-movimento"
 
 
 def ensure_dirs() -> None:
@@ -59,8 +62,24 @@ def setup_scene(title: str):
 
 def save_scene(fig, filename: str) -> None:
     fig.tight_layout(pad=0.4)
-    fig.savefig(ASSET_DIR / filename, format="svg")
+    target = ASSET_DIR / filename
+    temp_target = ASSET_DIR / (filename + ".tmp")
+    fig.savefig(temp_target, format="svg", metadata={"Date": "2026-03-26T00:00:00"})
     plt.close(fig)
+
+    svg_text = temp_target.read_text(encoding="utf-8")
+    svg_text = re.sub(
+        r"<dc:date>.*?</dc:date>",
+        "<dc:date>2026-03-26T00:00:00</dc:date>",
+        svg_text,
+        flags=re.S,
+    )
+
+    current = target.read_text(encoding="utf-8") if target.exists() else None
+    if current != svg_text:
+        target.write_text(svg_text, encoding="utf-8")
+
+    temp_target.unlink()
 
 
 def draw_s_axis(ax, max_s: float, step: float, y: float = 7.0, label: str = "S (m)"):

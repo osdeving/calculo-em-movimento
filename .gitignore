@@ -9,6 +9,7 @@ __pycache__/
 # Build outputs
 dist/
 book/
+.tmp/
 
 # Temporary files
 *.tmp

@@ -1,4 +1,4 @@
-.PHONY: assets build serve clean
+.PHONY: assets build serve serve-stop clean
 
 BOOK_DIR := renderers/mdbook
 
@@ -9,7 +9,11 @@ build: assets
 	mdbook build $(BOOK_DIR)
 
 serve: assets
-	mdbook serve $(BOOK_DIR) -n 0.0.0.0 -p 3000
+	python3 scripts/serve_mdbook.py
+
+serve-stop:
+	python3 scripts/serve_mdbook.py --stop
 
 clean:
+	python3 scripts/serve_mdbook.py --stop || true
 	rm -rf dist
