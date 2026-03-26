@@ -19,6 +19,7 @@ after = ["links"]
 default-theme = "light"
 preferred-dark-theme = "light"
 mathjax-support = true
+site-url = "/calculo-em-movimento/"
 additional-css = ["theme/custom.css"]
 additional-js = ["theme/lab.js"]
 git-repository-url = "https://github.com/osdeving/calculo-em-movimento"

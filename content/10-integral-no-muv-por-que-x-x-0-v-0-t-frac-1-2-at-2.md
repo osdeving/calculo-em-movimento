@@ -1,4 +1,4 @@
-# 10. Integral no MUV: por que $x = x_0 + v_0 t + \frac{1}{2}at^2$?
+# 10. Integral no MUV: por que x = x0 + v0t + (1/2)at^2?
 
 Aqui está uma das passagens mais bonitas do livro.
 

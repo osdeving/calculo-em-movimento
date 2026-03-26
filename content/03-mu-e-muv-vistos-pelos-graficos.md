@@ -50,7 +50,7 @@ Por enquanto, leia essa expressão como o retrato algébrico do MU:
 
 > A demonstração completa dessa fórmula virá na seção 9, quando o deslocamento for interpretado como área sob o gráfico $v \times t$.
 
-### Como a reta aparece no gráfico $x \times t$
+### Como a reta aparece no gráfico x versus t
 
 Considere um móvel com $x_0 = 10\ \text{m}$ e velocidade constante $v = 5\ \text{m/s}$.
 

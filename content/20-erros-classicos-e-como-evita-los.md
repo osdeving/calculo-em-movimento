@@ -15,7 +15,7 @@ Sinal de alerta:
 
 - quando o aluno usa um valor médio para descrever automaticamente “o instante”
 
-## Erro 2 — usar $\dfrac{v_0+v}{2}$ fora do MUV
+## Erro 2 — usar (v0 + v) / 2 fora do MUV
 
 Correção:
 

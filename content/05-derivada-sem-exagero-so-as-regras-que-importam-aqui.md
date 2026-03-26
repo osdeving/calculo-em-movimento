@@ -38,7 +38,7 @@ Exemplo:
 - se é fixa, não cresce nem diminui com o tempo
 - logo, sua derivada é zero
 
-## 5.3. Regra 2: derivada de $t$
+## 5.3. Regra 2: derivada de t
 
 $$
 \frac{d}{dt}(t) = 1
@@ -59,7 +59,7 @@ Em linguagem geométrica, isso equivale a dizer que a inclinação de uma reta �
 
 Se quiser revisar a ligação entre reta e inclinação, o [Apêndice A, seções A.3 e A.4](26-apendice-a-retas-graficos-e-funcoes.md) ajuda bastante.
 
-## 5.4. Regra 3: derivada de $t^2$
+## 5.4. Regra 3: derivada de t^2
 
 $$
 \frac{d}{dt}(t^2) = 2t

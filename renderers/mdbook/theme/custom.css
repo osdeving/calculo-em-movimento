@@ -35,6 +35,10 @@ html.light .nav-chapters:hover {
   color: var(--ink);
 }
 
+.chapter-item > a > strong[aria-hidden="true"] {
+  display: none !important;
+}
+
 html.light .page-wrapper {
   background: transparent;
 }

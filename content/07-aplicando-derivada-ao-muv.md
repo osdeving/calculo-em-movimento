@@ -26,7 +26,7 @@ Então a expectativa física é esta:
 
 Ou seja, o comportamento algébrico já deveria espelhar o comportamento físico.
 
-## 7.2. Primeira derivada: saindo de $x(t)$ para $v(t)$
+## 7.2. Primeira derivada: saindo de x(t) para v(t)
 
 Derivamos termo a termo:
 
@@ -54,7 +54,7 @@ $$
 
 Chegamos, assim, à equação horária da velocidade no MUV.
 
-## 7.3. Segunda derivada: saindo de $v(t)$ para $a(t)$
+## 7.3. Segunda derivada: saindo de v(t) para a(t)
 
 Agora derivamos a velocidade:
 

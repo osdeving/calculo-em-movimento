@@ -10,7 +10,7 @@ Essas três escritas parecem simples, mas organizam praticamente todo o livro.
 
 Se a leitura de função ainda estiver enferrujada, este é um bom momento para consultar o [Apêndice A, seções A.1 e A.2](26-apendice-a-retas-graficos-e-funcoes.md).
 
-## 2.1. O que significa escrever $x(t)$
+## 2.1. O que significa escrever x(t)
 
 Quando escrevemos $x(t)$, estamos dizendo:
 

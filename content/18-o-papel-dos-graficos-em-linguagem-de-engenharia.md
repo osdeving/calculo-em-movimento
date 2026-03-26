@@ -5,7 +5,7 @@ Na prática de engenharia, olhar gráfico não é enfeite.
 
 Uma conta pode até estar algébrica e numericamente correta, mas um gráfico incompatível costuma denunciar erro conceitual.
 
-## 18.1. Gráfico $x \times t$
+## 18.1. Gráfico x versus t
 
 Pergunta respondida:
 
@@ -19,7 +19,7 @@ Leituras importantes:
 Isso quer dizer que o gráfico $x \times t$ não fala só de “lugar”.  
 Ele também traz, embutido na sua inclinação, informação sobre a velocidade.
 
-## 18.2. Gráfico $v \times t$
+## 18.2. Gráfico v versus t
 
 Pergunta respondida:
 
@@ -33,7 +33,7 @@ Leituras importantes:
 
 Aqui aparece uma das leituras mais poderosas do curso: o mesmo gráfico informa tanto o valor instantâneo da velocidade quanto o deslocamento acumulado.
 
-## 18.3. Gráfico $a \times t$
+## 18.3. Gráfico a versus t
 
 Pergunta respondida:
 

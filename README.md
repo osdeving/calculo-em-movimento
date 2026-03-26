@@ -32,7 +32,9 @@ Laboratório editorial de um livro de cinemática com:
 
 ```bash
 make build
+make build-pages
 make animations
+make publish
 make serve
 make serve-stop
 make clean
@@ -43,6 +45,10 @@ make clean
 - geração dos SVGs
 - renderização das animações Manim quando houver mudanças
 - build ou serve do `mdBook`
+
+`make build-pages` gera apenas o site estático pronto para publicação, usando os assets e vídeos já versionados no repositório.
+
+`make publish` dispara manualmente o workflow de publicação no GitHub Pages para a branch `main`.
 
 ## Porta do servidor
 
@@ -56,3 +62,15 @@ O `make serve` tenta usar a porta `3000`.
 O conteúdo é a fonte de verdade. A camada visual fica no renderer `mdBook`, o que facilita trocar a apresentação depois sem reescrever os Markdown.
 
 As fórmulas continuam sendo escritas diretamente no Markdown com `$...$` e `$$...$$`. Um preprocessor local converte isso para o formato esperado pelo `mdBook` antes do HTML final ser gerado.
+
+## Publicação
+
+O repositório está preparado para publicar no GitHub Pages via GitHub Actions.
+
+- o workflow fica em `.github/workflows/publish-pages.yml`
+- o build de publicação usa `make build-pages`
+- a URL esperada da publicação é `https://osdeving.github.io/calculo-em-movimento/`
+
+Observação importante:
+
+- o GitHub Pages publica o site de forma pública, mesmo quando o repositório é privado, desde que o plano/conta permita esse recurso

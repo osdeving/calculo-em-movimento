@@ -1,4 +1,47 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const stripSidebarChapterNumbers = (root) => {
+    if (!root?.querySelectorAll) return;
+
+    root.querySelectorAll(".chapter-item > a").forEach((link) => {
+      const autoNumber = link.querySelector("strong[aria-hidden='true']");
+      if (!autoNumber) return;
+
+      autoNumber.remove();
+
+      if (link.firstChild?.nodeType === Node.TEXT_NODE) {
+        link.firstChild.textContent = link.firstChild.textContent.replace(/^\s+/, "");
+      }
+    });
+  };
+
+  const wireSidebarCleanup = () => {
+    stripSidebarChapterNumbers(document);
+
+    const sidebar = document.querySelector("mdbook-sidebar-scrollbox.sidebar-scrollbox");
+    if (sidebar) {
+      stripSidebarChapterNumbers(sidebar);
+
+      const observer = new MutationObserver(() => {
+        stripSidebarChapterNumbers(sidebar);
+      });
+
+      observer.observe(sidebar, { childList: true, subtree: true });
+    }
+
+    document.querySelectorAll("iframe.sidebar-iframe-outer").forEach((frame) => {
+      const cleanupFrame = () => {
+        try {
+          stripSidebarChapterNumbers(frame.contentDocument);
+        } catch (_) {}
+      };
+
+      frame.addEventListener("load", cleanupFrame);
+      cleanupFrame();
+    });
+  };
+
+  wireSidebarCleanup();
+
   const main = document.querySelector(".content main");
   if (!main) return;
 

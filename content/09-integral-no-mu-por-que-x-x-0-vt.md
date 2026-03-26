@@ -1,4 +1,4 @@
-# 9. Integral no MU: por que $x = x_0 + vt$?
+# 9. Integral no MU: por que x = x0 + vt?
 
 Chegou a hora de justificar geometricamente a fórmula clássica do MU.
 
