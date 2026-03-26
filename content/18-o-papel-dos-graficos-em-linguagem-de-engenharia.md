@@ -5,6 +5,14 @@ Na prática de engenharia, olhar gráfico não é enfeite.
 
 Uma conta pode até estar algébrica e numericamente correta, mas um gráfico incompatível costuma denunciar erro conceitual.
 
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/engineering_graph_reading.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>Na leitura de engenharia, valor, inclinação e área viram perguntas operacionais sobre o comportamento do sistema.</figcaption>
+</figure>
+
 ## 18.1. Gráfico x versus t
 
 Pergunta respondida:

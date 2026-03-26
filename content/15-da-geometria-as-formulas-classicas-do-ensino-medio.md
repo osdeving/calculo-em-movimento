@@ -4,6 +4,14 @@ Depois de percorrer gráficos, derivadas e integrais, vale reorganizar o materia
 
 Mas, em vez de listar só fórmulas soltas, vamos ligar cada uma à sua leitura física e geométrica.
 
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/formula_map_overview.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>As fórmulas clássicas ficam mais claras quando agrupadas por tipo de movimento e ligadas ao gráfico correspondente.</figcaption>
+</figure>
+
 ## 15.1. MU
 
 ### Equação horária da posição

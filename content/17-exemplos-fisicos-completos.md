@@ -81,6 +81,14 @@ Determine a velocidade e o deslocamento após $6\ \text{s}$.
 
 ![Cenário: carro saindo do semáforo ao longo do eixo S](assets/12_carro_semaforo.svg)
 
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/traffic_light_launch_example.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>O exemplo do carro saindo do semáforo combina aumento de velocidade com crescimento do deslocamento no mesmo intervalo.</figcaption>
+</figure>
+
 ### Antes da conta
 
 Aqui a informação-chave é:

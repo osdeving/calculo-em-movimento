@@ -11,6 +11,14 @@ $$
 > Aqui a lei horária do MU entra como hipótese de trabalho para enxergarmos o papel da derivada.  
 > A origem geométrica dessa expressão será construída na seção 9.
 
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/mu_derivative_bridge.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>No MU, derivar a reta de x(t) equivale a extrair sua inclinação constante, e isso reaparece como v(t).</figcaption>
+</figure>
+
 ## 6.1. O que esperamos encontrar
 
 Antes da conta, vale perguntar o que a física já sugere.

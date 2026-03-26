@@ -11,6 +11,14 @@ $$
 > Aqui a lei horária do MUV também entra primeiro como hipótese de trabalho.  
 > A construção geométrica dela aparece na seção 10, e a forma integral mínima aparece na seção 12.1.
 
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/muv_derivative_cascade.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>No MUV, a derivada desce um nível de complexidade: parábola em x(t), reta em v(t), constante em a(t).</figcaption>
+</figure>
+
 ## 7.1. O que esperamos da derivada
 
 No MUV:

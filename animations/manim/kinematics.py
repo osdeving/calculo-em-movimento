@@ -124,6 +124,23 @@ def make_car(scale_factor: float = 1.0) -> VGroup:
     return VGroup(body, cabin, windshield, wheel_left, wheel_right).scale(scale_factor)
 
 
+def make_traffic_light(scale_factor: float = 1.0) -> VGroup:
+    housing = RoundedRectangle(
+        corner_radius=0.12,
+        width=0.62,
+        height=1.72,
+        stroke_color=INK,
+        stroke_width=3,
+        fill_color=MUTED,
+        fill_opacity=1,
+    )
+    red = Circle(radius=0.12, stroke_width=0, fill_color="#d44f3a", fill_opacity=1).move_to(housing.get_top() + DOWN * 0.34)
+    yellow = Circle(radius=0.12, stroke_width=0, fill_color="#e2b44d", fill_opacity=1).move_to(housing.get_center())
+    green = Circle(radius=0.12, stroke_width=0, fill_color="#4f9d63", fill_opacity=1).move_to(housing.get_bottom() + UP * 0.34)
+    pole = Line(housing.get_bottom(), housing.get_bottom() + DOWN * 1.1, color=INK, stroke_width=5)
+    return VGroup(housing, red, yellow, green, pole).scale(scale_factor)
+
+
 def make_track(
     left_edge: float,
     right_edge: float,
@@ -692,5 +709,222 @@ class FormalIntegralBridgeScene(Scene):
         self.play(Create(v_curve), Create(a_line))
         self.play(FadeIn(v_area), FadeIn(a_area))
         self.play(FadeIn(top_box, shift=UP * 0.08), FadeIn(bottom_box, shift=UP * 0.08))
+        self.play(Indicate(v_area, color=HIGHLIGHT), Indicate(a_area, color=HIGHLIGHT))
+        self.wait(1.0)
+
+
+class UniformDerivativeBridgeScene(Scene):
+    def construct(self) -> None:
+        self.camera.background_color = PAPER
+
+        title = Text("MU: derivar a reta devolve sua inclinacao", font="DejaVu Serif", font_size=30, color=INK).to_edge(UP).shift(DOWN * 0.2)
+
+        left_group, left_axes = make_stage_axes(LEFT * 3.2 + DOWN * 0.15, "x(t)", [0, 5.8, 1], x_length=4.2, y_length=2.8)
+        right_group, right_axes = make_stage_axes(RIGHT * 3.2 + DOWN * 0.15, "v(t)", [0, 4.8, 1], x_length=4.2, y_length=2.8)
+
+        x_line = left_axes.plot(lambda t: 1.0 + 0.95 * t, x_range=[0, 4], color=HIGHLIGHT, stroke_width=5)
+        v_line = right_axes.plot(lambda t: 0.95, x_range=[0, 4], color=HIGHLIGHT, stroke_width=5)
+        bridge = Arrow(LEFT * 1.0, RIGHT * 1.0, buff=0.1, color=ACCENT, stroke_width=4).move_to(UP * 0.1)
+        bridge_label = Text("derivar", font="DejaVu Sans", font_size=22, color=ACCENT).next_to(bridge, UP, buff=0.08)
+        left_box = make_info_box("x(t) e reta", "inclinacao = v", font_size=22, highlight_last=True).next_to(left_group, DOWN, buff=0.35)
+        right_box = make_info_box("v(t) fica constante", "mesma inclinacao em todo ponto", font_size=20, highlight_last=True).next_to(right_group, DOWN, buff=0.35)
+
+        self.play(FadeIn(title, shift=DOWN * 0.08))
+        self.play(FadeIn(left_group), Create(x_line))
+        self.play(FadeIn(left_box, shift=UP * 0.08))
+        self.play(Create(bridge), FadeIn(bridge_label, shift=DOWN * 0.05))
+        self.play(FadeIn(right_group), Create(v_line))
+        self.play(FadeIn(right_box, shift=UP * 0.08))
+        self.play(Indicate(x_line, color=HIGHLIGHT), Indicate(v_line, color=HIGHLIGHT))
+        self.wait(1.0)
+
+
+class AcceleratedDerivativeCascadeScene(Scene):
+    def construct(self) -> None:
+        self.camera.background_color = PAPER
+
+        title = Text("MUV: a derivada cria uma cascata", font="DejaVu Serif", font_size=30, color=INK).to_edge(UP).shift(DOWN * 0.2)
+
+        centers = [LEFT * 4.4 + DOWN * 0.1, DOWN * 0.1, RIGHT * 4.4 + DOWN * 0.1]
+        panels = VGroup()
+        curves = VGroup()
+        boxes = VGroup()
+
+        specs = [
+            ("x(t)", [0, 6.4, 1], lambda t: 0.38 * t * t + 0.6 * t + 0.8, "quadratica"),
+            ("v(t)", [0, 5.2, 1], lambda t: 0.6 + 0.76 * t, "linear"),
+            ("a(t)", [0, 2.4, 1], lambda t: 0.76, "constante"),
+        ]
+
+        for center, (label, y_range, func, kind) in zip(centers, specs):
+            panel, axes = make_stage_axes(center, label, y_range, x_length=2.6, y_length=1.8)
+            graph = axes.plot(func, x_range=[0, 3], color=HIGHLIGHT, stroke_width=5)
+            box = make_badge(kind, font_size=20).next_to(panel, DOWN, buff=0.32)
+            panels.add(panel)
+            curves.add(graph)
+            boxes.add(box)
+
+        arrow_1 = Arrow(LEFT * 2.6 + UP * 0.1, LEFT * 1.6 + UP * 0.1, buff=0.08, color=ACCENT, stroke_width=4)
+        arrow_2 = Arrow(RIGHT * 1.6 + UP * 0.1, RIGHT * 2.6 + UP * 0.1, buff=0.08, color=ACCENT, stroke_width=4)
+        label_1 = Text("derivar", font="DejaVu Sans", font_size=20, color=ACCENT).next_to(arrow_1, UP, buff=0.06)
+        label_2 = Text("derivar", font="DejaVu Sans", font_size=20, color=ACCENT).next_to(arrow_2, UP, buff=0.06)
+        footer = make_info_box("x(t) -> v(t) -> a(t)", "cada derivada simplifica um nivel", font_size=21, highlight_last=True).to_edge(DOWN).shift(UP * 0.72)
+
+        self.play(FadeIn(title, shift=DOWN * 0.08))
+        for panel, graph, box in zip(panels, curves, boxes):
+            self.play(FadeIn(panel), Create(graph), FadeIn(box, shift=UP * 0.06))
+        self.play(Create(arrow_1), FadeIn(label_1), Create(arrow_2), FadeIn(label_2))
+        self.play(FadeIn(footer, shift=UP * 0.08))
+        self.play(Indicate(curves[0], color=HIGHLIGHT), Indicate(curves[1], color=HIGHLIGHT), Indicate(curves[2], color=HIGHLIGHT))
+        self.wait(1.0)
+
+
+class FundamentalTheoremKinematicsScene(Scene):
+    def construct(self) -> None:
+        self.camera.background_color = PAPER
+
+        title = Text("Derivar mede taxa, integrar recompõe acumulos", font="DejaVu Serif", font_size=29, color=INK).to_edge(UP).shift(DOWN * 0.2)
+
+        x_card = make_info_box("x(t)", "posicao", font_size=26, highlight_last=True).move_to(LEFT * 4.2 + UP * 0.2)
+        v_card = make_info_box("v(t)", "velocidade", font_size=26, highlight_last=True).move_to(UP * 0.2)
+        a_card = make_info_box("a(t)", "aceleracao", font_size=26, highlight_last=True).move_to(RIGHT * 4.2 + UP * 0.2)
+
+        dv_arrow = Arrow(x_card.get_right() + RIGHT * 0.12, v_card.get_left() + LEFT * 0.12, buff=0.08, color=ACCENT, stroke_width=4)
+        da_arrow = Arrow(v_card.get_right() + RIGHT * 0.12, a_card.get_left() + LEFT * 0.12, buff=0.08, color=ACCENT, stroke_width=4)
+        int_v_arrow = Arrow(a_card.get_bottom() + DOWN * 0.72, v_card.get_bottom() + DOWN * 0.72, buff=0.08, color=HIGHLIGHT, stroke_width=4)
+        int_x_arrow = Arrow(v_card.get_bottom() + DOWN * 0.72, x_card.get_bottom() + DOWN * 0.72, buff=0.08, color=HIGHLIGHT, stroke_width=4)
+
+        dv_label = Text("derivar", font="DejaVu Sans", font_size=20, color=ACCENT).next_to(dv_arrow, UP, buff=0.06)
+        da_label = Text("derivar", font="DejaVu Sans", font_size=20, color=ACCENT).next_to(da_arrow, UP, buff=0.06)
+        int_v_label = Text("integrar / acumular", font="DejaVu Sans", font_size=18, color=HIGHLIGHT).next_to(int_v_arrow, DOWN, buff=0.08)
+        int_x_label = Text("integrar / acumular", font="DejaVu Sans", font_size=18, color=HIGHLIGHT).next_to(int_x_arrow, DOWN, buff=0.08)
+
+        bottom_box = make_info_box(
+            "As setas de cima leem inclinacao.",
+            "As setas de baixo recompõem area e acumulo.",
+            font_size=21,
+            highlight_last=True,
+        ).to_edge(DOWN).shift(UP * 0.78)
+
+        self.play(FadeIn(title, shift=DOWN * 0.08))
+        self.play(FadeIn(x_card), FadeIn(v_card), FadeIn(a_card))
+        self.play(Create(dv_arrow), FadeIn(dv_label), Create(da_arrow), FadeIn(da_label))
+        self.play(Create(int_v_arrow), FadeIn(int_v_label), Create(int_x_arrow), FadeIn(int_x_label))
+        self.play(FadeIn(bottom_box, shift=UP * 0.08))
+        self.play(Indicate(v_card[1][1], color=HIGHLIGHT), Indicate(a_card[1][1], color=HIGHLIGHT))
+        self.wait(1.0)
+
+
+class FormulaMapOverviewScene(Scene):
+    def construct(self) -> None:
+        self.camera.background_color = PAPER
+
+        title = Text("MU e MUV como mapa de formulas e graficos", font="DejaVu Serif", font_size=29, color=INK).to_edge(UP).shift(DOWN * 0.2)
+
+        mu_card = make_info_box(
+            "MU",
+            "x = x0 + vt",
+            "v = constante",
+            font_size=24,
+            highlight_last=True,
+        ).move_to(LEFT * 3.4 + DOWN * 0.1)
+        muv_card = make_info_box(
+            "MUV",
+            "v = v0 + at",
+            "x = x0 + v0 t + (1/2) a t^2",
+            font_size=21,
+            highlight_last=True,
+        ).move_to(RIGHT * 3.4 + DOWN * 0.1)
+
+        mu_panel, mu_axes = make_stage_axes(LEFT * 3.4 + DOWN * 2.0, "x(t)", [0, 4.8, 1], x_length=3.2, y_length=1.8)
+        muv_panel, muv_axes = make_stage_axes(RIGHT * 3.4 + DOWN * 2.0, "x(t)", [0, 6.0, 1], x_length=3.2, y_length=1.8)
+        mu_graph = mu_axes.plot(lambda t: 0.9 + 0.8 * t, x_range=[0, 3], color=HIGHLIGHT, stroke_width=5)
+        muv_graph = muv_axes.plot(lambda t: 0.45 * t * t + 0.5, x_range=[0, 3], color=HIGHLIGHT, stroke_width=5)
+        footer = make_info_box(
+            "MU = reta e velocidade fixa.",
+            "MUV = curvatura na posicao e reta na velocidade.",
+            font_size=20,
+            highlight_last=True,
+        ).to_edge(DOWN).shift(UP * 0.62)
+
+        self.play(FadeIn(title, shift=DOWN * 0.08))
+        self.play(FadeIn(mu_card, shift=UP * 0.08), FadeIn(muv_card, shift=UP * 0.08))
+        self.play(FadeIn(mu_panel), Create(mu_graph), FadeIn(muv_panel), Create(muv_graph))
+        self.play(FadeIn(footer, shift=UP * 0.08))
+        self.play(Indicate(mu_graph, color=HIGHLIGHT), Indicate(muv_graph, color=HIGHLIGHT))
+        self.wait(1.0)
+
+
+class TrafficLightLaunchScene(Scene):
+    def construct(self) -> None:
+        self.camera.background_color = PAPER
+
+        title = Text("Exemplo: carro saindo do semaforo", font="DejaVu Serif", font_size=31, color=INK).to_edge(UP).shift(DOWN * 0.2)
+
+        track, axis_point = make_track(left_edge=5.6, right_edge=5.2, y=1.2, max_value=80)
+        axis, ticks, labels, axis_label = track
+        traffic_light = make_traffic_light(0.78).move_to(axis_point(2) + UP * 1.25 + LEFT * 0.9)
+
+        positions = [0, 13, 36, 69]
+        car = make_car(0.68).move_to(axis_point(positions[0]) + UP * 0.44)
+        markers = VGroup()
+        gap_tags = VGroup()
+        for index, value in enumerate(positions):
+            marker = Line(axis_point(value) + DOWN * 0.2, axis_point(value) + UP * 0.46, color=HIGHLIGHT, stroke_width=4)
+            tag = Text(f"t = {2*index} s", font="DejaVu Sans", font_size=18, color=INK).next_to(marker, UP, buff=0.08)
+            markers.add(VGroup(marker, tag))
+        for left, right, label in zip(positions, positions[1:], ["+13 m", "+23 m", "+33 m"]):
+            gap_tags.add(make_badge(label, font_size=20).move_to((axis_point(left) + axis_point(right)) / 2 + DOWN * 0.65))
+
+        info = make_info_box(
+            "v0 = 4 m/s",
+            "a = 2.5 m/s^2",
+            "apos 6 s: v = 19 m/s",
+            "Delta x = 69 m",
+            font_size=22,
+            highlight_last=True,
+        ).to_corner(UP + RIGHT).shift(DOWN * 0.95 + LEFT * 0.45)
+
+        self.play(FadeIn(title, shift=DOWN * 0.08))
+        self.play(Create(axis), FadeIn(axis_label), FadeIn(ticks), FadeIn(labels))
+        self.play(FadeIn(traffic_light, shift=DOWN * 0.1))
+        self.play(FadeIn(markers[0]), FadeIn(car, shift=LEFT * 0.08), FadeIn(info, shift=LEFT * 0.1))
+        for index, value in enumerate(positions[1:], start=1):
+            self.play(
+                car.animate.move_to(axis_point(value) + UP * 0.44),
+                FadeIn(markers[index]),
+                FadeIn(gap_tags[index - 1]),
+                run_time=0.85,
+                rate_func=linear,
+            )
+        self.play(Indicate(info[1][-1], color=HIGHLIGHT), Indicate(gap_tags[-1], color=HIGHLIGHT))
+        self.wait(1.0)
+
+
+class EngineeringGraphReadingScene(Scene):
+    def construct(self) -> None:
+        self.camera.background_color = PAPER
+
+        title = Text("Leitura de engenharia: valor, inclinacao e area", font="DejaVu Serif", font_size=29, color=INK).to_edge(UP).shift(DOWN * 0.2)
+
+        x_group, x_axes = make_stage_axes(LEFT * 4.1 + DOWN * 0.2, "x(t)", [0, 5.6, 1], x_length=2.8, y_length=2.0)
+        v_group, v_axes = make_stage_axes(DOWN * 0.2, "v(t)", [0, 5.6, 1], x_length=2.8, y_length=2.0)
+        a_group, a_axes = make_stage_axes(RIGHT * 4.1 + DOWN * 0.2, "a(t)", [0, 3.2, 1], x_length=2.8, y_length=2.0)
+
+        x_graph = x_axes.plot(lambda t: 0.8 + 0.9 * t, x_range=[0, 3], color=HIGHLIGHT, stroke_width=5)
+        v_graph = v_axes.plot(lambda t: 1.2 + 0.8 * t, x_range=[0, 3], color=HIGHLIGHT, stroke_width=5)
+        v_area = make_axis_polygon(v_axes, [(0, 0), (3, 0), (3, 3.6), (0, 1.2)], fill_color=ACCENT_SOFT, fill_opacity=0.3)
+        a_graph = a_axes.plot(lambda t: 1.5, x_range=[0, 3], color=HIGHLIGHT, stroke_width=5)
+        a_area = make_axis_polygon(a_axes, [(0, 0), (3, 0), (3, 1.5), (0, 1.5)], fill_color=SOFT_BLUE, fill_opacity=0.35, stroke_color=HIGHLIGHT)
+
+        x_box = make_info_box("no x(t):", "inclinacao = velocidade", font_size=18, highlight_last=True).next_to(x_group, DOWN, buff=0.3)
+        v_box = make_info_box("no v(t):", "valor = velocidade", "area = Delta x", font_size=18, highlight_last=True).next_to(v_group, DOWN, buff=0.3)
+        a_box = make_info_box("no a(t):", "valor = aceleracao", "area = Delta v", font_size=18, highlight_last=True).next_to(a_group, DOWN, buff=0.3)
+
+        self.play(FadeIn(title, shift=DOWN * 0.08))
+        self.play(FadeIn(x_group), Create(x_graph))
+        self.play(FadeIn(v_group), Create(v_graph), FadeIn(v_area))
+        self.play(FadeIn(a_group), Create(a_graph), FadeIn(a_area))
+        self.play(FadeIn(x_box, shift=UP * 0.06), FadeIn(v_box, shift=UP * 0.06), FadeIn(a_box, shift=UP * 0.06))
         self.play(Indicate(v_area, color=HIGHLIGHT), Indicate(a_area, color=HIGHLIGHT))
         self.wait(1.0)

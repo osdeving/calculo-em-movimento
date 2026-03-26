@@ -5,6 +5,14 @@ Em um curso formal de cálculo, existe um resultado central chamado **Teorema Fu
 Aqui não precisamos da forma mais abstrata desse teorema.  
 O que precisamos é da sua tradução física.
 
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/fundamental_theorem_kinematics.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>Derivar e integrar aparecem como rotas complementares entre posição, velocidade e aceleração.</figcaption>
+</figure>
+
 ## 13.1. A versão que importa para este livro
 
 Na linguagem da cinemática, ele aparece quase assim:
