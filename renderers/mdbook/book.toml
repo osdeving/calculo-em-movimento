@@ -1,0 +1,24 @@
+[book]
+title = "Cálculo em Movimento"
+authors = ["Willams Sousa"]
+description = "Limites, derivadas e integrais para entender a cinemática"
+language = "pt-BR"
+multilingual = false
+src = "../../content"
+
+[build]
+build-dir = "../../dist/book"
+create-missing = false
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "light"
+mathjax-support = true
+additional-css = ["theme/custom.css"]
+additional-js = ["theme/lab.js"]
+git-repository-url = "https://github.com/osdeving/calculo-em-movimento"
+edit-url-template = "https://github.com/osdeving/calculo-em-movimento/edit/main/{path}"
+
+[output.html.fold]
+enable = true
+level = 0

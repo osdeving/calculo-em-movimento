@@ -1,0 +1,151 @@
+:root {
+  --paper: #f6f1e6;
+  --paper-strong: #efe5d2;
+  --ink: #2a2926;
+  --muted: #665f56;
+  --rule: #d5c1a4;
+  --accent: #8b5e34;
+  --accent-soft: #d8c1a2;
+  --shadow: rgba(58, 44, 29, 0.12);
+}
+
+html.light {
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.7), transparent 40%),
+    linear-gradient(180deg, #ede3d2 0%, #e7dbc8 100%);
+}
+
+html.light body {
+  background: transparent;
+  color: var(--ink);
+  font-family: "Palatino Linotype", "Book Antiqua", "Iowan Old Style", Georgia, serif;
+}
+
+html.light .menu-bar,
+html.light .nav-chapters,
+html.light #sidebar,
+html.light .sidebar-scrollbox {
+  background: rgba(246, 241, 230, 0.92);
+}
+
+html.light .menu-title,
+html.light #sidebar a,
+html.light .nav-chapters,
+html.light .nav-chapters:hover {
+  color: var(--ink);
+}
+
+html.light .page-wrapper {
+  background: transparent;
+}
+
+html.light .content {
+  padding-top: 1.4rem;
+}
+
+html.light .content main {
+  max-width: 56rem;
+  margin: 0 auto 2.2rem;
+  padding: 2.3rem 3rem 3rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  box-shadow: 0 18px 50px var(--shadow);
+}
+
+html.light .content main h1,
+html.light .content main h2,
+html.light .content main h3 {
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+html.light .content main h1 {
+  margin-top: 2.7rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--rule);
+  position: relative;
+}
+
+html.light .content main h1::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 84px;
+  height: 3px;
+  background: var(--accent);
+}
+
+html.light .content main h2 {
+  margin-top: 1.9rem;
+}
+
+html.light .content main h3 {
+  color: var(--accent);
+}
+
+html.light .content main p,
+html.light .content main li,
+html.light .content main blockquote {
+  color: var(--ink);
+}
+
+html.light .content main blockquote {
+  margin: 1.2rem 0;
+  padding: 0.45rem 1rem;
+  border-left: 4px solid var(--accent-soft);
+  background: rgba(255, 255, 255, 0.35);
+  color: var(--muted);
+}
+
+html.light .content main hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 2.1rem 0;
+}
+
+html.light .content main a {
+  color: var(--accent);
+}
+
+.book-figure {
+  margin: 1.8rem auto;
+  padding: 0.9rem;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.book-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.book-figure figcaption {
+  margin-top: 0.7rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.book-lab-footer {
+  margin-top: 2.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 0.92rem;
+  display: flex;
+  gap: 0.8rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 960px) {
+  html.light .content main {
+    padding: 1.6rem 1.25rem 2rem;
+  }
+}
