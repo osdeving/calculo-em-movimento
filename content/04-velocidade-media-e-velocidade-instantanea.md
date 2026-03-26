@@ -66,6 +66,16 @@ Imagine um carro entre dois postes de medição:
 
 ![Cenário: carro entre dois postes de medição ao longo do eixo S](assets/10_postes_medicao.svg)
 
+Veja a mesma situação em movimento:
+
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/average_velocity_posts.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>Animação: o carro sai de x = 30 m em t = 2 s, chega a x = 66 m em t = 5 s e explicita Delta x, Delta t e v_med.</figcaption>
+</figure>
+
 Então:
 
 $$

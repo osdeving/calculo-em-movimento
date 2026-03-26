@@ -10,6 +10,11 @@ src = "../../content"
 build-dir = "../../dist/book"
 create-missing = false
 
+[preprocessor.math-dollar]
+command = "python3 scripts/mdbook_math_dollar.py"
+renderers = ["html"]
+after = ["links"]
+
 [output.html]
 default-theme = "light"
 preferred-dark-theme = "light"

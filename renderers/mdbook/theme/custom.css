@@ -125,11 +125,39 @@ html.light .content main a {
   background: #fff;
 }
 
+.book-figure video,
+.book-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  background: #ece1cf;
+  box-shadow: inset 0 0 0 1px rgba(102, 95, 86, 0.08);
+}
+
+.book-motion {
+  overflow: hidden;
+}
+
 .book-figure figcaption {
   margin-top: 0.7rem;
   text-align: center;
   color: var(--muted);
   font-size: 0.95rem;
+}
+
+.display-math {
+  margin: 1.1rem 0;
+  text-align: center;
+  overflow-x: auto;
+}
+
+.inline-math {
+  display: inline-block;
+}
+
+.display-math-inline {
+  display: inline-block;
 }
 
 .book-lab-footer {

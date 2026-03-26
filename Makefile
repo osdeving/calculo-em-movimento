@@ -1,14 +1,19 @@
-.PHONY: assets build serve serve-stop clean
+.PHONY: assets animations media build serve serve-stop clean
 
 BOOK_DIR := renderers/mdbook
 
 assets:
 	python3 scripts/generate_scene_assets.py
 
-build: assets
+animations:
+	python3 scripts/render_manim_assets.py
+
+media: assets animations
+
+build: media
 	mdbook build $(BOOK_DIR)
 
-serve: assets
+serve: media
 	python3 scripts/serve_mdbook.py
 
 serve-stop:
