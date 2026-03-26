@@ -1,6 +1,10 @@
 # 22. Folha de consulta compacta
 
+Este capítulo é propositalmente mais compacto.  
+Ele serve como folha de consulta rápida depois que os capítulos anteriores já foram estudados.
+
 ## MU
+
 $$
 x = x_0 + vt
 $$
@@ -10,6 +14,7 @@ $$
 - área em $v \times t$: deslocamento
 
 ## MUV
+
 $$
 v = v_0 + at
 $$
@@ -35,6 +40,7 @@ $$
 - gráfico $x \times t$: parábola
 
 ## Relações de cálculo
+
 $$
 v = \frac{dx}{dt}
 $$
@@ -50,5 +56,14 @@ $$
 $$
 \Delta v = \int a(t)\,dt
 $$
+
+## Como usar esta folha
+
+Ela não foi feita para ser lida isoladamente na primeira vez.  
+Ela funciona melhor como revisão:
+
+- antes de uma lista
+- durante resolução de exercícios
+- na hora de checar se a fórmula escolhida combina com o tipo de movimento
 
 ---

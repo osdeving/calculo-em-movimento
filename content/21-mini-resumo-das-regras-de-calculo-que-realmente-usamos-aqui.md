@@ -1,6 +1,10 @@
 # 21. Mini-resumo das regras de cálculo que realmente usamos aqui
 
-## Derivadas
+Este capítulo é uma folha de apoio.  
+Não substitui a leitura dos capítulos anteriores, mas ajuda a revisar rapidamente o que foi usado de fato.
+
+## 21.1. Derivadas
+
 $$
 \frac{d}{dt}(c)=0
 $$
@@ -17,7 +21,14 @@ $$
 \frac{d}{dt}[f(t)+g(t)] = f'(t)+g'(t)
 $$
 
-## Integrais
+### Leitura útil
+
+- constante deriva em zero
+- termo linear deriva em constante
+- termo quadrático deriva em termo linear
+
+## 21.2. Integrais
+
 $$
 \int c\,dt = ct + C
 $$
@@ -30,7 +41,14 @@ $$
 \int [f(t)+g(t)]\,dt = \int f(t)\,dt + \int g(t)\,dt
 $$
 
-## Tradução para a cinemática
+### Leitura útil
+
+- integrar constante produz termo linear
+- integrar termo linear produz termo quadrático
+- integrar soma permite acumular pedaço por pedaço
+
+## 21.3. Tradução para a cinemática
+
 $$
 v = \frac{dx}{dt}
 $$
@@ -47,7 +65,11 @@ $$
 \Delta v = \int a(t)\,dt
 $$
 
-> Dito isso, é possível usar várias outras regras práticas de cálculo.  
-> **Mas, na cinemática básica, especialmente em velocidade, MU e MUV, esse conjunto já leva você às fórmulas clássicas do ensino médio sem sofrimento desnecessário.**
+## 21.4. O mínimo operacional
+
+Na cinemática básica, especialmente em MU e MUV, esse conjunto já leva você às fórmulas clássicas sem sofrimento desnecessário.
+
+Se o curso avançar para funções mais complicadas, outras regras entram em cena.  
+Mas, para este livro, esse resumo cobre o essencial.
 
 ---

@@ -1,31 +1,112 @@
 # 2. As três funções da cinemática
 
-Na engenharia e na física, quase sempre pensamos em três funções do tempo:
+Na engenharia e na física, o movimento costuma ser descrito por três funções do tempo:
 
 $$
 x = x(t), \qquad v = v(t), \qquad a = a(t)
 $$
 
-onde:
+Essas três escritas parecem simples, mas organizam praticamente todo o livro.
 
-- $x(t)$ é a posição
-- $v(t)$ é a velocidade
-- $a(t)$ é a aceleração
+Se a leitura de função ainda estiver enferrujada, este é um bom momento para consultar o [Apêndice A, seções A.1 e A.2](26-apendice-a-retas-graficos-e-funcoes.md).
 
-## 2.1. Como ler isso fisicamente?
+## 2.1. O que significa escrever $x(t)$
 
-Quando você escreve $x(t)$, está dizendo:
+Quando escrevemos $x(t)$, estamos dizendo:
 
-> “a posição depende do tempo”.
+> a posição depende do tempo
 
-Quando escreve $v(t)$:
+Isso quer dizer que:
 
-> “a velocidade depende do tempo”.
+- para cada instante $t$, existe uma posição associada
+- se o tempo muda, a posição pode mudar
 
-E quando escreve $a(t)$:
+Por exemplo, se um carrinho anda para a frente, então a posição que ele ocupa em $t=1$ s não precisa ser a mesma que ocupa em $t=4$ s.
 
-> “a aceleração depende do tempo”.
+Em outras palavras, o tempo é a entrada da função, e a posição é a saída.
 
-Isso permite descrever desde uma esteira industrial em velocidade constante até um carro arrancando no semáforo.
+## 2.2. O mesmo vale para velocidade e aceleração
+
+Quando escrevemos $v(t)$:
+
+> a velocidade depende do tempo
+
+Quando escrevemos $a(t)$:
+
+> a aceleração depende do tempo
+
+Isso nos permite representar vários cenários:
+
+- velocidade constante
+- velocidade aumentando
+- velocidade diminuindo
+- aceleração nula
+- aceleração constante
+
+Ou seja, em vez de pensar o movimento como uma frase solta, começamos a pensá-lo como um sistema de relações entre grandezas.
+
+## 2.3. A hierarquia física entre as três funções
+
+Essas funções não vivem isoladas.
+
+Há uma ordem natural entre elas:
+
+- a posição diz **onde** o corpo está
+- a velocidade diz **como a posição está mudando**
+- a aceleração diz **como a velocidade está mudando**
+
+Em forma de leitura:
+
+- da posição nasce a pergunta sobre velocidade
+- da velocidade nasce a pergunta sobre aceleração
+
+Mais adiante, vamos traduzir isso por derivadas:
+
+$$
+v(t) = \frac{dx}{dt}
+$$
+
+$$
+a(t) = \frac{dv}{dt}
+$$
+
+Mas, por enquanto, o importante é sentir a cadeia física antes da cadeia simbólica.
+
+## 2.4. Uma imagem mental que ajuda muito
+
+Imagine um carro numa estrada reta.
+
+A posição responde:
+
+> “em que ponto da estrada ele está?”
+
+A velocidade responde:
+
+> “com que rapidez esse ponto está mudando?”
+
+A aceleração responde:
+
+> “com que rapidez a própria velocidade está mudando?”
+
+Se o carro mantém a mesma velocidade, a aceleração é zero.  
+Se o carro pisa no acelerador, a velocidade passa a variar e a aceleração deixa de ser zero.
+
+## 2.5. O que este capítulo prepara
+
+Nos próximos passos do livro, vamos olhar essas três grandezas de dois jeitos:
+
+- por fórmulas
+- por gráficos
+
+Essa dupla de leitura é decisiva.
+
+Uma boa prática, desde já, é nunca olhar apenas a equação.  
+Tente sempre perguntar:
+
+- que grandeza está sendo descrita?
+- como ela depende do tempo?
+- como isso apareceria num gráfico?
+
+É essa atitude que transforma cálculo em ferramenta de interpretação, e não só em conta.
 
 ---
