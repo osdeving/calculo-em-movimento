@@ -1,8 +1,8 @@
 # Summary
 
-- [Apresentação](index.md)
-- [Como usar](como-usar.md)
-- [Plano de ação](plano-de-acao.md)
+- [capa](capa.md)
+- [Prefácio](prefacio.md)
+- [Introdução](index.md)
 - [1. A ideia central: cálculo, na cinemática, é sobre duas perguntas](01-a-ideia-central-calculo-na-cinematica-e-sobre-duas-perguntas.md)
 - [2. As três funções da cinemática](02-as-tres-funcoes-da-cinematica.md)
 - [3. MU e MUV vistos pelos gráficos](03-mu-e-muv-vistos-pelos-graficos.md)

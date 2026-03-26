@@ -13,8 +13,9 @@ SUMMARY_PATH = CONTENT_ROOT / "SUMMARY.md"
 REFERENCE_ROOT = CONTENT_ROOT / "references"
 GLOSSARY_SOURCE = CONTENT_ROOT / "reference_data" / "glossary.json"
 THEME_GLOSSARY_JS = REPO_ROOT / "renderers" / "mdbook" / "theme" / "generated_glossary.js"
-CONTENT_SKIP_FILES = {"index.md", "como-usar.md", "plano-de-acao.md"}
+CONTENT_SKIP_FILES = {"capa.md", "index.md", "como-usar.md", "plano-de-acao.md"}
 REMISSIVE_SKIP_FILES = {
+    "capa.md",
     "index.md",
     "como-usar.md",
     "plano-de-acao.md",

@@ -216,6 +216,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const main = document.querySelector(".content main");
   if (!main) return;
 
+  const hasCoverFigure = !!main.querySelector(".cover-page-figure");
+  if (hasCoverFigure) {
+    main.classList.add("cover-page");
+  }
+
   const mathTargets = [];
   main.querySelectorAll("[data-math-inline]").forEach((node) => {
     const expr = node.getAttribute("data-math-inline");
@@ -253,7 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
   applyEditorialMediaLabels(main);
   autoLinkGlossaryTerms(main);
 
-  if (!main.querySelector(".book-lab-footer")) {
+  if (!main.querySelector(".book-lab-footer") && !main.querySelector(".book-cover-only") && !hasCoverFigure) {
     const footer = document.createElement("footer");
     footer.className = "book-lab-footer";
     footer.innerHTML = [

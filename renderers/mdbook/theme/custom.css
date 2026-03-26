@@ -112,6 +112,175 @@ html.light .content main a {
   color: var(--accent);
 }
 
+html.light .content main.cover-page {
+  max-width: none;
+  min-height: calc(100vh - 6.5rem);
+  margin: 0 auto;
+  padding: 0.35rem 0 0.85rem;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.cover-page-figure {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.cover-page-figure > img {
+  display: block;
+  width: min(94vw, 820px);
+  max-width: 100%;
+  height: auto;
+  max-height: calc(100vh - 6.5rem);
+  object-fit: contain;
+  background: transparent;
+}
+
+.book-cover {
+  margin: -2.3rem -3rem 2.4rem;
+  padding: 3.2rem 3rem 2.8rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+  gap: 2rem;
+  align-items: center;
+  background:
+    radial-gradient(circle at top right, rgba(244, 212, 151, 0.18), transparent 28%),
+    radial-gradient(circle at left 20%, rgba(142, 182, 217, 0.14), transparent 24%),
+    linear-gradient(135deg, #1a2836 0%, #23384c 45%, #16222f 100%);
+  color: #f3ede3;
+  border-bottom: 1px solid rgba(216, 193, 162, 0.28);
+}
+
+.book-cover-head {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-bottom: 0.9rem;
+}
+
+.book-cover-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.book-cover-kicker {
+  margin: 0 0 0.8rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #d6c2a5;
+}
+
+html.light .content main .book-cover h1 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: #fff7ea;
+  font-family: Baskerville, "Palatino Linotype", "Book Antiqua", "Iowan Old Style", Georgia, serif;
+  font-size: clamp(2.7rem, 4.5vw, 4.9rem);
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+html.light .content main .book-cover h1::before {
+  display: none;
+}
+
+.book-cover-subtitle {
+  margin: 0.9rem 0 0;
+  font-size: 1.03rem;
+  color: #f2ddbc;
+  max-width: 34rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.book-cover-author {
+  margin: 0.7rem 0 0;
+  font-family: Baskerville, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: 1.08rem;
+  letter-spacing: 0.01em;
+  color: #bfd6e7;
+  font-style: italic;
+}
+
+.book-cover-quote {
+  margin: 1.5rem 0 1rem;
+  max-width: 31rem;
+  padding: 0.85rem 1rem;
+  border-left: 4px solid rgba(239, 229, 210, 0.55);
+  background: rgba(255, 255, 255, 0.06);
+  color: #f7f1e6;
+  font-style: italic;
+}
+
+.book-cover-lead {
+  max-width: 32rem;
+  color: #d9e5ef;
+}
+
+.book-cover-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 1.35rem 0 0;
+}
+
+.book-cover-tags span {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgba(216, 193, 162, 0.3);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f1e6d6;
+  font-size: 0.88rem;
+}
+
+.book-cover-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1.45rem;
+}
+
+html.light .content main .book-cover-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.7rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(216, 193, 162, 0.45);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff7ea;
+  text-decoration: none;
+}
+
+html.light .content main .book-cover-actions a:hover,
+html.light .content main .book-cover-actions a:focus-visible {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(216, 193, 162, 0.75);
+}
+
+.book-cover-art {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.book-cover-art > img:first-child {
+  display: block;
+  width: min(100%, 27rem);
+  height: auto;
+  border-radius: 1.4rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.34);
+  background: transparent;
+}
+
 .book-figure {
   margin: 1.8rem auto;
   padding: 0.9rem;
@@ -199,6 +368,26 @@ html.light .content main a.glossary-term:focus-visible {
 }
 
 @media (max-width: 960px) {
+  html.light .content main.cover-page {
+    min-height: auto;
+    padding-top: 0.2rem;
+  }
+
+  .cover-page-figure > img {
+    width: min(96vw, 640px);
+    max-height: none;
+  }
+
+  .book-cover {
+    margin: -1.6rem -1.25rem 2rem;
+    padding: 2.3rem 1.25rem 2rem;
+    grid-template-columns: 1fr;
+  }
+
+  .book-cover-art {
+    order: -1;
+  }
+
   html.light .content main {
     padding: 1.6rem 1.25rem 2rem;
   }
