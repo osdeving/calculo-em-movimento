@@ -36,6 +36,14 @@ Primeiro podemos pensar em figuras simples:
 
 Depois, quando a situação ficar mais geral, escrevemos isso com o símbolo de integral.
 
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/integral_accumulation_overview.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>A integral nasce da ideia de somar pequenas contribuições ao longo do intervalo até formar o deslocamento total.</figcaption>
+</figure>
+
 ## 8.3. Por que “área” faz sentido aqui
 
 No gráfico $v \times t$:

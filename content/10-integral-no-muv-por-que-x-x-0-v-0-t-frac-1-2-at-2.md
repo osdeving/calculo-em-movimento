@@ -1,6 +1,12 @@
-# 10. Integral no MUV: por que x = x0 + v0t + (1/2)at^2?
+# 10. Integral no MUV: como a área vira equação horária
 
 Aqui está uma das passagens mais bonitas do livro.
+
+A pergunta-guia deste capítulo é esta: por que, no MUV, a posição pode ser escrita como
+
+$$
+x = x_0 + v_0 t + \frac{1}{2}at^2
+$$
 
 No MUV, a velocidade varia linearmente com o tempo:
 
@@ -10,6 +16,14 @@ $$
 
 > Se você quiser a origem dessa reta de velocidade partindo de $a(t)=a$, ela será construída na seção 12.2.  
 > Aqui vamos usá-la como entrada geométrica para montar a área sob o gráfico $v \times t$.
+
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/muv_area_decomposition.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>No MUV, a área sob v × t se separa em retângulo e triângulo, e os dois pedaços explicam a fórmula da posição.</figcaption>
+</figure>
 
 ## 10.1. O que queremos descobrir
 

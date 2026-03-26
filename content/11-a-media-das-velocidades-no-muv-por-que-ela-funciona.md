@@ -10,6 +10,14 @@ A resposta curta é:
 
 Mas vale desenvolver isso com mais calma.
 
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/muv_average_velocity.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>No MUV, o trapézio sob o gráfico pode ser reescrito como um retângulo de mesma base e altura média.</figcaption>
+</figure>
+
 ## 11.1. O que significa tirar a média aqui
 
 No MUV, a velocidade não fica fixa.  

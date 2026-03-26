@@ -20,6 +20,14 @@ Estamos perguntando:
 
 > “qual é o ritmo local de mudança desta grandeza?”
 
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/derivative_rules_overview.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>O formato de x(t) já antecipa o formato de v(t): constante vira zero, reta vira constante, curva quadrática vira reta.</figcaption>
+</figure>
+
 ## 5.2. Regra 1: derivada de constante
 
 Se $c$ é constante,

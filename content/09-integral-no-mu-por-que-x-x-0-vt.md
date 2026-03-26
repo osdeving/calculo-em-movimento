@@ -1,6 +1,12 @@
-# 9. Integral no MU: por que x = x0 + vt?
+# 9. Integral no MU: como a área vira posição
 
 Chegou a hora de justificar geometricamente a fórmula clássica do MU.
+
+A pergunta-guia deste capítulo é a seguinte: por que, no movimento uniforme, a posição pode ser escrita como
+
+$$
+x = x_0 + vt
+$$
 
 No movimento uniforme, a velocidade é constante:
 
@@ -9,6 +15,14 @@ v(t)=v
 $$
 
 Isso significa que o gráfico $v \times t$ é uma linha horizontal.
+
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/mu_area_rectangle.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>No MU, o gráfico v × t forma um retângulo; sua área entrega o deslocamento e recoloca a posição em x = x₀ + vt.</figcaption>
+</figure>
 
 ## 9.1. O que queremos descobrir
 

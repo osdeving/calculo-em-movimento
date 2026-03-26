@@ -7,6 +7,14 @@ Até aqui, já usamos bastante a leitura geométrica da integral:
 
 Agora vamos escrever essa ideia na linguagem formal mínima da integral, mas sem perder o fio físico.
 
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/integral_formal_bridge.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>A notação integral compacta a mesma leitura geométrica: acumular velocidade produz deslocamento, acumular aceleração produz variação de velocidade.</figcaption>
+</figure>
+
 ## 12.1. Deslocamento a partir da velocidade
 
 A regra geral é:

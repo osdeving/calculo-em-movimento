@@ -17,6 +17,7 @@ from manim import (
     Polygon,
     RIGHT,
     RoundedRectangle,
+    Rectangle,
     Scene,
     Text,
     Transform,
@@ -163,6 +164,44 @@ def make_graph_axes(center, label: str, y_range: list[float]) -> tuple[VGroup, A
     title = Text(label, font="DejaVu Sans", font_size=20, color=INK).next_to(axes, UP, buff=0.05)
     t_label = Text("t", font="DejaVu Sans", font_size=18, color=MUTED).next_to(axes, RIGHT, buff=0.08)
     return VGroup(axes, title, t_label), axes
+
+
+def make_stage_axes(
+    center,
+    y_label_text: str,
+    y_range: list[float],
+    x_range: list[float] | None = None,
+    x_length: float = 4.6,
+    y_length: float = 2.7,
+) -> tuple[VGroup, Axes]:
+    axes = Axes(
+        x_range=x_range or [0, 4.2, 1],
+        y_range=y_range,
+        x_length=x_length,
+        y_length=y_length,
+        tips=False,
+        axis_config={"color": ACCENT, "stroke_width": 3},
+    ).move_to(center)
+    x_label = Text("t", font="DejaVu Sans", font_size=20, color=MUTED).next_to(axes, RIGHT, buff=0.08)
+    y_label = Text(y_label_text, font="DejaVu Sans", font_size=20, color=MUTED).next_to(axes, UP + LEFT, buff=0.1)
+    return VGroup(axes, x_label, y_label), axes
+
+
+def make_axis_polygon(
+    axes: Axes,
+    points: list[tuple[float, float]],
+    fill_color: str = ACCENT_SOFT,
+    fill_opacity: float = 0.35,
+    stroke_color: str = ACCENT,
+    stroke_width: float = 3,
+) -> Polygon:
+    return Polygon(
+        *[axes.c2p(x, y) for x, y in points],
+        fill_color=fill_color,
+        fill_opacity=fill_opacity,
+        stroke_color=stroke_color,
+        stroke_width=stroke_width,
+    )
 
 
 class AverageVelocityPostsScene(Scene):
@@ -420,4 +459,238 @@ class SecantToTangentScene(Scene):
         self.play(h.animate.set_value(0.12), run_time=1.3, rate_func=smooth)
         self.play(Create(tangent), FadeIn(final_box, shift=RIGHT * 0.12))
         self.play(Indicate(tangent, color=HIGHLIGHT))
+        self.wait(1.0)
+
+
+class DerivativeRulesScene(Scene):
+    def construct(self) -> None:
+        self.camera.background_color = PAPER
+
+        title = Text("Derivada: o formato ja entrega a resposta", font="DejaVu Serif", font_size=30, color=INK).to_edge(UP).shift(DOWN * 0.2)
+        subtitle = Text(
+            "Constante vira zero, reta vira constante, parabola vira reta.",
+            font="DejaVu Sans",
+            font_size=20,
+            color=MUTED,
+        ).next_to(title, DOWN, buff=0.12)
+
+        centers = [LEFT * 4.4 + DOWN * 0.15, DOWN * 0.15, RIGHT * 4.4 + DOWN * 0.15]
+        panels = VGroup()
+        curves = VGroup()
+        cards = VGroup()
+
+        specs = [
+            ("x(t)", [0, 3.6, 1], lambda t: 2.2, "v(t) = 0"),
+            ("x(t)", [0, 4.6, 1], lambda t: 0.9 + 0.8 * t, "v(t) = constante"),
+            ("x(t)", [0, 6.6, 1], lambda t: 0.45 * t * t + 0.5, "v(t) = reta"),
+        ]
+
+        for center, (label, y_range, func, card_text) in zip(centers, specs):
+            panel, axes = make_stage_axes(center, label, y_range, x_length=2.6, y_length=1.8)
+            graph = axes.plot(func, x_range=[0, 3], color=HIGHLIGHT, stroke_width=5)
+            card = make_info_box(card_text, font_size=22, highlight_last=True).scale(0.86).next_to(panel, DOWN, buff=0.35)
+            panels.add(panel)
+            curves.add(graph)
+            cards.add(card)
+
+        self.play(FadeIn(title, shift=DOWN * 0.08), FadeIn(subtitle, shift=DOWN * 0.08))
+        for panel, graph, card in zip(panels, curves, cards):
+            self.play(FadeIn(panel), Create(graph))
+            self.play(FadeIn(card, shift=UP * 0.08))
+        self.play(Indicate(curves[1], color=HIGHLIGHT), Indicate(cards[1][1][0], color=HIGHLIGHT))
+        self.play(Indicate(curves[2], color=HIGHLIGHT), Indicate(cards[2][1][0], color=HIGHLIGHT))
+        self.wait(1.0)
+
+
+class IntegralAccumulationScene(Scene):
+    def construct(self) -> None:
+        self.camera.background_color = PAPER
+
+        title = Text("Integral: somar pequenas contribuicoes", font="DejaVu Serif", font_size=31, color=INK).to_edge(UP).shift(DOWN * 0.2)
+
+        axes_group, axes = make_stage_axes(LEFT * 1.6 + DOWN * 0.2, "v(t)", [0, 5.5, 1], x_length=6.2, y_length=3.1)
+        curve = axes.plot(lambda t: 1.0 + 0.7 * t, x_range=[0, 4], color=HIGHLIGHT, stroke_width=5)
+
+        dx = 0.55
+        rects = VGroup()
+        for index in range(7):
+            x0 = index * dx
+            height = 1.0 + 0.7 * x0
+            width = axes.c2p(x0 + dx, 0)[0] - axes.c2p(x0, 0)[0]
+            rect = Rectangle(
+                width=width,
+                height=axes.c2p(0, height)[1] - axes.c2p(0, 0)[1],
+                stroke_color=ACCENT,
+                stroke_width=2,
+                fill_color=ACCENT_SOFT,
+                fill_opacity=0.35,
+            )
+            rect.move_to((axes.c2p(x0, 0) + axes.c2p(x0 + dx, height)) / 2)
+            rects.add(rect)
+
+        message = make_info_box(
+            "Acumular no tempo =",
+            "somar muitas pequenas",
+            "contribuicoes de area.",
+            "No fim, aparece Delta x.",
+            font_size=22,
+            highlight_last=True,
+        ).to_corner(UP + RIGHT).shift(DOWN * 1.0 + LEFT * 0.4)
+
+        self.play(FadeIn(title, shift=DOWN * 0.08))
+        self.play(FadeIn(axes_group))
+        self.play(Create(curve))
+        self.play(FadeIn(rects))
+        self.play(FadeIn(message, shift=LEFT * 0.1))
+        self.play(Indicate(rects, color=HIGHLIGHT))
+        self.wait(1.0)
+
+
+class UniformAreaRectangleScene(Scene):
+    def construct(self) -> None:
+        self.camera.background_color = PAPER
+
+        title = Text("MU: a area do retangulo explica a formula", font="DejaVu Serif", font_size=30, color=INK).to_edge(UP).shift(DOWN * 0.2)
+
+        axes_group, axes = make_stage_axes(DOWN * 0.15, "v(t)", [0, 4.6, 1], x_length=6.3, y_length=3.2)
+        v_line = axes.plot(lambda t: 3.0, x_range=[0, 4], color=HIGHLIGHT, stroke_width=5)
+        area = make_axis_polygon(axes, [(0, 0), (4, 0), (4, 3), (0, 3)])
+
+        base_badge = make_badge("base = t", font_size=22).move_to(axes.c2p(2.0, -0.55))
+        height_badge = make_badge("altura = v", font_size=22).move_to(axes.c2p(-0.45, 1.55))
+        formula = make_info_box(
+            "Delta x = area",
+            "Delta x = v * t",
+            "x = x0 + vt",
+            font_size=22,
+            highlight_last=True,
+        ).to_corner(UP + RIGHT).shift(DOWN * 0.95 + LEFT * 0.45)
+
+        self.play(FadeIn(title, shift=DOWN * 0.08))
+        self.play(FadeIn(axes_group))
+        self.play(Create(v_line))
+        self.play(FadeIn(area))
+        self.play(FadeIn(base_badge), FadeIn(height_badge))
+        self.play(FadeIn(formula, shift=LEFT * 0.1))
+        self.play(Indicate(formula[1][-1], color=HIGHLIGHT))
+        self.wait(1.0)
+
+
+class AcceleratedAreaDecompositionScene(Scene):
+    def construct(self) -> None:
+        self.camera.background_color = PAPER
+
+        title = Text("MUV: o trapezio se divide em duas partes", font="DejaVu Serif", font_size=30, color=INK).to_edge(UP).shift(DOWN * 0.2)
+
+        axes_group, axes = make_stage_axes(DOWN * 0.12, "v(t)", [0, 5.8, 1], x_length=6.3, y_length=3.2)
+        v_line = axes.plot(lambda t: 1.2 + 0.8 * t, x_range=[0, 4], color=HIGHLIGHT, stroke_width=5)
+        rect = make_axis_polygon(axes, [(0, 0), (4, 0), (4, 1.2), (0, 1.2)])
+        tri = make_axis_polygon(
+            axes,
+            [(0, 1.2), (4, 1.2), (4, 4.4)],
+            fill_color=SOFT_BLUE,
+            stroke_color=HIGHLIGHT,
+            fill_opacity=0.45,
+        )
+
+        v0_tag = make_badge("v0", font_size=20).move_to(axes.c2p(-0.25, 1.2))
+        top_tag = make_badge("v0 + at", font_size=20).move_to(axes.c2p(4.35, 4.4))
+        formula = make_info_box(
+            "A1 = v0 * t",
+            "A2 = (1/2) * a * t^2",
+            "x = x0 + A1 + A2",
+            font_size=22,
+            highlight_last=True,
+        ).to_corner(UP + RIGHT).shift(DOWN * 0.92 + LEFT * 0.42)
+
+        self.play(FadeIn(title, shift=DOWN * 0.08))
+        self.play(FadeIn(axes_group))
+        self.play(Create(v_line))
+        self.play(FadeIn(v0_tag), FadeIn(top_tag))
+        self.play(FadeIn(rect))
+        self.play(FadeIn(tri))
+        self.play(FadeIn(formula, shift=LEFT * 0.1))
+        self.play(Indicate(tri, color=HIGHLIGHT), Indicate(formula[1][-1], color=HIGHLIGHT))
+        self.wait(1.0)
+
+
+class AverageVelocityAreaScene(Scene):
+    def construct(self) -> None:
+        self.camera.background_color = PAPER
+
+        title = Text("MUV: o trapezio vira um retangulo medio", font="DejaVu Serif", font_size=30, color=INK).to_edge(UP).shift(DOWN * 0.2)
+
+        left_group, left_axes = make_stage_axes(LEFT * 3.2 + DOWN * 0.15, "v(t)", [0, 5.8, 1], x_length=4.2, y_length=2.8)
+        right_group, right_axes = make_stage_axes(RIGHT * 3.2 + DOWN * 0.15, "v(t)", [0, 5.8, 1], x_length=4.2, y_length=2.8)
+
+        trap = make_axis_polygon(left_axes, [(0, 0), (4, 0), (4, 4.4), (0, 1.2)])
+        top_line = left_axes.plot(lambda t: 1.2 + 0.8 * t, x_range=[0, 4], color=HIGHLIGHT, stroke_width=5)
+        rect = make_axis_polygon(
+            right_axes,
+            [(0, 0), (4, 0), (4, 2.8), (0, 2.8)],
+            fill_color=SOFT_BLUE,
+            stroke_color=HIGHLIGHT,
+            fill_opacity=0.45,
+        )
+
+        avg_line = right_axes.plot(lambda t: 2.8, x_range=[0, 4], color=HIGHLIGHT, stroke_width=5)
+        left_tag = make_badge("mesma base t", font_size=20).move_to(left_axes.c2p(2.0, -0.52))
+        right_tag = make_badge("altura = v_med", font_size=20).move_to(right_axes.c2p(2.0, 3.5))
+        formula = make_info_box(
+            "Mesma area total",
+            "Delta x = v_med * t",
+            "v_med = (v0 + v) / 2",
+            font_size=22,
+            highlight_last=True,
+        ).to_edge(DOWN).shift(UP * 0.72)
+
+        self.play(FadeIn(title, shift=DOWN * 0.08))
+        self.play(FadeIn(left_group), FadeIn(right_group))
+        self.play(FadeIn(trap), Create(top_line))
+        self.play(FadeIn(rect), Create(avg_line))
+        self.play(FadeIn(left_tag), FadeIn(right_tag))
+        self.play(FadeIn(formula, shift=UP * 0.08))
+        self.play(Indicate(rect, color=HIGHLIGHT), Indicate(formula[1][-1], color=HIGHLIGHT))
+        self.wait(1.0)
+
+
+class FormalIntegralBridgeScene(Scene):
+    def construct(self) -> None:
+        self.camera.background_color = PAPER
+
+        title = Text("Integral formal: mesma ideia, notacao mais compacta", font="DejaVu Serif", font_size=29, color=INK).to_edge(UP).shift(DOWN * 0.2)
+
+        top_group, top_axes = make_stage_axes(LEFT * 3.0 + DOWN * 0.1, "v(t)", [0, 5.6, 1], x_length=4.4, y_length=2.8)
+        bottom_group, bottom_axes = make_stage_axes(RIGHT * 3.0 + DOWN * 0.1, "a(t)", [0, 3.6, 1], x_length=4.4, y_length=2.8)
+
+        v_curve = top_axes.plot(lambda t: 1.0 + 0.9 * t, x_range=[0, 4], color=HIGHLIGHT, stroke_width=5)
+        v_area = make_axis_polygon(top_axes, [(0, 0), (4, 0), (4, 4.6), (0, 1.0)])
+        a_line = bottom_axes.plot(lambda t: 2.0, x_range=[0, 4], color=HIGHLIGHT, stroke_width=5)
+        a_area = make_axis_polygon(
+            bottom_axes,
+            [(0, 0), (4, 0), (4, 2.0), (0, 2.0)],
+            fill_color=SOFT_BLUE,
+            stroke_color=HIGHLIGHT,
+            fill_opacity=0.45,
+        )
+
+        top_box = make_info_box(
+            "Acumular v(t) no intervalo",
+            "produz Delta x.",
+            font_size=21,
+            highlight_last=True,
+        ).next_to(top_group, DOWN, buff=0.38)
+        bottom_box = make_info_box(
+            "Acumular a(t) no intervalo",
+            "produz Delta v.",
+            font_size=21,
+            highlight_last=True,
+        ).next_to(bottom_group, DOWN, buff=0.38)
+
+        self.play(FadeIn(title, shift=DOWN * 0.08))
+        self.play(FadeIn(top_group), FadeIn(bottom_group))
+        self.play(Create(v_curve), Create(a_line))
+        self.play(FadeIn(v_area), FadeIn(a_area))
+        self.play(FadeIn(top_box, shift=UP * 0.08), FadeIn(bottom_box, shift=UP * 0.08))
+        self.play(Indicate(v_area, color=HIGHLIGHT), Indicate(a_area, color=HIGHLIGHT))
         self.wait(1.0)
