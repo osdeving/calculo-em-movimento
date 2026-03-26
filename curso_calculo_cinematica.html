@@ -1,0 +1,1677 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Curso de Cálculo para Cinemática</title>
+  <style>
+
+    :root {
+      --paper: #f6f1e6;
+      --paper-strong: #efe5d2;
+      --ink: #2a2926;
+      --muted: #665f56;
+      --rule: #d5c1a4;
+      --accent: #8b5e34;
+      --accent-soft: #d8c1a2;
+      --sky: #dae9f3;
+      --shadow: rgba(58, 44, 29, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 36px 18px 48px;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.7), transparent 40%),
+        linear-gradient(180deg, #ede3d2 0%, #e7dbc8 100%);
+      font-family: "Palatino Linotype", "Book Antiqua", "Iowan Old Style", Georgia, serif;
+      line-height: 1.72;
+    }
+    .page {
+      max-width: 1040px;
+      margin: 0 auto;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      box-shadow: 0 18px 50px var(--shadow);
+      padding: 46px 56px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page::before,
+    .page::after {
+      content: "";
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--rule), transparent);
+    }
+    .page::before { top: 18px; }
+    .page::after { bottom: 18px; }
+    .cover {
+      padding-bottom: 28px;
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+    }
+    .cover-mark {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: var(--paper-strong);
+      color: var(--accent);
+      font-size: 0.84rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .cover h1 {
+      margin: 0;
+      font-size: clamp(2.1rem, 4vw, 3.3rem);
+      line-height: 1.06;
+      border: 0;
+      padding: 0;
+    }
+    .cover .subtitle {
+      margin: 12px 0 18px;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+    .epigraph {
+      margin: 0;
+      max-width: 40rem;
+      padding-left: 18px;
+      border-left: 3px solid var(--accent-soft);
+      color: var(--muted);
+      font-style: italic;
+    }
+    .toc {
+      margin: 0 0 34px;
+      padding: 20px 22px 18px;
+      background: rgba(255,255,255,0.35);
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+    }
+    .toc h2 {
+      margin-top: 0;
+      font-size: 1.1rem;
+      letter-spacing: 0.02em;
+    }
+    .toc ol {
+      columns: 2;
+      column-gap: 28px;
+      margin: 0;
+      padding-left: 20px;
+    }
+    .toc li {
+      margin: 0 0 8px;
+      break-inside: avoid;
+    }
+    .toc a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px dotted transparent;
+    }
+    .toc a:hover { border-bottom-color: var(--accent); }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    figure.book-figure {
+      margin: 26px auto;
+      padding: 14px;
+      background: rgba(255,255,255,0.45);
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+    figure.book-figure img {
+      border-radius: 10px;
+      background: white;
+    }
+    figure.book-figure figcaption {
+      margin-top: 10px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.94rem;
+    }
+    .math-block {
+      margin: 1.1rem 0;
+      text-align: center;
+    }
+    blockquote {
+      margin: 1.2rem 0;
+      padding: 0.4rem 1rem;
+      border-left: 4px solid var(--accent-soft);
+      background: rgba(255,255,255,0.35);
+      color: var(--muted);
+    }
+    h1, h2, h3 {
+      line-height: 1.2;
+      color: var(--ink);
+      scroll-margin-top: 20px;
+    }
+    h1 {
+      margin-top: 3.2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--rule);
+      font-size: 2rem;
+      position: relative;
+    }
+    h1::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 82px;
+      height: 3px;
+      background: var(--accent);
+    }
+    h2 {
+      margin-top: 2rem;
+      font-size: 1.35rem;
+    }
+    h3 {
+      margin-top: 1.5rem;
+      font-size: 1.08rem;
+      color: var(--accent);
+    }
+    a { color: var(--accent); }
+    hr {
+      border: 0;
+      border-top: 1px solid var(--rule);
+      margin: 2.2rem 0;
+    }
+    code, pre {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    }
+    footer.book-footer {
+      margin-top: 42px;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 0.92rem;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 780px) {
+      .page {
+        padding: 30px 20px 28px;
+      }
+      .toc ol {
+        columns: 1;
+      }
+    }
+    
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+  <main class="page">
+    <header class="cover">
+      <span class="cover-mark">Edição de estudo</span>
+      <h1>Curso de Cálculo para Cinemática</h1>
+      <p class="subtitle">Limites, derivadas e integrais com foco em velocidade, MU e MUV</p>
+      <p class="epigraph">Antes da fórmula, veja a geometria. Antes da conta, localize o movimento no eixo S.</p>
+    </header>
+    <nav class="toc" aria-label="Índice do curso">
+      <h2>Índice</h2>
+      <ol><li><a href="#1-a-ideia-central-calculo-na-cinematica-e-sobre-duas-perguntas">1. A ideia central: cálculo, na cinemática, é sobre duas perguntas</a></li><li><a href="#2-as-tres-funcoes-da-cinematica">2. As três funções da cinemática</a></li><li><a href="#3-mu-e-muv-vistos-pelos-graficos">3. MU e MUV vistos pelos gráficos</a></li><li><a href="#4-velocidade-media-e-velocidade-instantanea">4. Velocidade média e velocidade instantânea</a></li><li><a href="#5-derivada-sem-exagero-so-as-regras-que-importam-aqui">5. Derivada sem exagero: só as regras que importam aqui</a></li><li><a href="#6-aplicando-derivada-ao-mu">6. Aplicando derivada ao MU</a></li><li><a href="#7-aplicando-derivada-ao-muv">7. Aplicando derivada ao MUV</a></li><li><a href="#8-o-caminho-inverso-integral-como-acumulo">8. O caminho inverso: integral como acúmulo</a></li><li><a href="#9-integral-no-mu-por-que-x-x-0-vt">9. Integral no MU: por que $x = x_0 + vt$?</a></li><li><a href="#10-integral-no-muv-por-que-x-x-0-v-0-t-frac-1-2-at-2">10. Integral no MUV: por que $x = x_0 + v_0 t + \frac{1}{2}at^2$?</a></li><li><a href="#11-a-media-das-velocidades-no-muv-por-que-ela-funciona">11. A média das velocidades no MUV: por que ela funciona?</a></li><li><a href="#12-integral-formal-minima-so-o-que-basta">12. Integral formal mínima: só o que basta</a></li><li><a href="#13-o-teorema-fundamental-do-calculo-traduzido-para-a-cinematica">13. O Teorema Fundamental do Cálculo, traduzido para a cinemática</a></li><li><a href="#14-um-comentario-sobre-curvas-so-o-necessario">14. Um comentário sobre curvas: só o necessário</a></li><li><a href="#15-da-geometria-as-formulas-classicas-do-ensino-medio">15. Da geometria às fórmulas clássicas do ensino médio</a></li><li><a href="#16-bonus-util-torricelli-via-calculo-minimo">16. Bônus útil: Torricelli via cálculo mínimo</a></li><li><a href="#17-exemplos-fisicos-completos">17. Exemplos físicos completos</a></li><li><a href="#18-o-papel-dos-graficos-em-linguagem-de-engenharia">18. O papel dos gráficos em linguagem de engenharia</a></li><li><a href="#19-uma-sequencia-mental-que-funciona-muito-bem-em-problemas">19. Uma sequência mental que funciona muito bem em problemas</a></li><li><a href="#20-erros-classicos-e-como-evita-los">20. Erros clássicos e como evitá-los</a></li><li><a href="#21-mini-resumo-das-regras-de-calculo-que-realmente-usamos-aqui">21. Mini-resumo das regras de cálculo que realmente usamos aqui</a></li><li><a href="#22-folha-de-consulta-compacta">22. Folha de consulta compacta</a></li><li><a href="#23-exercicios-propostos">23. Exercícios propostos</a></li><li><a href="#24-gabarito-dos-exercicios">24. Gabarito dos exercícios</a></li><li><a href="#25-fechamento">25. Fechamento</a></li></ol>
+    </nav>
+    
+
+<blockquote>
+<p><strong>Recorte do curso:</strong> este material não tenta ensinar “cálculo inteiro”.<br/>
+Ele ensina o pedaço do cálculo que mais conversa com a cinemática do ensino médio e do início da engenharia:<br/>
+<strong>posição, velocidade, aceleração, inclinação de gráfico, área sob gráfico e as equações clássicas do MU/MUV</strong>.</p>
+</blockquote>
+
+<hr/>
+<h2 id="como-usar-este-arquivo-no-vs-code">Como usar este arquivo no VS Code</h2>
+<p>Este arquivo foi escrito em <strong>Markdown com LaTeX</strong>.</p>
+<ul>
+<li>Fórmulas inline usam <code>$...$</code></li>
+<li>Fórmulas em bloco usam <code>$$...$$</code></li>
+</ul>
+<p>Para visualizar bem no VS Code, o caminho mais confiável é usar uma extensão de preview com matemática, como:</p>
+<ul>
+<li><strong>Markdown Preview Enhanced</strong>, ou</li>
+<li>qualquer preview com <strong>KaTeX/MathJax</strong></li>
+</ul>
+<p>As figuras estão em <code>./calc_cinematica_assets/</code>.</p>
+
+
+<hr/>
+<h2 id="plano-de-acao-do-curso">Plano de ação do curso</h2>
+<p>A ideia aqui é construir o cálculo <strong>de dentro da cinemática</strong>, e não o contrário.</p>
+<h3 id="etapa-1-linguagem-fisica-antes-da-matematica">Etapa 1 — Linguagem física antes da matemática</h3>
+<p>Primeiro vamos fixar o que são:</p>
+<ul>
+<li>posição $x(t)$</li>
+<li>velocidade $v(t)$</li>
+<li>aceleração $a(t)$</li>
+</ul>
+<p>e como cada uma aparece nos gráficos.</p>
+<h3 id="etapa-2-limite-como-aproximacao-da-velocidade-instantanea">Etapa 2 — Limite como “aproximação da velocidade instantânea”</h3>
+<p>Vamos partir da <strong>velocidade média</strong> e apertar o intervalo de tempo até enxergar a <strong>velocidade naquele instante</strong>.</p>
+<h3 id="etapa-3-derivada-como-inclinacao">Etapa 3 — Derivada como inclinação</h3>
+<p>Vamos mostrar que:</p>
+<ul>
+<li>derivar a posição dá a velocidade</li>
+<li>derivar a velocidade dá a aceleração</li>
+</ul>
+<p>mas <strong>apenas com as regras que realmente interessam</strong> para MU e MUV.</p>
+<h3 id="etapa-4-integral-como-acumulo-area">Etapa 4 — Integral como acúmulo / área</h3>
+<p>Vamos interpretar:</p>
+<ul>
+<li>área sob o gráfico de $v \times t$ como deslocamento</li>
+<li>área sob o gráfico de $a \times t$ como variação de velocidade</li>
+</ul>
+<p>A partir daí, as fórmulas clássicas vão aparecer quase sozinhas.</p>
+<h3 id="etapa-5-fechamento-em-linguagem-de-engenharia">Etapa 5 — Fechamento em linguagem de engenharia</h3>
+<p>No final, você vai enxergar as fórmulas não como “coisas para decorar”, mas como <strong>traduções geométricas</strong> de inclinação e área.</p>
+<hr/>
+<h1 id="1-a-ideia-central-calculo-na-cinematica-e-sobre-duas-perguntas">1. A ideia central: cálculo, na cinemática, é sobre duas perguntas</h1>
+<p>Na cinemática, o cálculo nasce de duas perguntas muito concretas:</p>
+<h2 id="pergunta-a-quao-rapido-esta-mudando-agora">Pergunta A — “quão rápido está mudando agora?”</h2>
+<p>Isso nos leva a <strong>derivada</strong>.</p>
+<p>Exemplo físico:</p>
+<ul>
+<li>a posição do carro muda com o tempo;</li>
+<li>a taxa dessa mudança é a velocidade;</li>
+<li>se a velocidade muda, a taxa dessa mudança é a aceleração.</li>
+</ul>
+<h2 id="pergunta-b-quanto-foi-acumulado-ao-longo-do-tempo">Pergunta B — “quanto foi acumulado ao longo do tempo?”</h2>
+<p>Isso nos leva a <strong>integral</strong>.</p>
+<p>Exemplo físico:</p>
+<ul>
+<li>se eu sei a velocidade a cada instante e quero saber quanto o corpo andou, eu acumulo isso ao longo do tempo;</li>
+<li>geometricamente, isso aparece como <strong>área sob o gráfico</strong>.</li>
+</ul>
+<blockquote>
+<p>Em linguagem curta:</p>
+<ul>
+<li><strong>derivada</strong> = taxa de variação</li>
+<li><strong>integral</strong> = acúmulo</li>
+</ul>
+</blockquote>
+<p>Essa dupla é o coração da cinemática.</p>
+<hr/>
+<h1 id="2-as-tres-funcoes-da-cinematica">2. As três funções da cinemática</h1>
+<p>Na engenharia e na física, quase sempre pensamos em três funções do tempo:</p>
+<div class="math-block">
+$$
+x = x(t), \qquad v = v(t), \qquad a = a(t)
+$$
+</div>
+<p>onde:</p>
+<ul>
+<li>$x(t)$ é a posição</li>
+<li>$v(t)$ é a velocidade</li>
+<li>$a(t)$ é a aceleração</li>
+</ul>
+<h2 id="2-1-como-ler-isso-fisicamente">2.1. Como ler isso fisicamente?</h2>
+<p>Quando você escreve $x(t)$, está dizendo:</p>
+<blockquote>
+<p>“a posição depende do tempo”.</p>
+</blockquote>
+<p>Quando escreve $v(t)$:</p>
+<blockquote>
+<p>“a velocidade depende do tempo”.</p>
+</blockquote>
+<p>E quando escreve $a(t)$:</p>
+<blockquote>
+<p>“a aceleração depende do tempo”.</p>
+</blockquote>
+<p>Isso permite descrever desde uma esteira industrial em velocidade constante até um carro arrancando no semáforo.</p>
+<hr/>
+<h1 id="3-mu-e-muv-vistos-pelos-graficos">3. MU e MUV vistos pelos gráficos</h1>
+<p>Antes do cálculo, vale fixar a geometria dos gráficos.</p>
+<h2 id="3-1-mu-movimento-uniforme">3.1. MU — Movimento Uniforme</h2>
+<p>No MU, a velocidade é constante.</p>
+<div class="math-block">
+$$
+v(t) = v
+$$
+</div>
+<p>Então a posição cresce linearmente:</p>
+<div class="math-block">
+$$
+x(t) = x_0 + vt
+$$
+</div>
+<blockquote>
+<p>Por enquanto, leia essa expressão como o retrato algébrico do MU.
+A construção dela virá na seção 9, quando o deslocamento for lido como área sob o gráfico $v \times t$.</p>
+</blockquote>
+<h3 id="geometria-do-mu">Geometria do MU</h3>
+<ul>
+<li>no gráfico $x \times t$, aparece uma <strong>reta</strong></li>
+<li>no gráfico $v \times t$, aparece uma <strong>linha horizontal</strong></li>
+<li>no gráfico $a \times t$, aparece a linha no zero</li>
+</ul>
+<p>Gráfico $x \times t$:</p>
+<figure class="book-figure"><img alt="MU: x(t) é uma reta" loading="lazy" src="./calc_cinematica_assets/01_mu_xt.svg"/><figcaption>MU: x(t) é uma reta</figcaption></figure>
+<p>Gráfico $v \times t$:</p>
+<figure class="book-figure"><img alt="MU: v(t) é constante" loading="lazy" src="./calc_cinematica_assets/08_mu_vt.svg"/><figcaption>MU: v(t) é constante</figcaption></figure>
+<p>Gráfico $a \times t$:</p>
+<figure class="book-figure"><img alt="MU: a(t) = 0" loading="lazy" src="./calc_cinematica_assets/09_mu_at.svg"/><figcaption>MU: a(t) = 0</figcaption></figure>
+<h3 id="leitura-fisica-da-inclinacao">Leitura física da inclinação</h3>
+<p>A inclinação dessa reta no gráfico $x \times t$ é a velocidade.</p>
+<ul>
+<li>reta mais inclinada $\Rightarrow$ maior velocidade</li>
+<li>reta menos inclinada $\Rightarrow$ menor velocidade</li>
+<li>reta descendo $\Rightarrow$ velocidade negativa</li>
+</ul>
+<hr/>
+<h2 id="3-2-muv-movimento-uniformemente-variado">3.2. MUV — Movimento Uniformemente Variado</h2>
+<p>No MUV, a aceleração é constante.</p>
+<div class="math-block">
+$$
+a(t) = a
+$$
+</div>
+<p>Logo, a velocidade varia linearmente com o tempo:</p>
+<div class="math-block">
+$$
+v(t) = v_0 + at
+$$
+</div>
+<p>E a posição passa a variar quadraticamente:</p>
+<div class="math-block">
+$$
+x(t) = x_0 + v_0 t + \frac{1}{2}at^2
+$$
+</div>
+<blockquote>
+<p>Aqui ainda estamos apresentando o mapa do movimento, não a demonstração.
+A forma $v(t)=v_0+at$ será justificada na seção 12.2.
+A forma $x(t)=x_0+v_0 t+\frac{1}{2}at^2$ será construída na seção 10 e retomada formalmente na seção 12.1.</p>
+</blockquote>
+<h3 id="geometria-do-muv">Geometria do MUV</h3>
+<ul>
+<li>no gráfico $a \times t$, temos uma linha horizontal</li>
+<li>no gráfico $v \times t$, temos uma <strong>reta</strong></li>
+<li>no gráfico $x \times t$, temos uma <strong>curva parabólica</strong></li>
+</ul>
+<figure class="book-figure"><img alt="MUV: x(t) é uma parábola" loading="lazy" src="./calc_cinematica_assets/02_muv_xt.svg"/><figcaption>MUV: x(t) é uma parábola</figcaption></figure>
+<blockquote>
+<p>Esse é um ponto importante:</p>
+<ul>
+<li>no MU, posição é reta</li>
+<li>no MUV, posição é curva</li>
+</ul>
+<p>Mesmo assim, ainda estamos dentro de um dos movimentos mais simples da física.</p>
+</blockquote>
+<hr/>
+<h1 id="4-velocidade-media-e-velocidade-instantanea">4. Velocidade média e velocidade instantânea</h1>
+<p>Aqui começa o cálculo de verdade.</p>
+<h2 id="4-1-velocidade-media">4.1. Velocidade média</h2>
+<p>Em um intervalo de tempo $\Delta t$, a velocidade média é:</p>
+<div class="math-block">
+$$
+v_{\text{méd}} = \frac{\Delta x}{\Delta t}
+$$
+</div>
+<p>Aqui aparecem duas abreviações:</p>
+<ul>
+<li>$\Delta x$ = variação de posição</li>
+<li>$\Delta t$ = variação de tempo</li>
+</ul>
+<p>Se o intervalo começa no instante $t$ e termina no instante $t+\Delta t$, então:</p>
+<ul>
+<li>posição inicial = $x(t)$</li>
+<li>posição final = $x(t+\Delta t)$</li>
+<li>tempo inicial = $t$</li>
+<li>tempo final = $t+\Delta t$</li>
+</ul>
+<p>Usamos agora duas ideias matemáticas bem simples:</p>
+<ol>
+<li>variação = valor final $-$ valor inicial</li>
+<li>a posição é dada por uma função do tempo, escrita como $x(t)$</li>
+</ol>
+<p>Logo,</p>
+<div class="math-block">
+$$
+\Delta x = x(t+\Delta t) - x(t)
+$$
+</div>
+<p>e</p>
+<div class="math-block">
+$$
+\Delta t = (t+\Delta t) - t
+$$
+</div>
+<p>Substituindo essas duas escritas na fórmula compacta, obtemos:</p>
+<div class="math-block">
+$$
+v_{\text{méd}}
+=
+\frac{x(t+\Delta t)-x(t)}{(t+\Delta t)-t}
+=
+\frac{x(t+\Delta t)-x(t)}{\Delta t}
+$$
+</div>
+<p>Essa forma parece mais carregada, mas não é uma nova fórmula.<br/>
+É a mesma velocidade média escrita em linguagem de função.</p>
+<p>Na seção 4.2, vamos usar exatamente essa escrita para encolher o intervalo e chegar à velocidade instantânea.</p>
+<p>Isso responde:</p>
+<blockquote>
+<p>“Em média, quanto a posição mudou por unidade de tempo nesse intervalo?”</p>
+</blockquote>
+<h3 id="exemplo-fisico">Exemplo físico</h3>
+<p>Imagine um carro entre dois postes de medição:</p>
+<ul>
+<li>em $t = 2,s$, ele está em $x=30,m$</li>
+<li>em $t = 5,s$, ele está em $x=66,m$</li>
+</ul>
+<figure class="book-figure"><img alt="Cenário: carro entre dois postes de medição ao longo do eixo S" loading="lazy" src="./calc_cinematica_assets/10_postes_medicao.svg"/><figcaption>Cenário: carro entre dois postes de medição ao longo do eixo S</figcaption></figure>
+<p>Então:</p>
+<div class="math-block">
+$$
+v_{\text{méd}} = \frac{66-30}{5-2} = \frac{36}{3} = 12\ \text{m/s}
+$$
+</div>
+<p>Isso não significa necessariamente que ele estava a $12\ \text{m/s}$ o tempo todo.<br/>
+Significa apenas que <strong>o efeito médio</strong> naquele intervalo foi esse.</p>
+<hr/>
+<h2 id="4-2-o-salto-conceitual-e-se-eu-encolher-o-intervalo">4.2. O salto conceitual: e se eu encolher o intervalo?</h2>
+<p>Agora vem a ideia de limite.</p>
+<p>Se eu quiser a velocidade <strong>num instante</strong>, eu posso pegar um intervalo muito pequeno em torno daquele instante.</p>
+<p>Em vez de olhar o comportamento entre tempos bem separados, eu olho assim:</p>
+<div class="math-block">
+$$
+v_{\text{méd}} = \frac{x(t+\Delta t)-x(t)}{\Delta t}
+$$
+</div>
+<p>e vou tornando $\Delta t$ cada vez menor:</p>
+<div class="math-block">
+$$
+\Delta t \to 0
+$$
+</div>
+<p>Quando esse processo funciona, nasce a <strong>velocidade instantânea</strong>:</p>
+<div class="math-block">
+$$
+v(t) = \lim_{\Delta t \to 0}\frac{x(t+\Delta t)-x(t)}{\Delta t}
+$$
+</div>
+<p>Essa é a definição de derivada aplicada à posição.</p>
+<blockquote>
+<p>Em linguagem intuitiva:</p>
+<p>a velocidade instantânea é a velocidade média em um intervalo tão pequeno que ele “encosta” num único instante.</p>
+</blockquote>
+<hr/>
+<h2 id="4-3-visao-geometrica-secante-e-tangente">4.3. Visão geométrica: secante e tangente</h2>
+<p>No gráfico $x \times t$:</p>
+<ul>
+<li>a <strong>velocidade média</strong> é a inclinação da reta secante entre dois pontos</li>
+<li>a <strong>velocidade instantânea</strong> é a inclinação da reta tangente naquele ponto</li>
+</ul>
+<figure class="book-figure"><img alt="Secante e tangente em x(t)" loading="lazy" src="./calc_cinematica_assets/03_secante_tangente.svg"/><figcaption>Secante e tangente em x(t)</figcaption></figure>
+<h3 id="leitura-fisica">Leitura física</h3>
+<p>Isso é belíssimo porque une duas linguagens:</p>
+<ul>
+<li>linguagem física: “rapidez de mudança”</li>
+<li>linguagem geométrica: “inclinação da curva”</li>
+</ul>
+<p>Na prática:</p>
+<ul>
+<li>inclinação grande $\Rightarrow$ velocidade grande</li>
+<li>inclinação nula $\Rightarrow$ velocidade zero</li>
+<li>inclinação negativa $\Rightarrow$ velocidade negativa</li>
+</ul>
+<hr/>
+<h1 id="5-derivada-sem-exagero-so-as-regras-que-importam-aqui">5. Derivada sem exagero: só as regras que importam aqui</h1>
+<p>Há muitas regras de derivação em cálculo.<br/>
+Mas, para MU e MUV, você precisa de um conjunto muito pequeno.</p>
+<h2 id="5-1-regra-1-derivada-de-constante">5.1. Regra 1 — derivada de constante</h2>
+<p>Se $c$ é constante,</p>
+<div class="math-block">
+$$
+\frac{d}{dt}(c) = 0
+$$
+</div>
+<p>Exemplo físico:</p>
+<ul>
+<li>$x_0$ é posição inicial, número fixo</li>
+<li>então a taxa de variação de $x_0$ é zero</li>
+</ul>
+<hr/>
+<h2 id="5-2-regra-2-derivada-de-t">5.2. Regra 2 — derivada de $t$</h2>
+<div class="math-block">
+$$
+\frac{d}{dt}(t) = 1
+$$
+</div>
+<p>Logo, se houver uma constante multiplicando $t$:</p>
+<div class="math-block">
+$$
+\frac{d}{dt}(kt) = k
+$$
+</div>
+<p>Isso é exatamente o que faz a velocidade constante aparecer no MU.</p>
+<hr/>
+<h2 id="5-3-regra-3-derivada-de-t-2">5.3. Regra 3 — derivada de $t^2$</h2>
+<div class="math-block">
+$$
+\frac{d}{dt}(t^2) = 2t
+$$
+</div>
+<p>Portanto,</p>
+<div class="math-block">
+$$
+\frac{d}{dt}\left(\frac{1}{2}at^2\right) = at
+$$
+</div>
+<p>Esse é o pedaço-chave do MUV.</p>
+<hr/>
+<h2 id="5-4-regra-4-derivada-da-soma">5.4. Regra 4 — derivada da soma</h2>
+<p>Se</p>
+<div class="math-block">
+$$
+f(t) = g(t) + h(t)
+$$
+</div>
+<p>então</p>
+<div class="math-block">
+$$
+f'(t) = g'(t) + h'(t)
+$$
+</div>
+<p>Na prática:</p>
+<div class="math-block">
+$$
+\frac{d}{dt}\left(x_0 + v_0 t + \frac{1}{2}at^2\right)
+=
+\frac{d}{dt}(x_0)
++
+\frac{d}{dt}(v_0 t)
++
+\frac{d}{dt}\left(\frac{1}{2}at^2\right)
+$$
+</div>
+<hr/>
+<h1 id="6-aplicando-derivada-ao-mu">6. Aplicando derivada ao MU</h1>
+<p>No MU:</p>
+<div class="math-block">
+$$
+x(t) = x_0 + vt
+$$
+</div>
+<blockquote>
+<p>Aqui a lei horária do MU entra como hipótese de trabalho para enxergarmos o papel da derivada.
+A origem geométrica dessa expressão será construída na seção 9.</p>
+</blockquote>
+<p>Derivando em relação ao tempo:</p>
+<div class="math-block">
+$$
+\frac{dx}{dt} = \frac{d}{dt}(x_0 + vt)
+$$
+</div>
+<p>Pelas regras acima:</p>
+<div class="math-block">
+$$
+\frac{dx}{dt} = 0 + v = v
+$$
+</div>
+<p>Logo,</p>
+<div class="math-block">
+$$
+v(t) = \frac{dx}{dt} = v
+$$
+</div>
+<p>ou seja, a velocidade é constante, como esperado.</p>
+<h3 id="interpretacao">Interpretação</h3>
+<p>Isso mostra que a fórmula do MU já carrega, escondida, uma ideia de cálculo:</p>
+<blockquote>
+<p>a inclinação da reta posição-tempo é constante.</p>
+</blockquote>
+<hr/>
+<h1 id="7-aplicando-derivada-ao-muv">7. Aplicando derivada ao MUV</h1>
+<p>Agora pegue a fórmula:</p>
+<div class="math-block">
+$$
+x(t) = x_0 + v_0 t + \frac{1}{2}at^2
+$$
+</div>
+<blockquote>
+<p>Aqui a lei horária do MUV também entra primeiro como hipótese de trabalho.
+A construção geométrica dela aparece na seção 10, e a forma integral mínima aparece na seção 12.1.</p>
+</blockquote>
+<p>Derivando:</p>
+<div class="math-block">
+$$
+\frac{dx}{dt}
+=
+\frac{d}{dt}(x_0)
++
+\frac{d}{dt}(v_0 t)
++
+\frac{d}{dt}\left(\frac{1}{2}at^2\right)
+$$
+</div>
+<p>Logo:</p>
+<div class="math-block">
+$$
+v(t) = 0 + v_0 + at
+$$
+</div>
+<p>portanto,</p>
+<div class="math-block">
+$$
+v(t) = v_0 + at
+$$
+</div>
+<p>Agora derivamos de novo:</p>
+<div class="math-block">
+$$
+\frac{dv}{dt} = \frac{d}{dt}(v_0 + at) = 0 + a
+$$
+</div>
+<p>portanto,</p>
+<div class="math-block">
+$$
+a(t) = a
+$$
+</div>
+<p>Chegamos ao pacote completo:</p>
+<div class="math-block">
+$$
+x(t) = x_0 + v_0 t + \frac{1}{2}at^2
+$$
+</div>
+<div class="math-block">
+$$
+v(t) = v_0 + at
+$$
+</div>
+<div class="math-block">
+$$
+a(t) = a
+$$
+</div>
+<blockquote>
+<p>Esse trio é a cara do MUV.</p>
+</blockquote>
+<hr/>
+<h1 id="8-o-caminho-inverso-integral-como-acumulo">8. O caminho inverso: integral como acúmulo</h1>
+<p>Derivada responde:</p>
+<blockquote>
+<p>“qual é a taxa de variação agora?”</p>
+</blockquote>
+<p>Integral responde:</p>
+<blockquote>
+<p>“quanto foi acumulado ao longo do intervalo?”</p>
+</blockquote>
+<p>Na cinemática, a leitura geométrica mais poderosa é:</p>
+<ul>
+<li>área sob o gráfico de $v \times t$ = deslocamento</li>
+<li>área sob o gráfico de $a \times t$ = variação de velocidade</li>
+</ul>
+<p>Essa ideia vale em geral.<br/>
+Mas vamos focar primeiro em MU e MUV.</p>
+<hr/>
+<h1 id="9-integral-no-mu-por-que-x-x-0-vt">9. Integral no MU: por que $x = x_0 + vt$?</h1>
+<p>No MU, a velocidade é constante.</p>
+<div class="math-block">
+$$
+v(t) = v
+$$
+</div>
+<p>Num intervalo de duração $t$, o gráfico $v \times t$ forma um retângulo.</p>
+<figure class="book-figure"><img alt="MU: área do retângulo em v(t)" loading="lazy" src="./calc_cinematica_assets/04_mu_vt_area.svg"/><figcaption>MU: área do retângulo em v(t)</figcaption></figure>
+<p>A área é:</p>
+<div class="math-block">
+$$
+\Delta x = v \cdot t
+$$
+</div>
+<p>Como posição final é posição inicial mais deslocamento:</p>
+<div class="math-block">
+$$
+x = x_0 + \Delta x
+$$
+</div>
+<p>então:</p>
+<div class="math-block">
+$$
+x = x_0 + vt
+$$
+</div>
+<p>Pronto: a fórmula do MU apareceu como <strong>área de um retângulo</strong>.</p>
+<hr/>
+<h1 id="10-integral-no-muv-por-que-x-x-0-v-0-t-frac-1-2-at-2">10. Integral no MUV: por que $x = x_0 + v_0 t + \frac{1}{2}at^2$?</h1>
+<p>Aqui está uma das partes mais importantes do curso.</p>
+<p>No MUV,</p>
+<div class="math-block">
+$$
+v(t) = v_0 + at
+$$
+</div>
+<blockquote>
+<p>Se você quiser a origem dessa reta de velocidade partindo de $a(t)=a$, ela será construída na seção 12.2.
+Aqui vamos usá-la como entrada geométrica para montar a área sob o gráfico $v \times t$.</p>
+</blockquote>
+<p>No gráfico $v \times t$, isso é uma reta.<br/>
+A área sob essa reta, de $0$ até $t$, é um trapézio.</p>
+<figure class="book-figure"><img alt="MUV: área como retângulo + triângulo" loading="lazy" src="./calc_cinematica_assets/05_muv_vt_area.svg"/><figcaption>MUV: área como retângulo + triângulo</figcaption></figure>
+<p>Podemos dividir essa área em duas partes:</p>
+<h2 id="parte-1-retangulo">Parte 1 — retângulo</h2>
+<p>Altura $v_0$, base $t$:</p>
+<div class="math-block">
+$$
+A_1 = v_0 t
+$$
+</div>
+<h2 id="parte-2-triangulo">Parte 2 — triângulo</h2>
+<p>A velocidade cresce de $v_0$ até $v_0+at$, então o “extra” é $at$.</p>
+<p>Base $t$, altura $at$:</p>
+<div class="math-block">
+$$
+A_2 = \frac{1}{2}\cdot t \cdot at = \frac{1}{2}at^2
+$$
+</div>
+<p>Somando:</p>
+<div class="math-block">
+$$
+\Delta x = A_1 + A_2 = v_0 t + \frac{1}{2}at^2
+$$
+</div>
+<p>Logo,</p>
+<div class="math-block">
+$$
+x = x_0 + \Delta x
+$$
+</div>
+<p>e portanto:</p>
+<div class="math-block">
+$$
+x = x_0 + v_0 t + \frac{1}{2}at^2
+$$
+</div>
+<blockquote>
+<p>Essa talvez seja a interpretação geométrica mais bonita do MUV:</p>
+<p>o termo $v_0 t$ é a parte “que já vinha andando”<br/>
+e o termo $\frac{1}{2}at^2$ é o ganho extra vindo da aceleração.</p>
+</blockquote>
+<hr/>
+<h1 id="11-a-media-das-velocidades-no-muv-por-que-ela-funciona">11. A média das velocidades no MUV: por que ela funciona?</h1>
+<p>Uma dúvida muito comum é:</p>
+<blockquote>
+<p>“Por que no MUV podemos usar $\dfrac{v_0 + v}{2}$?”</p>
+</blockquote>
+<p>A resposta curta é:</p>
+<blockquote>
+<p>porque o gráfico $v \times t$ é uma reta.</p>
+</blockquote>
+<p>Quando a velocidade varia linearmente no tempo, a área do trapézio também pode ser escrita como:</p>
+<div class="math-block">
+$$
+\Delta x = \text{velocidade média} \cdot t
+$$
+</div>
+<p>e a velocidade média é a média aritmética dos extremos:</p>
+<div class="math-block">
+$$
+v_{\text{méd}} = \frac{v_0 + v}{2}
+$$
+</div>
+<p>Então:</p>
+<div class="math-block">
+$$
+\Delta x = \frac{v_0 + v}{2}\,t
+$$
+</div>
+<p>Se quiser, substituímos $v = v_0 + at$:</p>
+<div class="math-block">
+$$
+\Delta x = \frac{v_0 + (v_0 + at)}{2}\,t
+$$
+</div>
+<div class="math-block">
+$$
+\Delta x = \frac{2v_0 + at}{2}\,t
+$$
+</div>
+<div class="math-block">
+$$
+\Delta x = \left(v_0 + \frac{at}{2}\right)t
+$$
+</div>
+<div class="math-block">
+$$
+\Delta x = v_0 t + \frac{1}{2}at^2
+$$
+</div>
+<p>e recuperamos a fórmula clássica.</p>
+<h3 id="o-ponto-conceitual-importante">O ponto conceitual importante</h3>
+<p>No MUV, a média das velocidades das pontas funciona porque a variação é linear.</p>
+<p>Se o gráfico de $v(t)$ fosse uma curva arbitrária, essa média simples dos extremos <strong>não seria</strong> garantidamente a velocidade média real.</p>
+<hr/>
+<h1 id="12-integral-formal-minima-so-o-que-basta">12. Integral formal mínima: só o que basta</h1>
+<p>Se você quiser escrever isso com linguagem de integral, fica assim:</p>
+<h2 id="12-1-deslocamento-a-partir-da-velocidade">12.1. Deslocamento a partir da velocidade</h2>
+<div class="math-block">
+$$
+\Delta x = \int_0^t v(\tau)\,d\tau
+$$
+</div>
+<p>Esse $\tau$ é só um nome para a variável de integração.<br/>
+Poderia ser outra letra.</p>
+<p>No MUV:</p>
+<div class="math-block">
+$$
+v(\tau) = v_0 + a\tau
+$$
+</div>
+<p>Então:</p>
+<div class="math-block">
+$$
+\Delta x = \int_0^t (v_0 + a\tau)\,d\tau
+$$
+</div>
+<p>Usando as regras mais simples de integral:</p>
+<div class="math-block">
+$$
+\int v_0\,d\tau = v_0\tau
+$$
+</div>
+<div class="math-block">
+$$
+\int a\tau\,d\tau = a\frac{\tau^2}{2}
+$$
+</div>
+<p>Logo,</p>
+<div class="math-block">
+$$
+\Delta x = \left[v_0\tau + \frac{a\tau^2}{2}\right]_0^t
+$$
+</div>
+<p>Substituindo os limites:</p>
+<div class="math-block">
+$$
+\Delta x = \left(v_0 t + \frac{at^2}{2}\right) - 0
+$$
+</div>
+<p>Portanto:</p>
+<div class="math-block">
+$$
+\Delta x = v_0 t + \frac{1}{2}at^2
+$$
+</div>
+<p>e de novo:</p>
+<div class="math-block">
+$$
+x = x_0 + v_0 t + \frac{1}{2}at^2
+$$
+</div>
+<hr/>
+<h2 id="12-2-variacao-de-velocidade-a-partir-da-aceleracao">12.2. Variação de velocidade a partir da aceleração</h2>
+<p>Da mesma forma:</p>
+<div class="math-block">
+$$
+\Delta v = \int_0^t a(\tau)\,d\tau
+$$
+</div>
+<p>No MUV, $a(\tau)=a$ constante, então:</p>
+<div class="math-block">
+$$
+\Delta v = \int_0^t a\,d\tau = a\int_0^t d\tau = a[t]_0^t = at
+$$
+</div>
+<p>Logo:</p>
+<div class="math-block">
+$$
+v - v_0 = at
+$$
+</div>
+<p>portanto:</p>
+<div class="math-block">
+$$
+v = v_0 + at
+$$
+</div>
+<blockquote>
+<p>Isso mostra o papel da integral com clareza:</p>
+<ul>
+<li>acumular aceleração ao longo do tempo dá variação de velocidade</li>
+<li>acumular velocidade ao longo do tempo dá deslocamento</li>
+</ul>
+</blockquote>
+<hr/>
+<h1 id="13-o-teorema-fundamental-do-calculo-traduzido-para-a-cinematica">13. O Teorema Fundamental do Cálculo, traduzido para a cinemática</h1>
+<p>Em um curso formal de cálculo, existe um resultado central chamado <strong>Teorema Fundamental do Cálculo</strong>.</p>
+<p>Aqui, em linguagem de cinemática, ele aparece quase assim:</p>
+<h2 id="se-eu-derivar-a-posicao-obtenho-a-velocidade">Se eu derivar a posição, obtenho a velocidade</h2>
+<div class="math-block">
+$$
+v(t) = \frac{dx}{dt}
+$$
+</div>
+<h2 id="se-eu-acumular-a-velocidade-no-tempo-recupero-deslocamento">Se eu acumular a velocidade no tempo, recupero deslocamento</h2>
+<div class="math-block">
+$$
+\Delta x = \int v(t)\,dt
+$$
+</div>
+<h2 id="se-eu-derivar-a-velocidade-obtenho-a-aceleracao">Se eu derivar a velocidade, obtenho a aceleração</h2>
+<div class="math-block">
+$$
+a(t) = \frac{dv}{dt}
+$$
+</div>
+<h2 id="se-eu-acumular-a-aceleracao-no-tempo-recupero-variacao-de-velocidade">Se eu acumular a aceleração no tempo, recupero variação de velocidade</h2>
+<div class="math-block">
+$$
+\Delta v = \int a(t)\,dt
+$$
+</div>
+<p>Em linguagem bem direta:</p>
+<blockquote>
+<p>derivar “mede a taxa”<br/>
+integrar “reconstrói o acúmulo”</p>
+</blockquote>
+<p>Na cinemática, essas duas operações são praticamente a tradução matemática de “olhar inclinação” e “olhar área”.</p>
+<hr/>
+<h1 id="14-um-comentario-sobre-curvas-so-o-necessario">14. Um comentário sobre curvas: só o necessário</h1>
+<p>Você pediu para trazer curva apenas o suficiente para introduzir integral.<br/>
+Então aqui vai o recorte certo.</p>
+<p>Se $v(t)$ não for reta, mas uma curva qualquer, a regra geral continua válida:</p>
+<div class="math-block">
+$$
+\Delta x = \int_{t_1}^{t_2} v(t)\,dt
+$$
+</div>
+<p>Geometricamente:</p>
+<ul>
+<li>área sob a curva de $v \times t$ = deslocamento</li>
+</ul>
+<figure class="book-figure"><img alt="Movimento geral: área sob curva de v(t)" loading="lazy" src="./calc_cinematica_assets/07_vt_curva_geral.svg"/><figcaption>Movimento geral: área sob curva de v(t)</figcaption></figure>
+<p>Mas, neste material, o foco principal é:</p>
+<ul>
+<li>MU: $v(t)$ constante</li>
+<li>MUV: $v(t)$ linear</li>
+</ul>
+<p>Ou seja, mesmo sem entrar em movimentos complexos, você já ganha o pedaço mais útil do cálculo para a cinemática básica.</p>
+<hr/>
+<h1 id="15-da-geometria-as-formulas-classicas-do-ensino-medio">15. Da geometria às fórmulas clássicas do ensino médio</h1>
+<p>Agora vamos reorganizar tudo em forma de “caixa de ferramentas”.</p>
+<h2 id="15-1-mu">15.1. MU</h2>
+<h3 id="equacao-horaria-da-posicao">Equação horária da posição</h3>
+<div class="math-block">
+$$
+x = x_0 + vt
+$$
+</div>
+<h3 id="leitura-em-calculo">Leitura em cálculo</h3>
+<ul>
+<li>derivada de $x(t)$ dá $v$</li>
+<li>área sob $v(t)$ dá deslocamento</li>
+</ul>
+<hr/>
+<h2 id="15-2-muv">15.2. MUV</h2>
+<h3 id="equacao-horaria-da-velocidade">Equação horária da velocidade</h3>
+<div class="math-block">
+$$
+v = v_0 + at
+$$
+</div>
+<h3 id="equacao-horaria-da-posicao-2">Equação horária da posição</h3>
+<div class="math-block">
+$$
+x = x_0 + v_0 t + \frac{1}{2}at^2
+$$
+</div>
+<h3 id="velocidade-media-no-muv">Velocidade média no MUV</h3>
+<div class="math-block">
+$$
+v_{\text{méd}} = \frac{v_0 + v}{2}
+$$
+</div>
+<h3 id="deslocamento-via-velocidade-media">Deslocamento via velocidade média</h3>
+<div class="math-block">
+$$
+\Delta x = v_{\text{méd}}\,t
+= \frac{v_0 + v}{2}\,t
+$$
+</div>
+<hr/>
+<h1 id="16-bonus-util-torricelli-via-calculo-minimo">16. Bônus útil: Torricelli via cálculo mínimo</h1>
+<p>Essa parte é opcional, mas muito boa para engenharia porque elimina o tempo.</p>
+<p>Queremos chegar em:</p>
+<div class="math-block">
+$$
+v^2 = v_0^2 + 2a(x-x_0)
+$$
+</div>
+<p>Começamos de:</p>
+<div class="math-block">
+$$
+a = \frac{dv}{dt}
+$$
+</div>
+<p>Mas também sabemos que:</p>
+<div class="math-block">
+$$
+v = \frac{dx}{dt}
+$$
+</div>
+<p>Então podemos escrever:</p>
+<div class="math-block">
+$$
+a = \frac{dv}{dt}
+= \frac{dv}{dx}\cdot\frac{dx}{dt}
+$$
+</div>
+<p>Como $\dfrac{dx}{dt}=v$, fica:</p>
+<div class="math-block">
+$$
+a = v\frac{dv}{dx}
+$$
+</div>
+<p>Reorganizando:</p>
+<div class="math-block">
+$$
+v\,dv = a\,dx
+$$
+</div>
+<p>Se a aceleração for constante, integramos os dois lados:</p>
+<div class="math-block">
+$$
+\int_{v_0}^{v} v\,dv
+=
+\int_{x_0}^{x} a\,dx
+$$
+</div>
+<p>Calculando:</p>
+<div class="math-block">
+$$
+\left[\frac{v^2}{2}\right]_{v_0}^{v}
+=
+a[x]_{x_0}^{x}
+$$
+</div>
+<p>Logo:</p>
+<div class="math-block">
+$$
+\frac{v^2 - v_0^2}{2} = a(x-x_0)
+$$
+</div>
+<p>Multiplicando por $2$:</p>
+<div class="math-block">
+$$
+v^2 - v_0^2 = 2a(x-x_0)
+$$
+</div>
+<p>Portanto:</p>
+<div class="math-block">
+$$
+v^2 = v_0^2 + 2a(x-x_0)
+$$
+</div>
+<blockquote>
+<p>Essa derivação é muito valiosa porque mostra que Torricelli não é uma fórmula solta.
+Ela cai de um pedaço curto de cálculo com grande significado físico.</p>
+</blockquote>
+<hr/>
+<h1 id="17-exemplos-fisicos-completos">17. Exemplos físicos completos</h1>
+<p>Agora vamos usar tudo em cenários reais.</p>
+<hr/>
+<h2 id="exemplo-1-esteira-industrial-em-velocidade-constante-mu">Exemplo 1 — Esteira industrial em velocidade constante (MU)</h2>
+<p>Uma caixa entra numa esteira na posição inicial $x_0 = 1{,}2\ \text{m}$ e segue com velocidade constante de $0{,}8\ \text{m/s}$ por $15\ \text{s}$.</p>
+<figure class="book-figure"><img alt="Cenário: caixa sobre esteira industrial ao longo do eixo S" loading="lazy" src="./calc_cinematica_assets/11_esteira_caixa.svg"/><figcaption>Cenário: caixa sobre esteira industrial ao longo do eixo S</figcaption></figure>
+<h3 id="pergunta">Pergunta</h3>
+<p>Qual a posição da caixa após $15\ \text{s}$?</p>
+<h3 id="solucao">Solução</h3>
+<p>No MU:</p>
+<div class="math-block">
+$$
+x = x_0 + vt
+$$
+</div>
+<p>Substituindo:</p>
+<div class="math-block">
+$$
+x = 1{,}2 + 0{,}8\cdot 15
+$$
+</div>
+<div class="math-block">
+$$
+x = 1{,}2 + 12
+$$
+</div>
+<div class="math-block">
+$$
+x = 13{,}2\ \text{m}
+$$
+</div>
+<h3 id="leitura-geometrica">Leitura geométrica</h3>
+<p>No gráfico $v \times t$, isso é um retângulo com:</p>
+<ul>
+<li>base $15$</li>
+<li>altura $0{,}8$</li>
+</ul>
+<p>Área:</p>
+<div class="math-block">
+$$
+0{,}8\cdot 15 = 12
+$$
+</div>
+<p>Esse é o deslocamento.<br/>
+Depois somamos com a posição inicial.</p>
+<hr/>
+<h2 id="exemplo-2-carro-saindo-do-semaforo-muv">Exemplo 2 — Carro saindo do semáforo (MUV)</h2>
+<p>Um carro passa pelo semáforo com velocidade inicial $v_0 = 4\ \text{m/s}$ e aceleração constante $a = 2{,}5\ \text{m/s}^2$.<br/>
+Determine a velocidade e o deslocamento após $6\ \text{s}$.</p>
+<figure class="book-figure"><img alt="Cenário: carro saindo do semáforo ao longo do eixo S" loading="lazy" src="./calc_cinematica_assets/12_carro_semaforo.svg"/><figcaption>Cenário: carro saindo do semáforo ao longo do eixo S</figcaption></figure>
+<h3 id="velocidade-apos-6-s">Velocidade após 6 s</h3>
+<p>Usamos:</p>
+<div class="math-block">
+$$
+v = v_0 + at
+$$
+</div>
+<div class="math-block">
+$$
+v = 4 + 2{,}5\cdot 6 = 4 + 15 = 19\ \text{m/s}
+$$
+</div>
+<h3 id="deslocamento-apos-6-s">Deslocamento após 6 s</h3>
+<p>Usamos:</p>
+<div class="math-block">
+$$
+\Delta x = v_0 t + \frac{1}{2}at^2
+$$
+</div>
+<div class="math-block">
+$$
+\Delta x = 4\cdot 6 + \frac{1}{2}\cdot 2{,}5\cdot 6^2
+$$
+</div>
+<div class="math-block">
+$$
+\Delta x = 24 + 1{,}25\cdot 36
+$$
+</div>
+<div class="math-block">
+$$
+\Delta x = 24 + 45 = 69\ \text{m}
+$$
+</div>
+<h3 id="interpretacao-fisica">Interpretação física</h3>
+<p>Dos $69\ \text{m}$:</p>
+<ul>
+<li>$24\ \text{m}$ vêm do pedaço “velocidade inicial mantida”</li>
+<li>$45\ \text{m}$ vêm do ganho extra causado pela aceleração</li>
+</ul>
+<p>Essa separação ajuda muito a enxergar o significado da fórmula.</p>
+<hr/>
+<h2 id="exemplo-3-empilhadeira-freando-muv-com-aceleracao-negativa">Exemplo 3 — Empilhadeira freando (MUV com aceleração negativa)</h2>
+<p>Uma empilhadeira se move com velocidade inicial $v_0 = 6\ \text{m/s}$ e freia com aceleração constante $a = -1{,}5\ \text{m/s}^2$.</p>
+<figure class="book-figure"><img alt="Cenário: empilhadeira freando ao longo do eixo S" loading="lazy" src="./calc_cinematica_assets/13_empilhadeira_frenagem.svg"/><figcaption>Cenário: empilhadeira freando ao longo do eixo S</figcaption></figure>
+<h3 id="pergunta-a">Pergunta A</h3>
+<p>Quanto tempo leva para parar?</p>
+<p>Usamos:</p>
+<div class="math-block">
+$$
+v = v_0 + at
+$$
+</div>
+<p>No instante em que para, $v=0$:</p>
+<div class="math-block">
+$$
+0 = 6 - 1{,}5t
+$$
+</div>
+<div class="math-block">
+$$
+1{,}5t = 6
+$$
+</div>
+<div class="math-block">
+$$
+t = 4\ \text{s}
+$$
+</div>
+<h3 id="pergunta-b">Pergunta B</h3>
+<p>Qual a distância percorrida até parar?</p>
+<div class="math-block">
+$$
+\Delta x = v_0 t + \frac{1}{2}at^2
+$$
+</div>
+<div class="math-block">
+$$
+\Delta x = 6\cdot 4 + \frac{1}{2}\cdot(-1{,}5)\cdot 4^2
+$$
+</div>
+<div class="math-block">
+$$
+\Delta x = 24 - 0{,}75\cdot 16
+$$
+</div>
+<div class="math-block">
+$$
+\Delta x = 24 - 12 = 12\ \text{m}
+$$
+</div>
+<h3 id="interpretacao-2">Interpretação</h3>
+<p>A aceleração negativa não “quebra” a fórmula.<br/>
+Ela apenas faz o termo quadrático atuar reduzindo o crescimento da posição.</p>
+<hr/>
+<h2 id="exemplo-4-torricelli-em-frenagem">Exemplo 4 — Torricelli em frenagem</h2>
+<p>Um veículo está a $24\ \text{m/s}$ e freia com aceleração constante de $-4\ \text{m/s}^2$.<br/>
+Qual a distância mínima de frenagem até parar?</p>
+<figure class="book-figure"><img alt="Cenário: veículo freando até parar ao longo do eixo S" loading="lazy" src="./calc_cinematica_assets/14_veiculo_frenagem.svg"/><figcaption>Cenário: veículo freando até parar ao longo do eixo S</figcaption></figure>
+<p>Usamos Torricelli:</p>
+<div class="math-block">
+$$
+v^2 = v_0^2 + 2a(x-x_0)
+$$
+</div>
+<p>Quando o veículo para, $v=0$:</p>
+<div class="math-block">
+$$
+0 = 24^2 + 2(-4)\Delta x
+$$
+</div>
+<div class="math-block">
+$$
+0 = 576 - 8\Delta x
+$$
+</div>
+<div class="math-block">
+$$
+8\Delta x = 576
+$$
+</div>
+<div class="math-block">
+$$
+\Delta x = 72\ \text{m}
+$$
+</div>
+<h3 id="checagem-cruzada">Checagem cruzada</h3>
+<p>Também poderíamos fazer pelo tempo:</p>
+<div class="math-block">
+$$
+0 = 24 - 4t \Rightarrow t=6
+$$
+</div>
+<p>Depois:</p>
+<div class="math-block">
+$$
+\Delta x = 24\cdot 6 + \frac{1}{2}(-4)\cdot 6^2
+$$
+</div>
+<div class="math-block">
+$$
+\Delta x = 144 - 72 = 72\ \text{m}
+$$
+</div>
+<p>As duas rotas batem, como devem bater.</p>
+<hr/>
+<h1 id="18-o-papel-dos-graficos-em-linguagem-de-engenharia">18. O papel dos gráficos em linguagem de engenharia</h1>
+<p>Na prática, em engenharia, olhar gráfico não é “enfeite”.<br/>
+É uma maneira de validar a equação sem decorar.</p>
+<h2 id="18-1-grafico-x-times-t">18.1. Gráfico $x \times t$</h2>
+<p>Pergunta respondida:</p>
+<blockquote>
+<p>“onde o corpo está?”</p>
+</blockquote>
+<p>Leituras importantes:</p>
+<ul>
+<li>valor do gráfico = posição</li>
+<li>inclinação = velocidade</li>
+</ul>
+<h2 id="18-2-grafico-v-times-t">18.2. Gráfico $v \times t$</h2>
+<p>Pergunta respondida:</p>
+<blockquote>
+<p>“a que velocidade o corpo está se movendo?”</p>
+</blockquote>
+<p>Leituras importantes:</p>
+<ul>
+<li>valor do gráfico = velocidade</li>
+<li>inclinação = aceleração</li>
+<li>área sob o gráfico = deslocamento</li>
+</ul>
+<h2 id="18-3-grafico-a-times-t">18.3. Gráfico $a \times t$</h2>
+<p>Pergunta respondida:</p>
+<blockquote>
+<p>“como a velocidade está mudando?”</p>
+</blockquote>
+<p>Leituras importantes:</p>
+<ul>
+<li>valor do gráfico = aceleração</li>
+<li>área sob o gráfico = variação de velocidade</li>
+</ul>
+<figure class="book-figure"><img alt="MUV: a(t) constante" loading="lazy" src="./calc_cinematica_assets/06_muv_at.svg"/><figcaption>MUV: a(t) constante</figcaption></figure>
+<hr/>
+<h1 id="19-uma-sequencia-mental-que-funciona-muito-bem-em-problemas">19. Uma sequência mental que funciona muito bem em problemas</h1>
+<p>Quando você pegar um exercício, use esta ordem:</p>
+<h2 id="passo-1-descubra-qual-grandeza-voce-conhece-como-funcao-do-tempo">Passo 1 — descubra qual grandeza você conhece como função do tempo</h2>
+<p>Você recebeu:</p>
+<ul>
+<li>posição?</li>
+<li>velocidade?</li>
+<li>aceleração?</li>
+</ul>
+<h2 id="passo-2-veja-se-o-movimento-e-mu-ou-muv">Passo 2 — veja se o movimento é MU ou MUV</h2>
+<ul>
+<li>velocidade constante $\Rightarrow$ MU</li>
+<li>aceleração constante $\Rightarrow$ MUV</li>
+</ul>
+<h2 id="passo-3-pense-em-grafico">Passo 3 — pense em gráfico</h2>
+<p>Antes da fórmula, pergunte:</p>
+<ul>
+<li>isso é reta?</li>
+<li>isso é área?</li>
+<li>isso é inclinação?</li>
+</ul>
+<h2 id="passo-4-so-entao-escreva-a-equacao">Passo 4 — só então escreva a equação</h2>
+<p>Use a equação como tradução do raciocínio geométrico, não como chute decorado.</p>
+<hr/>
+<h1 id="20-erros-classicos-e-como-evita-los">20. Erros clássicos e como evitá-los</h1>
+<h2 id="erro-1-confundir-velocidade-media-com-velocidade-instantanea">Erro 1 — confundir velocidade média com velocidade instantânea</h2>
+<p>Correção:</p>
+<ul>
+<li>média usa intervalo</li>
+<li>instantânea usa limite / tangente</li>
+</ul>
+<h2 id="erro-2-usar-dfrac-v-0-v-2-fora-do-muv">Erro 2 — usar $\dfrac{v_0 + v}{2}$ fora do MUV</h2>
+<p>Correção:</p>
+<ul>
+<li>essa média simples vale quando $v(t)$ é linear no tempo</li>
+</ul>
+<h2 id="erro-3-esquecer-a-interpretacao-de-area">Erro 3 — esquecer a interpretação de área</h2>
+<p>Correção:</p>
+<ul>
+<li>em $v \times t$, área = deslocamento</li>
+<li>em $a \times t$, área = variação de velocidade</li>
+</ul>
+<h2 id="erro-4-tratar-aceleracao-negativa-como-formula-diferente">Erro 4 — tratar aceleração negativa como “fórmula diferente”</h2>
+<p>Correção:</p>
+<ul>
+<li>a fórmula é a mesma</li>
+<li>o sinal da aceleração cuida do sentido físico</li>
+</ul>
+<h2 id="erro-5-decorar-sem-ler-unidade">Erro 5 — decorar sem ler unidade</h2>
+<p>Correção:</p>
+<ul>
+<li>sempre cheque unidade:
+<ul>
+<li>$v_0 t$ tem unidade de comprimento</li>
+<li>$at^2$ também tem unidade de comprimento</li>
+<li>logo ambos podem ser somados em $x(t)$</li>
+</ul>
+</li>
+</ul>
+<h3 id="checagem-dimensional-rapida">Checagem dimensional rápida</h3>
+<div class="math-block">
+$$
+[v_0 t] = \frac{m}{s}\cdot s = m
+$$
+</div>
+<div class="math-block">
+$$
+[at^2] = \frac{m}{s^2}\cdot s^2 = m
+$$
+</div>
+<p>Tudo consistente.</p>
+<hr/>
+<h1 id="21-mini-resumo-das-regras-de-calculo-que-realmente-usamos-aqui">21. Mini-resumo das regras de cálculo que realmente usamos aqui</h1>
+<h2 id="derivadas">Derivadas</h2>
+<div class="math-block">
+$$
+\frac{d}{dt}(c)=0
+$$
+</div>
+<div class="math-block">
+$$
+\frac{d}{dt}(t)=1
+$$
+</div>
+<div class="math-block">
+$$
+\frac{d}{dt}(t^2)=2t
+$$
+</div>
+<div class="math-block">
+$$
+\frac{d}{dt}[f(t)+g(t)] = f'(t)+g'(t)
+$$
+</div>
+<h2 id="integrais">Integrais</h2>
+<div class="math-block">
+$$
+\int c\,dt = ct + C
+$$
+</div>
+<div class="math-block">
+$$
+\int t\,dt = \frac{t^2}{2} + C
+$$
+</div>
+<div class="math-block">
+$$
+\int [f(t)+g(t)]\,dt = \int f(t)\,dt + \int g(t)\,dt
+$$
+</div>
+<h2 id="traducao-para-a-cinematica">Tradução para a cinemática</h2>
+<div class="math-block">
+$$
+v = \frac{dx}{dt}
+$$
+</div>
+<div class="math-block">
+$$
+a = \frac{dv}{dt}
+$$
+</div>
+<div class="math-block">
+$$
+\Delta x = \int v(t)\,dt
+$$
+</div>
+<div class="math-block">
+$$
+\Delta v = \int a(t)\,dt
+$$
+</div>
+<blockquote>
+<p>Dito isso, é possível usar várias outras regras práticas de cálculo.<br/>
+<strong>Mas, na cinemática básica, especialmente em velocidade, MU e MUV, esse conjunto já leva você às fórmulas clássicas do ensino médio sem sofrimento desnecessário.</strong></p>
+</blockquote>
+<hr/>
+<h1 id="22-folha-de-consulta-compacta">22. Folha de consulta compacta</h1>
+<h2 id="mu">MU</h2>
+<div class="math-block">
+$$
+x = x_0 + vt
+$$
+</div>
+<ul>
+<li>gráfico $x \times t$: reta</li>
+<li>gráfico $v \times t$: horizontal</li>
+<li>área em $v \times t$: deslocamento</li>
+</ul>
+<h2 id="muv">MUV</h2>
+<div class="math-block">
+$$
+v = v_0 + at
+$$
+</div>
+<div class="math-block">
+$$
+x = x_0 + v_0 t + \frac{1}{2}at^2
+$$
+</div>
+<div class="math-block">
+$$
+v_{\text{méd}} = \frac{v_0 + v}{2}
+$$
+</div>
+<div class="math-block">
+$$
+\Delta x = \frac{v_0 + v}{2}\,t
+$$
+</div>
+<div class="math-block">
+$$
+v^2 = v_0^2 + 2a(x-x_0)
+$$
+</div>
+<ul>
+<li>gráfico $a \times t$: horizontal</li>
+<li>gráfico $v \times t$: reta</li>
+<li>gráfico $x \times t$: parábola</li>
+</ul>
+<h2 id="relacoes-de-calculo">Relações de cálculo</h2>
+<div class="math-block">
+$$
+v = \frac{dx}{dt}
+$$
+</div>
+<div class="math-block">
+$$
+a = \frac{dv}{dt}
+$$
+</div>
+<div class="math-block">
+$$
+\Delta x = \int v(t)\,dt
+$$
+</div>
+<div class="math-block">
+$$
+\Delta v = \int a(t)\,dt
+$$
+</div>
+<hr/>
+<h1 id="23-exercicios-propostos">23. Exercícios propostos</h1>
+<h2 id="exercicio-1-mu">Exercício 1 — MU</h2>
+<p>Um carrinho de inspeção se move com velocidade constante de $3{,}5\ \text{m/s}$ a partir de $x_0 = 2\ \text{m}$.<br/>
+Qual sua posição após $12\ \text{s}$?</p>
+<figure class="book-figure"><img alt="Cenário: carrinho de inspeção em movimento uniforme sobre o eixo S" loading="lazy" src="./calc_cinematica_assets/15_carrinho_inspecao.svg"/><figcaption>Cenário: carrinho de inspeção em movimento uniforme sobre o eixo S</figcaption></figure>
+<hr/>
+<h2 id="exercicio-2-muv-acelerado">Exercício 2 — MUV acelerado</h2>
+<p>Uma moto parte com $v_0 = 2\ \text{m/s}$ e aceleração constante de $3\ \text{m/s}^2$.<br/>
+Determine:</p>
+<ol>
+<li>a velocidade após $5\ \text{s}$</li>
+<li>o deslocamento nesse intervalo</li>
+</ol>
+<figure class="book-figure"><img alt="Cenário: moto acelerando ao longo do eixo S" loading="lazy" src="./calc_cinematica_assets/16_moto_arrancada.svg"/><figcaption>Cenário: moto acelerando ao longo do eixo S</figcaption></figure>
+<hr/>
+<h2 id="exercicio-3-muv-retardado">Exercício 3 — MUV retardado</h2>
+<p>Um robô de armazém está a $8\ \text{m/s}$ e freia com $a=-2\ \text{m/s}^2$.<br/>
+Determine:</p>
+<ol>
+<li>o tempo para parar</li>
+<li>a distância percorrida até parar</li>
+</ol>
+<figure class="book-figure"><img alt="Cenário: robô de armazém freando ao longo do eixo S" loading="lazy" src="./calc_cinematica_assets/17_robo_armazem.svg"/><figcaption>Cenário: robô de armazém freando ao longo do eixo S</figcaption></figure>
+<hr/>
+<h2 id="exercicio-4-leitura-geometrica">Exercício 4 — leitura geométrica</h2>
+<p>Explique, sem usar conta, por que o termo $\dfrac{1}{2}at^2$ aparece no MUV a partir do gráfico $v \times t$.</p>
+<hr/>
+<h1 id="24-gabarito-dos-exercicios">24. Gabarito dos exercícios</h1>
+<h2 id="exercicio-1">Exercício 1</h2>
+<div class="math-block">
+$$
+x = x_0 + vt = 2 + 3{,}5\cdot 12 = 44\ \text{m}
+$$
+</div>
+<h2 id="exercicio-2">Exercício 2</h2>
+<h3 id="velocidade">Velocidade</h3>
+<div class="math-block">
+$$
+v = v_0 + at = 2 + 3\cdot 5 = 17\ \text{m/s}
+$$
+</div>
+<h3 id="deslocamento">Deslocamento</h3>
+<div class="math-block">
+$$
+\Delta x = v_0 t + \frac{1}{2}at^2
+= 2\cdot 5 + \frac{1}{2}\cdot 3\cdot 5^2
+= 10 + 37{,}5
+= 47{,}5\ \text{m}
+$$
+</div>
+<h2 id="exercicio-3">Exercício 3</h2>
+<h3 id="tempo-para-parar">Tempo para parar</h3>
+<div class="math-block">
+$$
+0 = 8 - 2t \Rightarrow t=4\ \text{s}
+$$
+</div>
+<h3 id="distancia">Distância</h3>
+<div class="math-block">
+$$
+\Delta x = 8\cdot 4 + \frac{1}{2}(-2)\cdot 4^2
+= 32 - 16
+= 16\ \text{m}
+$$
+</div>
+<h2 id="exercicio-4">Exercício 4</h2>
+<p>Porque o gráfico $v \times t$ no MUV é uma reta;<br/>
+a área sob a reta pode ser decomposta em:</p>
+<ul>
+<li>um retângulo $v_0 t$</li>
+<li>um triângulo de área $\dfrac{1}{2}t\cdot at$</li>
+</ul>
+<p>Logo o deslocamento total é:</p>
+<div class="math-block">
+$$
+\Delta x = v_0 t + \frac{1}{2}at^2
+$$
+</div>
+<hr/>
+<h1 id="25-fechamento">25. Fechamento</h1>
+<p>Se você guardar apenas uma visão deste material, guarde esta:</p>
+<h2 id="derivada-e-inclinacao">Derivada é inclinação</h2>
+<ul>
+<li>da posição sai a velocidade</li>
+<li>da velocidade sai a aceleração</li>
+</ul>
+<h2 id="integral-e-area-acumulo">Integral é área / acúmulo</h2>
+<ul>
+<li>da velocidade sai o deslocamento</li>
+<li>da aceleração sai a variação de velocidade</li>
+</ul>
+<p>E, mais importante ainda:</p>
+<blockquote>
+<p>as fórmulas do MU e do MUV não são mágicas nem arbitrárias<br/>
+elas são a forma algébrica de duas ideias geométricas:
+<strong>inclinação</strong> e <strong>área</strong></p>
+</blockquote>
+<p>Esse é o ponto em que cálculo deixa de parecer “matemática abstrata solta” e passa a parecer o que ele realmente é na cinemática:</p>
+<blockquote>
+<p>uma linguagem para medir mudança e acúmulo no mundo físico.</p>
+</blockquote>
+<hr/>
+
+    <footer class="book-footer">
+      <span>Curso de Cálculo para Cinemática</span>
+      <span>Cenas esquemáticas 2D e layout editorial</span>
+      <span>Atualizado em 26/03/2026</span>
+    </footer>
+  </main>
+</body>
+</html>

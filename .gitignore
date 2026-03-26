@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# OS / editor
+.DS_Store
+.vscode/
+
+# Build outputs
+dist/
+book/
+
+# Temporary files
+*.tmp
+*.bak
