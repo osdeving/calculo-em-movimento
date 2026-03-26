@@ -17,6 +17,33 @@ SCENES = [
         "format": "mp4",
         "quality": "l",
         "renderer": "cairo",
+    },
+    {
+        "source": REPO_ROOT / "animations" / "manim" / "kinematics.py",
+        "scene": "UniformMotionGraphsScene",
+        "output_stem": "mu_graphs_overview",
+        "target": REPO_ROOT / "content" / "media" / "manim" / "mu_graphs_overview.mp4",
+        "format": "mp4",
+        "quality": "l",
+        "renderer": "cairo",
+    },
+    {
+        "source": REPO_ROOT / "animations" / "manim" / "kinematics.py",
+        "scene": "AcceleratedMotionGraphsScene",
+        "output_stem": "muv_graphs_overview",
+        "target": REPO_ROOT / "content" / "media" / "manim" / "muv_graphs_overview.mp4",
+        "format": "mp4",
+        "quality": "l",
+        "renderer": "cairo",
+    },
+    {
+        "source": REPO_ROOT / "animations" / "manim" / "kinematics.py",
+        "scene": "SecantToTangentScene",
+        "output_stem": "secant_to_tangent",
+        "target": REPO_ROOT / "content" / "media" / "manim" / "secant_to_tangent.mp4",
+        "format": "mp4",
+        "quality": "l",
+        "renderer": "cairo",
     }
 ]
 

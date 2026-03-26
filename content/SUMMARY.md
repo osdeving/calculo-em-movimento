@@ -28,3 +28,4 @@
 - [23. Exercícios propostos](23-exercicios-propostos.md)
 - [24. Gabarito dos exercícios](24-gabarito-dos-exercicios.md)
 - [25. Fechamento](25-fechamento.md)
+- [Apêndice A. Retas, gráficos e funções](26-apendice-a-retas-graficos-e-funcoes.md)
