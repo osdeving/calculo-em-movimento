@@ -1,6 +1,9 @@
-.PHONY: assets animations media build build-pages publish serve serve-stop clean
+.PHONY: assets animations references media build build-pages publish serve serve-stop clean
 
 BOOK_DIR := renderers/mdbook
+
+references:
+	python3 scripts/build_reference_pages.py
 
 assets:
 	python3 scripts/generate_scene_assets.py
@@ -10,17 +13,17 @@ animations:
 
 media: assets animations
 
-build: media
+build: references media
 	mdbook build $(BOOK_DIR)
 
-build-pages:
+build-pages: references
 	mdbook build $(BOOK_DIR)
 	touch dist/book/.nojekyll
 
 publish:
 	gh workflow run publish-pages.yml --ref main
 
-serve: media
+serve: references media
 	python3 scripts/serve_mdbook.py
 
 serve-stop:

@@ -14,6 +14,7 @@ Se a noção de inclinação estiver nebulosa, o ponto mais útil é o [Apêndic
 
 Em um intervalo de tempo $\Delta t$, a velocidade média é:
 
+<!-- formula: Velocidade média -->
 $$
 v_{\text{méd}} = \frac{\Delta x}{\Delta t}
 $$
@@ -71,6 +72,7 @@ $$
 
 Substituindo essas duas escritas na fórmula compacta, obtemos:
 
+<!-- formula: Velocidade média em linguagem de função -->
 $$
 v_{\text{méd}}
 =
@@ -238,6 +240,13 @@ Os valores vão se aproximando de $4$.
 Isso sugere que a velocidade instantânea em $t=2$ é $4$.
 
 Quando esse processo funciona, nasce a **velocidade instantânea**:
+
+<!-- formula: Velocidade instantânea -->
+$$
+v(t)=\lim_{\Delta t\to 0}\frac{x(t+\Delta t)-x(t)}{\Delta t}
+$$
+
+Essa escrita condensa a ideia inteira do capítulo: sair de uma razão média e encolher o intervalo até obter a taxa no instante.
 
 $$
 v(t) = \lim_{\Delta t \to 0}\frac{x(t+\Delta t)-x(t)}{\Delta t}

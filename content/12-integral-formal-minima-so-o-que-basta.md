@@ -19,6 +19,7 @@ Agora vamos escrever essa ideia na linguagem formal mínima da integral, mas sem
 
 A regra geral é:
 
+<!-- formula: Integral da velocidade produz deslocamento -->
 $$
 \Delta x = \int_0^t v(\tau)\,d\tau
 $$
@@ -88,6 +89,7 @@ Agora fazemos o mesmo raciocínio um nível acima.
 
 A regra geral é:
 
+<!-- formula: Integral da aceleração produz variação de velocidade -->
 $$
 \Delta v = \int_0^t a(\tau)\,d\tau
 $$
@@ -150,6 +152,7 @@ Por isso, quando parte do gráfico fica abaixo do eixo horizontal, a integral l�
 
 Em forma curta:
 
+<!-- formula: Deslocamento como área assinada -->
 $$
 \Delta x = A_+ - A_-
 $$

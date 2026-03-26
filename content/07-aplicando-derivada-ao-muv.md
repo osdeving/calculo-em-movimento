@@ -56,6 +56,7 @@ Aplicando as regras:
 
 Logo:
 
+<!-- formula: Equação horária da velocidade no MUV -->
 $$
 v(t) = \frac{dx}{dt} = v_0 + at
 $$
@@ -78,6 +79,7 @@ $$
 
 Portanto:
 
+<!-- formula: Aceleração constante no MUV -->
 $$
 a(t)=a
 $$

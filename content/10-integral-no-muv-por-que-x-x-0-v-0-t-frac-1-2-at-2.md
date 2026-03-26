@@ -101,6 +101,7 @@ $$
 
 Portanto:
 
+<!-- formula: Equação horária da posição no MUV -->
 $$
 x = x_0 + v_0 t + \frac{1}{2}at^2
 $$

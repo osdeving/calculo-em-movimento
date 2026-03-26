@@ -25,6 +25,7 @@ Ela começa em $v_0$ e termina em $v$.
 
 Se a variação entre esses extremos é linear, então o valor médio ao longo do intervalo coincide com a média aritmética dos extremos:
 
+<!-- formula: Velocidade média no MUV -->
 $$
 v_{\text{méd}} = \frac{v_0 + v}{2}
 $$

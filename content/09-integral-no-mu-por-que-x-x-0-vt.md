@@ -75,6 +75,7 @@ $$
 
 Substituindo $\Delta x = vt$:
 
+<!-- formula: Equação horária do MU -->
 $$
 x = x_0 + vt
 $$

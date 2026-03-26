@@ -14,19 +14,24 @@ Laboratório editorial de um livro de cinemática com:
 - `content/`: conteúdo real do livro, separado por página/capítulo
 - `content/assets/`: figuras e ilustrações usadas pelo conteúdo
 - `content/media/`: vídeos e outras mídias geradas para o livro
+- `content/reference_data/glossary.json`: base editável do glossário e do índice remissivo
+- `content/references/`: páginas geradas de consulta editorial
 - `animations/manim/`: cenas-fonte do Manim
 - `renderers/mdbook/`: configuração visual e build do `mdBook`
 - `scripts/generate_scene_assets.py`: gera os SVGs esquemáticos 2D
 - `scripts/render_manim_assets.py`: renderiza as animações do Manim
+- `scripts/build_reference_pages.py`: gera lista de figuras, vídeos, fórmulas, glossário e índice remissivo
 - `dist/book/`: saída gerada do livro
 
 ## Fluxo de edição
 
 1. Edite o conteúdo em `content/*.md`
-2. Se precisar ajustar ilustrações, edite `scripts/generate_scene_assets.py`
-3. Se precisar ajustar animações, edite `animations/manim/*.py`
-4. Gere o livro com `make build`
-5. Sirva localmente com `make serve`
+2. Para incluir fórmulas na lista de fórmulas, adicione `<!-- formula: Título -->` logo antes do bloco `$$ ... $$`
+3. Para ampliar glossário e índice remissivo, edite `content/reference_data/glossary.json`
+4. Se precisar ajustar ilustrações, edite `scripts/generate_scene_assets.py`
+5. Se precisar ajustar animações, edite `animations/manim/*.py`
+6. Gere o livro com `make build`
+7. Sirva localmente com `make serve`
 
 ## Comandos
 
@@ -42,6 +47,7 @@ make clean
 
 `make build` e `make serve` passam por:
 
+- geração das páginas de referência
 - geração dos SVGs
 - renderização das animações Manim quando houver mudanças
 - build ou serve do `mdBook`

@@ -83,6 +83,7 @@ $$
 
 Portanto:
 
+<!-- formula: Fórmula de Torricelli -->
 $$
 v^2=v_0^2+2a(x-x_0)
 $$
