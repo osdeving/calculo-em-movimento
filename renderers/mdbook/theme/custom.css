@@ -135,8 +135,8 @@ html.light .content main a {
   width: 100%;
   height: auto;
   border-radius: 10px;
-  background: #ece1cf;
-  box-shadow: inset 0 0 0 1px rgba(102, 95, 86, 0.08);
+  background: #05070d;
+  box-shadow: inset 0 0 0 1px rgba(216, 193, 162, 0.12);
 }
 
 .book-motion {

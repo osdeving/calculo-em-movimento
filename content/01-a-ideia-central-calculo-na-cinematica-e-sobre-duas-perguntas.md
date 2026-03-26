@@ -54,6 +54,21 @@ Na cinemática, a leitura geométrica disso é fortíssima:
 - área sob o gráfico $v \times t$ representa deslocamento
 - área sob o gráfico $a \times t$ representa variação de velocidade
 
+Mas aqui já vale antecipar um detalhe importante, para não nascer uma intuição incompleta.
+
+Quando o gráfico fica **acima** do eixo do tempo, a contribuição entra positiva.  
+Quando o gráfico fica **abaixo** do eixo do tempo, a contribuição entra negativa.
+
+Em linguagem física, isso significa o seguinte:
+
+- velocidade positiva tende a empurrar a posição no sentido positivo do eixo
+- velocidade negativa tende a empurrar a posição no sentido oposto
+
+Então a integral, na cinemática, não mede apenas “quanto desenho apareceu sob a curva”.  
+Ela mede um **acúmulo com sinal**.
+
+Esse ponto vai aparecer com mais calma no [capítulo 8, seção 8.4](08-o-caminho-inverso-integral-como-acumulo.md) e volta de modo formal no [capítulo 12, seção 12.3](12-integral-formal-minima-so-o-que-basta.md).
+
 ## 1.3. O livro inteiro gira em torno desse par
 
 Se quisermos dizer tudo em uma forma bem compacta:

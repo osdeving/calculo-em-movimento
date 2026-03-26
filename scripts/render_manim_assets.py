@@ -65,6 +65,15 @@ SCENES = [
     },
     {
         "source": REPO_ROOT / "animations" / "manim" / "kinematics.py",
+        "scene": "SignedAreaScene",
+        "output_stem": "signed_area_overview",
+        "target": REPO_ROOT / "content" / "media" / "manim" / "signed_area_overview.mp4",
+        "format": "mp4",
+        "quality": "l",
+        "renderer": "cairo",
+    },
+    {
+        "source": REPO_ROOT / "animations" / "manim" / "kinematics.py",
         "scene": "UniformAreaRectangleScene",
         "output_stem": "mu_area_rectangle",
         "target": REPO_ROOT / "content" / "media" / "manim" / "mu_area_rectangle.mp4",

@@ -30,15 +30,20 @@ from manim import (
 )
 
 
-PAPER = "#f6f1e6"
-INK = "#2a2926"
-MUTED = "#665f56"
-ACCENT = "#8b5e34"
-ACCENT_SOFT = "#d8c1a2"
-CAR_RED = "#c8623b"
-CAR_DARK = "#7e3c27"
-HIGHLIGHT = "#1f7a8c"
-SOFT_BLUE = "#d6eef2"
+PAPER = "#05070d"
+INK = "#f4ead8"
+MUTED = "#c5b79f"
+ACCENT = "#d89a45"
+ACCENT_SOFT = "#6c4b23"
+CARD_FILL = "#101722"
+CARD_FILL_ALT = "#16202d"
+CAR_RED = "#d96f48"
+CAR_DARK = "#8d452d"
+CAR_WHEEL = "#0d1118"
+HIGHLIGHT = "#67d5e7"
+SOFT_BLUE = "#18394d"
+NEGATIVE = "#e07a6b"
+NEGATIVE_SOFT = "#5d2520"
 
 
 def make_info_box(
@@ -67,7 +72,7 @@ def make_info_box(
         width=content.width + 0.56,
         stroke_color=ACCENT_SOFT,
         stroke_width=2,
-        fill_color="#fffaf2",
+        fill_color=CARD_FILL,
         fill_opacity=1,
     )
     content.move_to(card.get_center())
@@ -82,7 +87,7 @@ def make_badge(text: str, font_size: int = 22, color: str = ACCENT) -> VGroup:
         width=label.width + 0.34,
         stroke_color=ACCENT_SOFT,
         stroke_width=2,
-        fill_color="#fffaf2",
+        fill_color=CARD_FILL_ALT,
         fill_opacity=0.94,
     )
     label.move_to(card.get_center())
@@ -117,7 +122,7 @@ def make_car(scale_factor: float = 1.0) -> VGroup:
         fill_color=SOFT_BLUE,
         fill_opacity=0.95,
     )
-    wheel_left = Circle(radius=0.15, stroke_color=INK, stroke_width=3, fill_color=INK, fill_opacity=1)
+    wheel_left = Circle(radius=0.15, stroke_color=CAR_WHEEL, stroke_width=3, fill_color=CAR_WHEEL, fill_opacity=1)
     wheel_right = wheel_left.copy()
     wheel_left.move_to(body.get_bottom() + LEFT * 0.42 + DOWN * 0.02)
     wheel_right.move_to(body.get_bottom() + RIGHT * 0.42 + DOWN * 0.02)
@@ -219,6 +224,46 @@ def make_axis_polygon(
         stroke_color=stroke_color,
         stroke_width=stroke_width,
     )
+
+
+def make_riemann_rectangles(
+    axes: Axes,
+    func,
+    x_start: float,
+    x_end: float,
+    count: int,
+    sample: str = "left",
+    positive_fill: str = ACCENT_SOFT,
+    positive_stroke: str = ACCENT,
+    negative_fill: str = NEGATIVE_SOFT,
+    negative_stroke: str = NEGATIVE,
+    fill_opacity: float = 0.35,
+    stroke_width: float = 2,
+) -> VGroup:
+    dx = (x_end - x_start) / count
+    sample_offset = {"left": 0.0, "mid": 0.5, "right": 1.0}[sample]
+    rectangles = VGroup()
+
+    for index in range(count):
+        left = x_start + index * dx
+        right = left + dx
+        probe = left + sample_offset * dx
+        height = func(probe)
+        fill_color = positive_fill if height >= 0 else negative_fill
+        stroke_color = positive_stroke if height >= 0 else negative_stroke
+        rect = Polygon(
+            axes.c2p(left, 0),
+            axes.c2p(right, 0),
+            axes.c2p(right, height),
+            axes.c2p(left, height),
+            fill_color=fill_color,
+            fill_opacity=fill_opacity,
+            stroke_color=stroke_color,
+            stroke_width=stroke_width,
+        )
+        rectangles.add(rect)
+
+    return rectangles
 
 
 class AverageVelocityPostsScene(Scene):
@@ -523,33 +568,37 @@ class IntegralAccumulationScene(Scene):
     def construct(self) -> None:
         self.camera.background_color = PAPER
 
-        title = Text("Integral: somar pequenas contribuicoes", font="DejaVu Serif", font_size=31, color=INK).to_edge(UP).shift(DOWN * 0.2)
+        title = Text(
+            "Integral: refinar a particao melhora a leitura da area",
+            font="DejaVu Serif",
+            font_size=30,
+            color=INK,
+        ).to_edge(UP).shift(DOWN * 0.2)
 
-        axes_group, axes = make_stage_axes(LEFT * 1.6 + DOWN * 0.2, "v(t)", [0, 5.5, 1], x_length=6.2, y_length=3.1)
-        curve = axes.plot(lambda t: 1.0 + 0.7 * t, x_range=[0, 4], color=HIGHLIGHT, stroke_width=5)
+        func = lambda t: 0.8 + 0.55 * t + 0.16 * t * t
+        axes_group, axes = make_stage_axes(LEFT * 1.55 + DOWN * 0.2, "v(t)", [0, 6.3, 1], x_length=6.2, y_length=3.1)
+        curve = axes.plot(func, x_range=[0, 4], color=HIGHLIGHT, stroke_width=5)
+        fine_fill = Polygon(
+            axes.c2p(0, 0),
+            *[axes.c2p(t, func(t)) for t in [0.25, 0.5, 1.0, 1.5, 2.0, 2.6, 3.2, 3.6, 4.0]],
+            axes.c2p(4, 0),
+            fill_color=SOFT_BLUE,
+            fill_opacity=0.18,
+            stroke_width=0,
+        )
 
-        dx = 0.55
-        rects = VGroup()
-        for index in range(7):
-            x0 = index * dx
-            height = 1.0 + 0.7 * x0
-            width = axes.c2p(x0 + dx, 0)[0] - axes.c2p(x0, 0)[0]
-            rect = Rectangle(
-                width=width,
-                height=axes.c2p(0, height)[1] - axes.c2p(0, 0)[1],
-                stroke_color=ACCENT,
-                stroke_width=2,
-                fill_color=ACCENT_SOFT,
-                fill_opacity=0.35,
-            )
-            rect.move_to((axes.c2p(x0, 0) + axes.c2p(x0 + dx, height)) / 2)
-            rects.add(rect)
+        rects_4 = make_riemann_rectangles(axes, func, 0, 4, 4, sample="left", fill_opacity=0.38)
+        rects_8 = make_riemann_rectangles(axes, func, 0, 4, 8, sample="left", fill_opacity=0.36)
+        rects_16 = make_riemann_rectangles(axes, func, 0, 4, 16, sample="left", fill_opacity=0.34, stroke_width=1.5)
+
+        badge_4 = make_badge("4 partes", font_size=22).move_to(axes.c2p(2.4, 5.5))
+        badge_8 = make_badge("8 partes", font_size=22).move_to(badge_4)
+        badge_16 = make_badge("16 partes", font_size=22).move_to(badge_4)
 
         message = make_info_box(
-            "Acumular no tempo =",
-            "somar muitas pequenas",
-            "contribuicoes de area.",
-            "No fim, aparece Delta x.",
+            "Poucas partes: aproximacao grossa.",
+            "Mais partes: o desenho acompanha melhor a curva.",
+            "A integral organiza esse refinamento.",
             font_size=22,
             highlight_last=True,
         ).to_corner(UP + RIGHT).shift(DOWN * 1.0 + LEFT * 0.4)
@@ -557,9 +606,77 @@ class IntegralAccumulationScene(Scene):
         self.play(FadeIn(title, shift=DOWN * 0.08))
         self.play(FadeIn(axes_group))
         self.play(Create(curve))
-        self.play(FadeIn(rects))
+        self.play(FadeIn(fine_fill))
+        self.play(FadeIn(rects_4), FadeIn(badge_4, shift=UP * 0.06))
         self.play(FadeIn(message, shift=LEFT * 0.1))
-        self.play(Indicate(rects, color=HIGHLIGHT))
+        self.play(Indicate(rects_4, color=HIGHLIGHT))
+        self.play(FadeOut(rects_4, scale=0.98), FadeOut(badge_4, shift=DOWN * 0.05), FadeIn(rects_8, scale=1.02), FadeIn(badge_8, shift=UP * 0.05))
+        self.play(Indicate(rects_8, color=HIGHLIGHT))
+        self.play(FadeOut(rects_8, scale=0.98), FadeOut(badge_8, shift=DOWN * 0.05), FadeIn(rects_16, scale=1.02), FadeIn(badge_16, shift=UP * 0.05))
+        self.play(Indicate(rects_16, color=HIGHLIGHT), Indicate(message[1][-1], color=HIGHLIGHT))
+        self.wait(1.0)
+
+
+class SignedAreaScene(Scene):
+    def construct(self) -> None:
+        self.camera.background_color = PAPER
+
+        title = Text(
+            "Area assinada: abaixo do eixo, a contribuicao vem com sinal negativo",
+            font="DejaVu Serif",
+            font_size=28,
+            color=INK,
+        ).to_edge(UP).shift(DOWN * 0.2)
+
+        func = lambda t: 2.4 - 1.2 * t
+        axes_group, axes = make_stage_axes(DOWN * 0.18, "v(t)", [-3.2, 3.2, 1], x_length=6.2, y_length=3.2)
+        curve = axes.plot(func, x_range=[0, 4], color=HIGHLIGHT, stroke_width=5)
+        rects = make_riemann_rectangles(
+            axes,
+            func,
+            0,
+            4,
+            8,
+            sample="mid",
+            positive_fill=SOFT_BLUE,
+            positive_stroke=HIGHLIGHT,
+            negative_fill=NEGATIVE_SOFT,
+            negative_stroke=NEGATIVE,
+            fill_opacity=0.34,
+        )
+        positive_area = make_axis_polygon(
+            axes,
+            [(0, 0), (2, 0), (0, 2.4)],
+            fill_color=SOFT_BLUE,
+            fill_opacity=0.24,
+            stroke_color=HIGHLIGHT,
+        )
+        negative_area = make_axis_polygon(
+            axes,
+            [(2, 0), (4, 0), (4, -2.4)],
+            fill_color=NEGATIVE_SOFT,
+            fill_opacity=0.28,
+            stroke_color=NEGATIVE,
+        )
+
+        plus_badge = make_badge("acima do eixo: soma", font_size=20, color=HIGHLIGHT).move_to(axes.c2p(0.9, 1.7))
+        minus_badge = make_badge("abaixo do eixo: subtrai", font_size=20, color=NEGATIVE).move_to(axes.c2p(3.0, -1.8))
+        summary = make_info_box(
+            "Velocidade positiva aumenta x.",
+            "Velocidade negativa devolve parte do caminho.",
+            "Delta x liquido = area positiva - area negativa.",
+            font_size=21,
+            highlight_last=True,
+        ).to_corner(UP + RIGHT).shift(DOWN * 1.0 + LEFT * 0.45)
+
+        self.play(FadeIn(title, shift=DOWN * 0.08))
+        self.play(FadeIn(axes_group))
+        self.play(Create(curve))
+        self.play(FadeIn(rects))
+        self.play(FadeIn(positive_area), FadeIn(negative_area))
+        self.play(FadeIn(plus_badge, shift=UP * 0.05), FadeIn(minus_badge, shift=DOWN * 0.05))
+        self.play(FadeIn(summary, shift=LEFT * 0.1))
+        self.play(Indicate(positive_area, color=HIGHLIGHT), Indicate(negative_area, color=NEGATIVE))
         self.wait(1.0)
 
 
@@ -675,7 +792,7 @@ class FormalIntegralBridgeScene(Scene):
     def construct(self) -> None:
         self.camera.background_color = PAPER
 
-        title = Text("Integral formal: mesma ideia, notacao mais compacta", font="DejaVu Serif", font_size=29, color=INK).to_edge(UP).shift(DOWN * 0.2)
+        title = Text("Integral formal: mesma ideia, com sinal e notacao compacta", font="DejaVu Serif", font_size=29, color=INK).to_edge(UP).shift(DOWN * 0.2)
 
         top_group, top_axes = make_stage_axes(LEFT * 3.0 + DOWN * 0.1, "v(t)", [0, 5.6, 1], x_length=4.4, y_length=2.8)
         bottom_group, bottom_axes = make_stage_axes(RIGHT * 3.0 + DOWN * 0.1, "a(t)", [0, 3.6, 1], x_length=4.4, y_length=2.8)
@@ -693,13 +810,13 @@ class FormalIntegralBridgeScene(Scene):
 
         top_box = make_info_box(
             "Acumular v(t) no intervalo",
-            "produz Delta x.",
+            "produz Delta x com sinal.",
             font_size=21,
             highlight_last=True,
         ).next_to(top_group, DOWN, buff=0.38)
         bottom_box = make_info_box(
             "Acumular a(t) no intervalo",
-            "produz Delta v.",
+            "produz Delta v com sinal.",
             font_size=21,
             highlight_last=True,
         ).next_to(bottom_group, DOWN, buff=0.38)

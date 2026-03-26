@@ -41,7 +41,7 @@ Depois, quando a situação ficar mais geral, escrevemos isso com o símbolo de 
     <source src="media/manim/integral_accumulation_overview.mp4" type="video/mp4">
     Seu navegador não conseguiu reproduzir a animação.
   </video>
-  <figcaption>A integral nasce da ideia de somar pequenas contribuições ao longo do intervalo até formar o deslocamento total.</figcaption>
+  <figcaption>A integral nasce da ideia de somar pequenas contribuições ao longo do intervalo; quando refinamos a partição, os retângulos acompanham melhor a curva.</figcaption>
 </figure>
 
 ## 8.3. Por que “área” faz sentido aqui
@@ -69,7 +69,42 @@ Agora a unidade sugere variação de velocidade.
 
 Esse tipo de checagem dimensional é muito útil para não transformar a integral em algo puramente decorado.
 
-## 8.4. O plano para os próximos capítulos
+## 8.4. Quando a área entra com sinal negativo
+
+Até aqui, a palavra “área” pode dar a impressão de que tudo entra sempre somando.
+
+Na cinemática, não é bem assim.
+
+Se o gráfico de $v(t)$ ficar abaixo do eixo do tempo durante parte do intervalo, então a velocidade está negativa nessa faixa.  
+Fisicamente, isso quer dizer que o móvel está empurrando a posição no sentido oposto ao sentido positivo escolhido para o eixo.
+
+Nesse caso:
+
+- a parte acima do eixo contribui positivamente para $\Delta x$
+- a parte abaixo do eixo contribui negativamente para $\Delta x$
+
+O resultado final não é “a soma dos tamanhos absolutos das áreas”.  
+O resultado final é o **saldo algébrico** dessas contribuições.
+
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/signed_area_overview.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>Quando o gráfico cruza o eixo, a parte acima conta positiva e a parte abaixo conta negativa; a integral lê esse saldo.</figcaption>
+</figure>
+
+Isso ajuda a separar duas ideias que, no começo, costumam se confundir:
+
+- **deslocamento**: pode ser positivo, negativo ou zero
+- **distância percorrida**: é sempre não negativa
+
+Se um corpo anda para a frente e depois volta, a distância total aumenta o tempo todo.  
+Já o deslocamento líquido pode diminuir, zerar ou até trocar de sinal.
+
+Essa distinção é decisiva para usar integrais com maturidade física.
+
+## 8.5. O plano para os próximos capítulos
 
 Não vamos começar pela forma mais abstrata da integral.
 
@@ -81,7 +116,7 @@ Vamos fazer o caminho mais pedagógico:
 
 Essa ordem ajuda porque o aluno vê a ideia nascer antes de ver a notação.
 
-## 8.5. O que você deve levar daqui
+## 8.6. O que você deve levar daqui
 
 Se este capítulo precisasse caber em uma única frase, seria esta:
 
@@ -91,6 +126,7 @@ Nos próximos capítulos, essa frase vai ganhar corpo:
 
 - no MU, com a área de um retângulo
 - no MUV, com a soma de retângulo e triângulo, ou com a área de um trapézio
+- quando o gráfico cruzar o eixo, com contribuições positivas e negativas no mesmo intervalo
 
 É daí que brotarão as fórmulas clássicas do ensino médio de um modo muito mais transparente.
 

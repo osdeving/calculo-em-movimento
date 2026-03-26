@@ -128,7 +128,41 @@ $$
 v=v_0+at
 $$
 
-## 12.3. O que a linguagem formal acrescenta
+## 12.3. Quando a integral sai negativa
+
+Na linguagem formal, a ideia de sinal fica ainda mais nítida.
+
+Quando escrevemos
+
+$$
+\Delta x = \int_0^t v(\tau)\,d\tau
+$$
+
+não estamos dizendo “pegue apenas o tamanho da região desenhada”.  
+Estamos dizendo: acumule a velocidade com o sinal que ela tem em cada instante.
+
+Então:
+
+- se $v(\tau) > 0$, a contribuição local empurra $\Delta x$ para cima
+- se $v(\tau) < 0$, a contribuição local empurra $\Delta x$ para baixo
+
+Por isso, quando parte do gráfico fica abaixo do eixo horizontal, a integral lê essa faixa como contribuição negativa.
+
+Em forma curta:
+
+$$
+\Delta x = A_+ - A_-
+$$
+
+Aqui, $A_+$ representa a contribuição acima do eixo, e $A_-$ representa a contribuição abaixo do eixo.  
+“Área negativa”, portanto, quer dizer “área que entra com sinal negativo”, não uma área geométrica com tamanho negativo.
+
+Esse detalhe é o que faz a integral conversar corretamente com a física do problema.  
+Se o móvel avança e depois retorna, a distância total percorrida pode aumentar, mas o deslocamento líquido pode diminuir.
+
+Se quiser rever essa intuição primeiro pelo desenho, veja o [capítulo 8, seção 8.4](08-o-caminho-inverso-integral-como-acumulo.md).
+
+## 12.4. O que a linguagem formal acrescenta
 
 Do ponto de vista prático, os capítulos 9 e 10 já entregaram as fórmulas.
 
@@ -143,7 +177,7 @@ Em linguagem integral:
 
 Isso vale não só para MU e MUV, mas como princípio mais amplo da cinemática.
 
-## 12.4. O equilíbrio certo para este livro
+## 12.5. O equilíbrio certo para este livro
 
 Não precisamos mergulhar em teoria avançada de integração para tirar proveito disso.
 
