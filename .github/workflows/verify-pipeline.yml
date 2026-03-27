@@ -22,10 +22,10 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: "3.13"
+          python-version: "3.8"
 
       - name: Install Python dependencies
-        run: python3 -m pip install matplotlib
+        run: python3 -m pip install matplotlib==3.7.5
 
       - name: Install Rust toolchain if needed
         shell: bash
