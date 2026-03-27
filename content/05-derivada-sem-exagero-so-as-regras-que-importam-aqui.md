@@ -28,7 +28,48 @@ Estamos perguntando:
   <figcaption>O formato de x(t) já antecipa o formato de v(t): constante vira zero, reta vira constante, curva quadrática vira reta.</figcaption>
 </figure>
 
-## 5.2. Regra 1: derivada de constante
+## 5.2. Um intervalo visual: limite, derivada e integral
+
+Mesmo em um livro focado em cinemática, vale parar por um instante e olhar para as três ideias centrais do cálculo sem carro, sem poste e sem equação horária.
+
+Fazer isso ajuda porque mostra que:
+
+- o **limite** é a ideia de aproximação controlada
+- a **derivada** é a leitura local que nasce dessa aproximação
+- a **integral** é a leitura acumulada de muitas pequenas contribuições
+
+Em linguagem bem curta:
+
+- o limite pergunta o que acontece quando a separação vai encolhendo
+- a derivada pergunta qual é a inclinação naquele ponto
+- a integral pergunta quanto foi acumulado ao longo do trecho
+
+Na cinemática, essas ideias depois ganham nomes físicos:
+
+- derivada da posição $\Rightarrow$ velocidade
+- derivada da velocidade $\Rightarrow$ aceleração
+- integral da velocidade $\Rightarrow$ deslocamento
+- integral da aceleração $\Rightarrow$ variação de velocidade
+
+Mas antes de colar isso no movimento, vale ver o trio funcionando por conta própria:
+
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/calculus_triptych.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>O trio central do cálculo em um único palco: o limite faz dois pontos se aproximarem, a derivada fixa a tangente local e a integral acumula a curva por retângulos cada vez mais finos.</figcaption>
+</figure>
+
+Se você guardar essa cena mental, muita coisa do restante do livro fica mais leve.
+
+Quando a secante vai perdendo separação, aparece o gesto do limite.  
+Quando a tangente encosta a curva em um ponto, aparece o gesto da derivada.  
+Quando a área vai sendo montada por partes menores, aparece o gesto da integral.
+
+Nos tópicos seguintes, vamos reduzir isso ao mínimo operacional de que realmente precisamos para o MU e o MUV.
+
+## 5.3. Regra 1: derivada de constante
 
 Se $c$ é constante,
 
@@ -46,7 +87,7 @@ Exemplo:
 - se é fixa, não cresce nem diminui com o tempo
 - logo, sua derivada é zero
 
-## 5.3. Regra 2: derivada de t
+## 5.4. Regra 2: derivada de t
 
 $$
 \frac{d}{dt}(t) = 1
@@ -67,7 +108,7 @@ Em linguagem geométrica, isso equivale a dizer que a inclinação de uma reta �
 
 Se quiser revisar a ligação entre reta e inclinação, o [Apêndice A, seções A.3 e A.4](26-apendice-a-retas-graficos-e-funcoes.md) ajuda bastante.
 
-## 5.4. Regra 3: derivada de t^2
+## 5.5. Regra 3: derivada de t^2
 
 $$
 \frac{d}{dt}(t^2) = 2t
@@ -89,7 +130,7 @@ $$
 
 Esse é exatamente o pedaço que faz a velocidade no MUV depender linearmente do tempo.
 
-## 5.5. Regra 4: derivada da soma
+## 5.6. Regra 4: derivada da soma
 
 Se
 
@@ -119,7 +160,7 @@ $$
 
 Isso deixa a conta organizada e evita a sensação de “mágica”.
 
-## 5.6. O mínimo que basta para este livro
+## 5.7. O mínimo que basta para este livro
 
 Com essas quatro regras, já conseguimos:
 

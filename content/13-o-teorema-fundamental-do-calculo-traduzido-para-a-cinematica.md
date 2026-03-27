@@ -75,6 +75,23 @@ Quando passa de:
 
 está lendo áreas.
 
+### Uma cena em que o ciclo aparece inteiro
+
+No fundo, o teorema fundamental diz que a leitura local e a leitura acumulada não estão soltas.
+
+Quando olhamos a inclinação de $x(t)$, estamos descobrindo a velocidade naquele instante.  
+Quando depois acumulamos $v(t)$ ao longo de um intervalo, recompomos um pedaço da própria posição.
+
+É esse ciclo que a animação abaixo tenta tornar visual:
+
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/fundamental_cycle_dashboard.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>A tangente em x(t) revela v(t) localmente; a área sob v(t) recompõe Delta x no intervalo. A taxa local e o acúmulo global fecham o mesmo ciclo.</figcaption>
+</figure>
+
 ## 13.4. O que isso resolve pedagogicamente
 
 Esse capítulo serve para unificar o livro.

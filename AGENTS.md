@@ -19,6 +19,7 @@ O objetivo deste arquivo é orientar agentes de IA e contribuidores automatizado
 - `scripts/generate_scene_assets.py`: fonte das ilustrações 2D geradas
 - `animations/manim/*.py`: fontes das animações Manim
 - `animations/manim/book_motion.py`: biblioteca compartilhada de componentes visuais para animações
+- `animations/manim/recipes/*.py`: galeria local de tecnicas e snippets inspirados na documentacao oficial do Manim
 - `scripts/render_manim_assets.py`: registro de cenas Manim e pipeline de render
 - `renderers/mdbook/theme/*`: camada visual do `mdBook`
 
@@ -48,6 +49,7 @@ Os playbooks principais são:
 - criar capítulo novo
 - incluir figura
 - incluir vídeo
+- usar técnica Manim da galeria
 - publicar no GitHub Pages
 
 ## Regras Operacionais

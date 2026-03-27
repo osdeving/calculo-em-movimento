@@ -41,6 +41,16 @@ Leituras importantes:
 
 Aqui aparece uma das leituras mais poderosas do curso: o mesmo gráfico informa tanto o valor instantâneo da velocidade quanto o deslocamento acumulado.
 
+Em contexto de engenharia, essa é uma leitura de altíssimo valor, porque um único gráfico pode responder várias perguntas operacionais ao mesmo tempo.
+
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/velocity_graph_operations.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>Num único gráfico v × t, o valor local entrega a velocidade, a inclinação local entrega a aceleração e a área acumulada entrega o deslocamento.</figcaption>
+</figure>
+
 ## 18.3. Gráfico a versus t
 
 Pergunta respondida:

@@ -19,6 +19,7 @@ Laboratório editorial de um livro de cinemática com:
 - `content/references/`: páginas geradas de consulta editorial
 - `animations/manim/`: cenas-fonte do Manim
 - `animations/manim/book_motion.py`: biblioteca local de componentes reutilizáveis para as animações
+- `animations/manim/recipes/`: galeria local de snippets inspirados na documentação oficial do Manim
 - `docs/ai/pipelines/`: playbooks por ação para agentes e automações
 - `.codex/skills/`: skills locais do repositório para workflows recorrentes
 - `renderers/mdbook/`: configuração visual e build do `mdBook`
@@ -34,8 +35,9 @@ Laboratório editorial de um livro de cinemática com:
 3. Para ampliar glossário e índice remissivo, edite `content/reference_data/glossary.json`
 4. Se precisar ajustar ilustrações, edite `scripts/generate_scene_assets.py`
 5. Se precisar ajustar animações, edite `animations/manim/*.py`; para componentes compartilhados, prefira `animations/manim/book_motion.py`
-6. Gere o livro com `make build`
-7. Sirva localmente com `make serve`
+6. Se quiser partir de uma técnica já conhecida do Manim, consulte `animations/manim/recipes/README.md` e reaproveite uma receita local
+7. Gere o livro com `make build`
+8. Sirva localmente com `make serve`
 
 ## Recursos editoriais automáticos
 

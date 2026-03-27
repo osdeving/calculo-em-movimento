@@ -213,6 +213,29 @@ O termo $\frac{1}{2}at^2$ é justamente o sinal algébrico de que o crescimento 
   <figcaption>No MUV, as posições ficam cada vez mais espaçadas, v(t) vira reta e a(t) permanece constante.</figcaption>
 </figure>
 
+### Um mesmo instante visto nos três gráficos
+
+Uma dificuldade muito comum no começo é olhar $x(t)$, $v(t)$ e $a(t)$ como se fossem três histórias separadas.
+
+Mas não são.
+
+Quando escolhemos um instante $t$, esse mesmo valor de tempo aponta:
+
+- um ponto no gráfico da posição
+- um ponto no gráfico da velocidade
+- um ponto no gráfico da aceleração
+- e, fisicamente, um estado do movimento naquele momento
+
+Na animação abaixo, o tempo varre o movimento e deixa claro que o carrinho, a posição no eixo $S$ e os três gráficos estão sincronizados.
+
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/kinematics_time_sweep.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>O mesmo instante t gera uma leitura simultânea em x(t), v(t) e a(t): um ponto em cada gráfico e uma posição correspondente no eixo do movimento.</figcaption>
+</figure>
+
 ### Geometria do MUV
 
 No MUV, os três gráficos típicos ficam assim:

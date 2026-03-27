@@ -11,6 +11,7 @@ Use estes playbooks quando precisar fazer mudanças modulares, sem improvisar a 
 - [criar-capitulo.md](/home/willams/curso_calculo_cinematica_bundle/docs/ai/pipelines/criar-capitulo.md)
 - [incluir-figura.md](/home/willams/curso_calculo_cinematica_bundle/docs/ai/pipelines/incluir-figura.md)
 - [incluir-video.md](/home/willams/curso_calculo_cinematica_bundle/docs/ai/pipelines/incluir-video.md)
+- [usar-tecnica-manim.md](/home/willams/curso_calculo_cinematica_bundle/docs/ai/pipelines/usar-tecnica-manim.md)
 - [publicar.md](/home/willams/curso_calculo_cinematica_bundle/docs/ai/pipelines/publicar.md)
 
 ## Regras gerais

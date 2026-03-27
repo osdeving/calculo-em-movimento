@@ -104,6 +104,30 @@ def make_signal_chip(
     return VGroup(chip, label)
 
 
+def make_value_token(text: str, font_size: int = 28, color: str = ACCENT) -> Text:
+    return Text(text, font="DejaVu Sans", font_size=font_size, color=color, weight="BOLD")
+
+
+def make_machine_formula(text: str, font_size: int = 34, color: str = INK) -> Text:
+    return Text(text, font="DejaVu Sans", font_size=font_size, color=color, weight="BOLD")
+
+
+def make_machine_formula_parts(
+    value: str = "t",
+    font_size: int = 34,
+    outer_color: str = INK,
+    token_color: str = ACCENT,
+) -> VGroup:
+    prefix = Text("x(", font="DejaVu Sans", font_size=font_size, color=outer_color, weight="BOLD")
+    token = Text(value if value else "8", font="DejaVu Sans", font_size=font_size, color=token_color, weight="BOLD")
+    suffix = Text(")", font="DejaVu Sans", font_size=font_size, color=outer_color, weight="BOLD")
+
+    if not value:
+        token.set_opacity(0)
+
+    return VGroup(prefix, token, suffix).arrange(RIGHT, buff=0.01)
+
+
 def make_car(scale_factor: float = 1.0) -> VGroup:
     body = RoundedRectangle(
         corner_radius=0.14,
@@ -222,7 +246,7 @@ def make_stopwatch(
 
 
 def make_function_machine(
-    label: str = "x(t)",
+    label="x(t)",
     subtitle: str = "tempo -> posicao",
     scale_factor: float = 1.0,
 ) -> VGroup:
@@ -244,7 +268,7 @@ def make_function_machine(
         fill_color=CARD_FILL,
         fill_opacity=1,
     ).move_to(shell.get_center() + UP * 0.42)
-    label_text = Text(label, font="DejaVu Sans", font_size=34, color=INK, weight="BOLD").move_to(screen.get_center())
+    label_text = (make_machine_formula(label) if isinstance(label, str) else label.copy()).move_to(screen.get_center())
     subtitle_text = Text(subtitle, font="DejaVu Sans", font_size=18, color=MUTED).move_to(shell.get_center() + DOWN * 0.55)
 
     input_port = RoundedRectangle(

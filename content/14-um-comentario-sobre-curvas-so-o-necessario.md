@@ -24,7 +24,31 @@ Geometricamente:
 Ou seja, a interpretação de área não depende de a curva ser reta.  
 Ela continua funcionando quando o movimento fica mais complicado.
 
-## 14.2. Por que então focamos em MU e MUV?
+## 14.2. Um painel mais completo da curva
+
+Quando o gráfico deixa de ser uma reta simples, ainda assim podemos fazer três leituras poderosas no mesmo desenho:
+
+- o valor do gráfico em um instante
+- a inclinação local da curva naquele ponto
+- a área acumulada desde o início do intervalo
+
+Isso merece ser visto em movimento, porque a cena ajuda a fixar que:
+
+- o ponto mostra o valor instantâneo de $v(t)$
+- a tangente mostra a taxa local de mudança
+- a área assinada acumula o efeito total até aquele instante
+
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/general_curve_dashboard.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>Mesmo em uma curva qualquer, o gráfico ainda entrega três leituras: valor local, inclinação local e área assinada acumulada.</figcaption>
+</figure>
+
+Esse tipo de painel é útil porque prepara o olhar para movimentos menos escolares, em que a curva pode subir, descer, cruzar o eixo e mudar de ritmo várias vezes.
+
+## 14.3. Por que então focamos em MU e MUV?
 
 Porque eles já concentram o essencial do raciocínio:
 
@@ -35,7 +59,7 @@ Porque eles já concentram o essencial do raciocínio:
 
 Além disso, MU e MUV cobrem uma enorme parte da cinemática básica que aparece em cursos iniciais.
 
-## 14.3. O limite certo deste livro
+## 14.4. O limite certo deste livro
 
 Este material não pretende esgotar movimentos arbitrários.
 
@@ -46,7 +70,7 @@ O foco principal é:
 
 Mesmo ficando nesse recorte, você já ganha o pedaço mais útil do cálculo para a cinemática elementar e intermediária.
 
-## 14.4. O que vale guardar
+## 14.5. O que vale guardar
 
 Se precisar levar só uma frase deste capítulo, leve esta:
 

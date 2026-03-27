@@ -71,6 +71,23 @@ workflows:
       - python3 scripts/render_manim_assets.py
       - make build-pages
 
+  usar-tecnica-manim:
+    goal: Reaproveitar uma tecnica oficial do Manim a partir da galeria local de receitas do projeto.
+    source_of_truth:
+      - animations/manim/recipes/*.py
+      - animations/manim/*.py
+      - animations/manim/book_motion.py
+    maybe_touch:
+      - scripts/render_manim_assets.py
+      - content/*.md
+    generated_side_effects:
+      - content/media/manim/*.mp4
+      - content/references/lista-de-videos.md
+      - dist/book/*
+    validate:
+      - python3 -m py_compile animations/manim/*.py animations/manim/recipes/*.py scripts/render_manim_assets.py
+      - make build-pages
+
   publicar:
     goal: Levar a versão atual do livro para o GitHub Pages.
     source_of_truth:

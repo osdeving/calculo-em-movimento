@@ -69,6 +69,16 @@ Agora a unidade sugere variação de velocidade.
 
 Esse tipo de checagem dimensional é muito útil para não transformar a integral em algo puramente decorado.
 
+Vale a pena ver isso de forma quase mecânica: a mesma figura geométrica pode virar deslocamento ou variação de velocidade, dependendo do que o eixo vertical está medindo.
+
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/integral_units_bridge.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>A mesma área geométrica muda de interpretação física quando trocamos v por a no eixo vertical: em um caso ela produz deslocamento, no outro produz variação de velocidade.</figcaption>
+</figure>
+
 ## 8.4. Quando a área entra com sinal negativo
 
 Até aqui, a palavra “área” pode dar a impressão de que tudo entra sempre somando.
