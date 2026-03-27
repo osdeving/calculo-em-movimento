@@ -1,0 +1,84 @@
+version: 1
+
+workflows:
+  alterar-capitulo:
+    goal: Editar texto, fórmulas, exemplos ou links dentro de um capítulo já existente.
+    source_of_truth:
+      - content/*.md
+    maybe_touch:
+      - content/SUMMARY.md
+      - content/reference_data/glossary.json
+    generated_side_effects:
+      - content/references/*.md
+      - dist/book/*
+    validate:
+      - make build-pages
+
+  criar-secao:
+    goal: Criar uma nova seção dentro de um capítulo existente.
+    source_of_truth:
+      - content/*.md
+    maybe_touch:
+      - content/reference_data/glossary.json
+    generated_side_effects:
+      - content/references/*.md
+      - dist/book/*
+    validate:
+      - make build-pages
+
+  criar-capitulo:
+    goal: Criar uma nova página/capítulo e integrá-la ao fluxo do livro.
+    source_of_truth:
+      - content/*.md
+      - content/SUMMARY.md
+    maybe_touch:
+      - content/reference_data/glossary.json
+    generated_side_effects:
+      - content/references/*.md
+      - dist/book/*
+    validate:
+      - make build-pages
+
+  incluir-figura:
+    goal: Inserir figura estática ou gerada e fazer a obra reconhecer a mídia corretamente.
+    source_of_truth:
+      - content/*.md
+      - content/assets/*
+      - scripts/generate_scene_assets.py
+    maybe_touch:
+      - content/assets/THIRD_PARTY.md
+      - content/reference_data/glossary.json
+    generated_side_effects:
+      - content/references/lista-de-figuras.md
+      - dist/book/*
+    validate:
+      - python3 scripts/generate_scene_assets.py
+      - make build-pages
+
+  incluir-video:
+    goal: Inserir animação Manim, renderizar a mídia e integrá-la ao capítulo e às referências.
+    source_of_truth:
+      - content/*.md
+      - animations/manim/*.py
+      - animations/manim/book_motion.py
+      - scripts/render_manim_assets.py
+    generated_side_effects:
+      - content/media/manim/*.mp4
+      - content/references/lista-de-videos.md
+      - dist/book/*
+    validate:
+      - python3 -m py_compile animations/manim/*.py scripts/render_manim_assets.py
+      - python3 scripts/render_manim_assets.py
+      - make build-pages
+
+  publicar:
+    goal: Levar a versão atual do livro para o GitHub Pages.
+    source_of_truth:
+      - main
+      - .github/workflows/publish-pages.yml
+    generated_side_effects:
+      - site publicado em https://osdeving.github.io/calculo-em-movimento/
+    validate:
+      - make build-pages
+      - git push origin main
+      - gh run view <run-id>

@@ -25,6 +25,23 @@ Por exemplo, se um carrinho anda para a frente, então a posição que ele ocupa
 
 Em outras palavras, o tempo é a entrada da função, e a posição é a saída.
 
+Uma maneira de fixar essa ideia é imaginar a função como uma pequena máquina conceitual:
+o valor de $t$ entra, a função $x(t)$ processa esse valor, e a posição correspondente sai na outra ponta.
+
+Na animação abaixo, repare em três coisas ao mesmo tempo:
+
+- o cronômetro marca o tempo que está entrando
+- a máquina $x(t)$ recebe esse tempo e devolve uma posição
+- o carro, no eixo $S$, aparece cada vez mais à frente conforme o tempo aumenta
+
+<figure class="book-figure book-motion">
+  <video class="book-video" controls muted loop playsinline preload="metadata" data-autoplay-when-visible>
+    <source src="media/manim/position_function_machine.mp4" type="video/mp4">
+    Seu navegador não conseguiu reproduzir a animação.
+  </video>
+  <figcaption>Animação: o tempo entra na função x(t), a posição sai como resposta, e o carro ocupa posições cada vez maiores no eixo S.</figcaption>
+</figure>
+
 ## 2.2. O mesmo vale para velocidade e aceleração
 
 Quando escrevemos $v(t)$:

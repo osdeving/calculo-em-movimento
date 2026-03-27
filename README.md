@@ -11,12 +11,16 @@ Laboratório editorial de um livro de cinemática com:
 
 ## Estrutura
 
+- `AGENTS.md`: contrato operacional para agentes de IA e automações
 - `content/`: conteúdo real do livro, separado por página/capítulo
 - `content/assets/`: figuras e ilustrações usadas pelo conteúdo
 - `content/media/`: vídeos e outras mídias geradas para o livro
 - `content/reference_data/glossary.json`: base editável do glossário e do índice remissivo
 - `content/references/`: páginas geradas de consulta editorial
 - `animations/manim/`: cenas-fonte do Manim
+- `animations/manim/book_motion.py`: biblioteca local de componentes reutilizáveis para as animações
+- `docs/ai/pipelines/`: playbooks por ação para agentes e automações
+- `.codex/skills/`: skills locais do repositório para workflows recorrentes
 - `renderers/mdbook/`: configuração visual e build do `mdBook`
 - `scripts/generate_scene_assets.py`: gera os SVGs esquemáticos 2D
 - `scripts/render_manim_assets.py`: renderiza as animações do Manim
@@ -29,7 +33,7 @@ Laboratório editorial de um livro de cinemática com:
 2. Para incluir fórmulas na lista de fórmulas, adicione `<!-- formula: Título -->` logo antes do bloco `$$ ... $$`
 3. Para ampliar glossário e índice remissivo, edite `content/reference_data/glossary.json`
 4. Se precisar ajustar ilustrações, edite `scripts/generate_scene_assets.py`
-5. Se precisar ajustar animações, edite `animations/manim/*.py`
+5. Se precisar ajustar animações, edite `animations/manim/*.py`; para componentes compartilhados, prefira `animations/manim/book_motion.py`
 6. Gere o livro com `make build`
 7. Sirva localmente com `make serve`
 
@@ -46,6 +50,8 @@ Laboratório editorial de um livro de cinemática com:
 make build
 make build-pages
 make animations
+make check-media
+make check-pipeline
 make publish
 make serve
 make serve-stop
@@ -60,6 +66,10 @@ make clean
 - build ou serve do `mdBook`
 
 `make build-pages` gera apenas o site estático pronto para publicação, usando os assets e vídeos já versionados no repositório.
+
+`make check-media` roda as checagens automáticas de contrato de mídia e de impacto entre fontes e artefatos gerados.
+
+`make check-pipeline` roda `make check-media` e fecha com `make build-pages`.
 
 `make publish` dispara manualmente o workflow de publicação no GitHub Pages para a branch `main`.
 

@@ -1,0 +1,77 @@
+name: verify-pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Install Rust toolchain if needed
+        shell: bash
+        run: |
+          if ! command -v cargo >/dev/null 2>&1; then
+            curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable
+            echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Install mdBook
+        shell: bash
+        run: cargo install mdbook --no-default-features --features search --vers "^0.4" --locked
+
+      - name: Check media contracts
+        run: python3 scripts/check_media_contracts.py
+
+      - name: Check changed pipeline impacts (pull request)
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch origin "${{ github.base_ref }}" --depth=1
+          python3 scripts/check_changed_pipeline_impacts.py --base-ref "origin/${{ github.base_ref }}"
+
+      - name: Check changed pipeline impacts (push)
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          BASE="${{ github.event.before }}"
+          if [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
+            BASE="HEAD^"
+          fi
+          python3 scripts/check_changed_pipeline_impacts.py --base-ref "$BASE"
+
+      - name: Regenerate references
+        run: python3 scripts/build_reference_pages.py
+
+      - name: Regenerate scene assets
+        run: python3 scripts/generate_scene_assets.py
+
+      - name: Check generated references and assets are committed
+        run: |
+          python3 scripts/check_generated_artifacts.py \
+            content/references \
+            renderers/mdbook/theme/generated_glossary.js \
+            content/assets
+
+      - name: Check Manim source syntax
+        shell: bash
+        run: |
+          python3 -m py_compile animations/manim/*.py scripts/render_manim_assets.py
+
+      - name: Build static site
+        run: make build-pages

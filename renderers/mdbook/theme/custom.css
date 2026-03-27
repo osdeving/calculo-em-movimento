@@ -48,7 +48,6 @@ html.light .content {
 }
 
 html.light .content main {
-  max-width: 56rem;
   margin: 0 auto 2.2rem;
   padding: 2.3rem 3rem 3rem;
   background: var(--paper);

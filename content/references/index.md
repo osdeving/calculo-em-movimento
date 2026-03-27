@@ -13,7 +13,7 @@ Esta área reúne atalhos de navegação para consulta rápida do material.
 ## O que você encontra aqui
 
 - **Figuras**: 19 entradas com legenda e capítulo de origem.
-- **Vídeos**: 17 animações integradas ao texto.
+- **Vídeos**: 18 animações integradas ao texto.
 - **Fórmulas**: 12 fórmulas principais marcadas editorialmente.
 - **Glossário**: 18 termos-base do curso.
 - **Índice remissivo**: 17 termos com ocorrências linkáveis no corpo do livro.

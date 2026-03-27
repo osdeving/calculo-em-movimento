@@ -10,6 +10,16 @@ TEMP_MEDIA_DIR = REPO_ROOT / ".tmp" / "manim"
 
 SCENES = [
     {
+        "source": REPO_ROOT / "animations" / "manim" / "function_machine.py",
+        "scene": "PositionFunctionMachineScene",
+        "output_stem": "position_function_machine",
+        "target": REPO_ROOT / "content" / "media" / "manim" / "position_function_machine.mp4",
+        "format": "mp4",
+        "quality": "l",
+        "renderer": "cairo",
+        "dependencies": [REPO_ROOT / "animations" / "manim" / "book_motion.py"],
+    },
+    {
         "source": REPO_ROOT / "animations" / "manim" / "kinematics.py",
         "scene": "AverageVelocityPostsScene",
         "output_stem": "average_velocity_posts",
@@ -194,8 +204,8 @@ def copy_if_changed(source: Path, target: Path) -> bool:
     return True
 
 
-def render_scene(scene: dict[str, Path | str]) -> bool:
-    dependencies = [Path(__file__), scene["source"]]
+def render_scene(scene: dict[str, object]) -> bool:
+    dependencies = [scene["source"], *scene.get("dependencies", [])]
     target = scene["target"]
     if is_up_to_date(target, dependencies):
         print(f"manim up-to-date: {target.relative_to(REPO_ROOT)}")

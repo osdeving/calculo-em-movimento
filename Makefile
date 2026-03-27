@@ -1,4 +1,4 @@
-.PHONY: assets animations references media build build-pages publish serve serve-stop clean
+.PHONY: assets animations references media build build-pages publish serve serve-stop clean check-media check-pipeline
 
 BOOK_DIR := renderers/mdbook
 
@@ -15,6 +15,13 @@ media: assets animations
 
 build: references media
 	mdbook build $(BOOK_DIR)
+
+check-media:
+	python3 scripts/check_media_contracts.py
+	python3 scripts/check_changed_pipeline_impacts.py
+
+check-pipeline: check-media
+	make build-pages
 
 build-pages: references
 	mdbook build $(BOOK_DIR)
